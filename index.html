@@ -142,6 +142,11 @@ table.et td.etl{text-align:left;font-family:'Barlow Condensed',sans-serif;color:
 .rb{display:inline-block;font-size:7.5px;font-weight:700;padding:1px 4px;border-radius:3px;margin-left:3px;vertical-align:middle;font-family:'Barlow Condensed',sans-serif;}
 .st-btn{border:none;border-radius:5px;padding:4px 10px;font-size:9px;font-weight:700;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;transition:all .2s;white-space:nowrap;}
 .st-btn.pendente{background:#f1f5f9;color:#64748b;border:1px solid #cbd5e1;}
+.st-btn.atrasada{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
+table.et tbody tr.atrasada{background:#fff1f2!important;}
+.idx-atrasada{background:#fee2e2;color:#991b1b;border-radius:10px;padding:1px 6px;font-size:8px;font-weight:700;font-family:'Barlow Condensed',sans-serif;margin-left:3px;}
+.banner-atrasadas{background:#fef2f2;border:1px solid #fca5a5;border-radius:7px;padding:10px 14px;font-size:10.5px;color:#991b1b;display:flex;align-items:center;gap:10px;}
+.banner-atrasadas b{font-family:'Barlow Condensed',sans-serif;font-size:12px;}
 .st-btn.em-rota{background:#fef9c3;color:#854d0e;border:1px solid #fde047;}
 .st-btn.entregue{background:#dcfce7;color:#166534;border:1px solid #86efac;}
 .st-btn:hover{filter:brightness(.9);}
@@ -262,6 +267,7 @@ table.et td.etl{text-align:left;font-family:'Barlow Condensed',sans-serif;color:
       <button class="modal-btn btn-pend"     onclick="aplicarStatus('PENDENTE')">⏳ Pendente</button>
       <button class="modal-btn btn-rota"     onclick="aplicarStatus('EM ROTA')">🚚 Em Rota</button>
       <button class="modal-btn btn-entregue" onclick="aplicarStatus('ENTREGUE')">✅ Entregue</button>
+      <button class="modal-btn" style="background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;flex:1;min-width:90px;" onclick="aplicarStatus('ATRASADA')">⚠️ Atrasada</button>
       <button class="modal-btn btn-cancel"   onclick="fecharModal('modal-status')">✕</button>
     </div>
   </div>
@@ -434,29 +440,30 @@ function verificarAutomacaoMinuto() {
   const agora = new Date();
   const h = agora.getHours(), m = agora.getMinutes();
   if (h === 23 && m === 59) {
-    // Marcar EM ROTA do dia de hoje como ENTREGUE
     const dh = hoje();
-    // Grupo Hoje (15/04)
+    let mudou = false;
+    // Grupo Hoje (15/04): escolas EM ROTA não confirmadas → ATRASADA
     if (dh === '2026-04-15') {
-      let mudou = false;
       EM_ROTA_ORIGINAIS.forEach(id => {
-        if (estadoProd[id] === 'EM ROTA') { estadoProd[id] = 'ENTREGUE'; mudou = true; }
+        const st = estadoProd[id];
+        if (st === 'EM ROTA' || st === 'PENDENTE') {
+          estadoProd[id] = 'ATRASADA'; mudou = true;
+        }
       });
-      if (mudou) { salvarLocal(); renderTudo(); }
     }
-    // Grupos futuros que viraram hoje
+    // Grupos futuros que viraram hoje: escolas PENDENTE → ATRASADA
     const grupos = calcGruposFuturos();
     grupos.forEach(g => {
       if (g.data === dh) {
-        let mudou = false;
         g.escolas.forEach(e => {
-          if ((estadoProd[e.id] || 'PENDENTE') === 'PENDENTE') {
-            estadoProd[e.id] = 'ENTREGUE'; mudou = true;
+          const st = estadoProd[e.id] || 'PENDENTE';
+          if (st === 'PENDENTE' || st === 'EM ROTA') {
+            estadoProd[e.id] = 'ATRASADA'; mudou = true;
           }
         });
-        if (mudou) { salvarLocal(); renderTudo(); }
       }
     });
+    if (mudou) { salvarLocal(); renderTudo(); }
   }
 }
 
@@ -549,13 +556,13 @@ function aplicarStatus(novoStatus) {
 
   // Atualizar ícone e linha imediatamente na tela (antes de qualquer re-render)
   document.querySelectorAll(`[data-esc-id="${id}"]`).forEach(btn => {
-    const cls = novoStatus === 'ENTREGUE' ? 'entregue' : novoStatus === 'EM ROTA' ? 'em-rota' : 'pendente';
-    const ico = novoStatus === 'ENTREGUE' ? '✅ Entregue' : novoStatus === 'EM ROTA' ? '🚚 Em Rota' : '⏳ Pendente';
+    const cls = novoStatus==='ENTREGUE'?'entregue':novoStatus==='EM ROTA'?'em-rota':novoStatus==='ATRASADA'?'atrasada':'pendente';
+    const ico = novoStatus==='ENTREGUE'?'✅ Entregue':novoStatus==='EM ROTA'?'🚚 Em Rota':novoStatus==='ATRASADA'?'⚠️ Atrasada':'⏳ Pendente';
     btn.className = `st-btn ${cls}`;
     btn.textContent = ico;
     const tr = btn.closest('tr');
     if (tr) {
-      tr.className = novoStatus === 'ENTREGUE' ? 'entregue' : novoStatus === 'EM ROTA' ? 'em-rota' : '';
+      tr.className = novoStatus==='ENTREGUE'?'entregue':novoStatus==='EM ROTA'?'em-rota':novoStatus==='ATRASADA'?'atrasada':'';
     }
   });
 
@@ -590,33 +597,54 @@ function nav(id) { grupoAtivo = id; renderTudo(); window.scrollTo({top: 0, behav
 // ═══════════════════════════════════════
 function vtot(e) { return TIPOS.reduce((s, k) => s + (e[k] || 0), 0); }
 
-// Calcular grupos futuros dinamicamente (apenas pendentes, limite 2500, ordem rota)
+// Calcular grupos futuros dinamicamente (pendentes + atrasadas, limite 2500, ordem rota)
 function calcGruposFuturos() {
   const est = getEstado();
-  // IDs dos grupos passados já congelados
   const idsPassados = new Set();
   gruposPasadosSalvos.forEach(gp => gp.ids.forEach(id => idsPassados.add(id)));
 
-  // Pendentes: escolas que NÃO são EM ROTA originais, NÃO estão entregues, NÃO estão em grupos passados
+  // Atrasadas: entram primeiro, na frente do próximo grupo
+  const atrasadas = CFG.escolas.filter(e =>
+    !EM_ROTA_ORIGINAIS.has(e.id) &&
+    !idsPassados.has(e.id) &&
+    (est[e.id] || e.status || 'PENDENTE') === 'ATRASADA'
+  );
+
+  // Pendentes normais
   const pendentes = CFG.escolas.filter(e =>
     !EM_ROTA_ORIGINAIS.has(e.id) &&
     !idsPassados.has(e.id) &&
     (est[e.id] || e.status || 'PENDENTE') === 'PENDENTE'
   );
 
-  // Agrupar respeitando limite e ordem
+  // Atrasadas entram no INÍCIO do primeiro grupo (sem redistribuição)
+  // Se o primeiro grupo + atrasadas ultrapassar 2500, as atrasadas formam grupo próprio antes
   const grupos = [];
+  
+  if (atrasadas.length > 0) {
+    const volAtrasadas = atrasadas.reduce((s,e) => s+vtot(e), 0);
+    // Se couber no limite junto com as primeiras pendentes: acrescenta na frente
+    // Se não couber: grupo próprio de atrasadas
+    if (volAtrasadas <= MAX_KITS_DIA) {
+      // Inserir atrasadas no início — serão agrupadas junto com pendentes depois
+      // na lógica abaixo, mas com flag de atrasada
+    }
+    // Grupo de atrasadas sempre separado para manter visibilidade
+    grupos.push({escolas: [...atrasadas], vol: volAtrasadas, temAtrasadas: true});
+  }
+
+  // Agrupar pendentes respeitando limite e ordem
   let cur = [], vol = 0;
   for (const e of pendentes) {
     const v = vtot(e);
     if (vol + v > MAX_KITS_DIA && cur.length > 0) {
-      grupos.push({escolas: [...cur], vol});
+      grupos.push({escolas: [...cur], vol, temAtrasadas: false});
       cur = [e]; vol = v;
     } else { cur.push(e); vol += v; }
   }
-  if (cur.length) grupos.push({escolas: cur, vol});
+  if (cur.length) grupos.push({escolas: cur, vol, temAtrasadas: false});
 
-  // Atribuir datas do pool (após os passados)
+  // Atribuir datas do pool
   const nPassados = gruposPasadosSalvos.length;
   grupos.forEach((g, i) => { g.data = DATAS_POOL[nPassados + i] || ''; });
   return grupos;
@@ -637,7 +665,9 @@ function calcAcumulados() {
   const emRotaGrupo = esc.filter(e => EM_ROTA_ORIGINAIS.has(e.id));
 
   // Histórico: todas com status ENTREGUE (incluindo as do grupo hoje)
+  // ATRASADA não conta como entregue — permanece pendente visualmente
   const entregues = esc.filter(e => e.st === 'ENTREGUE');
+  const atrasadas = esc.filter(e => e.st === 'ATRASADA' && !EM_ROTA_ORIGINAIS.has(e.id));
 
   // Para cálculo de acumulados: entregues que NÃO são do grupo hoje
   const entreguesSemHoje = entregues.filter(e => !EM_ROTA_ORIGINAIS.has(e.id));
@@ -697,18 +727,16 @@ function escRow(e, seq, readonly = false) {
   const t = vtot(e);
   const reg = e.reg || '';
   const bc = BADGE_CORES[reg] || ['#374151', '#f3f4f6'];
-  const trCls = s === 'ENTREGUE' ? ' class="entregue"' : s === 'EM ROTA' ? ' class="em-rota"' : '';
+  const trCls = s === 'ENTREGUE' ? ' class="entregue"' : s === 'EM ROTA' ? ' class="em-rota"' : s === 'ATRASADA' ? ' class="atrasada"' : '';
   const f = v => v || '—';
   const canEdit = perfilAtual === 'admin' && !readonly;
+  const stCls = s==='ENTREGUE'?'entregue':s==='EM ROTA'?'em-rota':s==='ATRASADA'?'atrasada':'pendente';
+  const stIco = s==='ENTREGUE'?'✅ Entregue':s==='EM ROTA'?'🚚 Em Rota':s==='ATRASADA'?'⚠️ Atrasada':'⏳ Pendente';
   const stHtml = canEdit
-    ? `<button class="st-btn ${s==='ENTREGUE'?'entregue':s==='EM ROTA'?'em-rota':'pendente'}"
+    ? `<button class="st-btn ${stCls}"
         data-esc-id="${e.id}"
-        onclick="abrirModalStatus('${e.id}','${e.nome.replace(/'/g,"\'")}')">
-        ${s==='ENTREGUE'?'✅ Entregue':s==='EM ROTA'?'🚚 Em Rota':'⏳ Pendente'}
-       </button>`
-    : `<span class="st-btn ${s==='ENTREGUE'?'entregue':s==='EM ROTA'?'em-rota':'pendente'} readonly">
-        ${s==='ENTREGUE'?'✅ Entregue':s==='EM ROTA'?'🚚 Em Rota':'⏳ Pendente'}
-       </span>`;
+        onclick="abrirModalStatus('${e.id}','${e.nome.replace(/'/g,"\'")}')">${stIco}</button>`
+    : `<span class="st-btn ${stCls} readonly">${stIco}</span>`;
   return `<tr${trCls}>
     <td class="sq">${seq}</td><td class="rt">${e.rota || '—'}</td>
     <td class="nm">${e.nome} <span class="rb" style="background:${bc[1]};color:${bc[0]}">${reg}</span></td>
@@ -783,16 +811,20 @@ function renderTudo() {
   document.getElementById('bar-esc').style.width = pE.toFixed(1) + '%';
   document.getElementById('bar-kits').style.width = pK.toFixed(1) + '%';
 
+  // Banner de atrasadas no índice
+  const nAtrasadas = CFG.escolas.filter(e => (getEstado()[e.id]||e.status||'PENDENTE') === 'ATRASADA').length;
+
   const testeTag = modoTeste ? ' <span class="pill pill-teste">TESTE</span>' : '';
 
   // ÍNDICE
   let idxHtml = '';
   const pctH = entregues.filter(e => !EM_ROTA_ORIGINAIS.has(e.id)).length / mE * 100;
+  const badgeAtrasadas = nAtrasadas > 0 ? `<span class="idx-atrasada">⚠️ ${nAtrasadas} atrasada${nAtrasadas>1?'s':''}</span>` : '';
   idxHtml += `<button class="idx-btn${grupoAtivo==='hist'?' ativo':''}" onclick="nav('hist')">
     <span class="idx-titulo">📋 HIST.</span>
     <span class="idx-data">${entregues.length} esc.</span>
     <span class="idx-pct">${(entregues.length/mE*100).toFixed(0)}%</span>
-    <div class="idx-bar"><div class="idx-bar-fill" style="width:${(entregues.length/mE*100).toFixed(0)}%"></div></div></button>`;
+    <div class="idx-bar"><div class="idx-bar-fill" style="width:${(entregues.length/mE*100).toFixed(0)}%"></div></div></button>${badgeAtrasadas}`;
 
   // Grupos passados no índice
   gruposPasadosSalvos.forEach((gp, i) => {
@@ -864,6 +896,7 @@ function renderTudo() {
     </div>
     <div class="body-wrap">
       ${adminPanel}
+      ${nAtrasadas > 0 ? `<div class="banner-atrasadas">⚠️ <b>${nAtrasadas} escola${nAtrasadas>1?'s':''} com entrega atrasada.</b> Verifique o próximo grupo — as atrasadas aparecem no início.</div>` : ''}
       <div class="sec"><div class="sec-title">🏫 Todas as unidades entregues <span class="badge-count">${entregues.length} escolas</span></div>
         <div class="tw"><table class="et">${thRow()}<tbody>
           ${entregues.map((e,i) => escRow(e, i+1, false)).join('')}${totRow(entregues)}</tbody></table></div></div>
@@ -984,7 +1017,7 @@ function renderTudo() {
       </div>
       <div class="body-wrap">
         ${adminPanel}
-        <div class="aviso-box">⚠ <b>Atenção:</b> Produções aquém ou além do planejado podem alterar a previsão de data de entrega em cada unidade escolar e assim mudar os grupos. A ordem da rota é sempre respeitada. O limite de ${MAX_KITS_DIA.toLocaleString('pt-BR')} kits/dia determina o agrupamento automático.</div>
+        ${g.temAtrasadas ? `<div class="banner-atrasadas">⚠️ <b>Este grupo contém escolas com entrega atrasada.</b> Verifique e confirme a entrega ou reagende conforme necessário.</div>` : `<div class="aviso-box">⚠ <b>Atenção:</b> Produções aquém ou além do planejado podem alterar a previsão de data de entrega em cada unidade escolar e assim mudar os grupos. A ordem da rota é sempre respeitada. O limite de ${MAX_KITS_DIA.toLocaleString('pt-BR')} kits/dia determina o agrupamento automático.</div>`}
         <div class="sec"><div class="sec-title">📦 Quadro 1 — Controle de Produção</div>
           <div class="prod-grid">
             <div class="prod-col c-est"><div class="prod-col-head">✅ Estoque disponível<div class="ps">Abatido da produção</div></div><table><tbody>${ptable(p.uso)}</tbody></table></div>
