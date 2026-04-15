@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Kit Escolar 2026 — Controle de Entregas · SMECEL</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --az:#1a3a5c;--md:#2d6a9f;--cl:#dce8f5;--lj:#e07b00;
+  --verde:#166534;--verde-bg:#f0fdf4;--verde-bd:#86efac;
+  --am:#92400e;--am-bg:#fffbeb;--am-bd:#fde068;
+  --azl:#1e40af;--azl-bg:#eff6ff;--azl-bd:#93c5fd;
+  --roxo:#7e22ce;--roxo-bg:#fdf4ff;--roxo-bd:#d8b4fe;
+  --bd:#d0d7de;--cz:#f4f6f8;--tx:#1c2128;--lv:#6b7280;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Barlow',sans-serif;background:#e5e7eb;color:var(--tx);font-size:13px;}
+
+/* ── LOGIN ── */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f2744 0%,#1a3a5c 60%,#2d6a9f 100%);}
+.login-card{background:#fff;border-radius:14px;padding:40px 36px;width:380px;box-shadow:0 24px 60px rgba(0,0,0,.4);}
+.login-logo{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--lv);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;}
+.login-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--az);margin-bottom:4px;}
+.login-sub{font-size:11px;color:var(--lv);margin-bottom:28px;}
+.login-field{margin-bottom:14px;}
+.login-field label{display:block;font-size:11px;font-weight:600;color:var(--lv);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+.login-field input{width:100%;border:1.5px solid var(--bd);border-radius:7px;padding:10px 12px;font-size:13px;font-family:'Barlow',sans-serif;color:var(--tx);outline:none;transition:border .2s;}
+.login-field input:focus{border-color:var(--md);}
+.login-btn{width:100%;background:var(--az);color:#fff;border:none;border-radius:7px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.04em;margin-top:6px;transition:background .2s;}
+.login-btn:hover{background:var(--md);}
+.login-error{color:#dc2626;font-size:11px;margin-top:8px;display:none;}
+.login-info{background:var(--cz);border-radius:7px;padding:10px 12px;font-size:10.5px;color:var(--lv);margin-top:20px;line-height:1.6;}
+.login-info b{color:var(--tx);}
+
+/* ── TOPO ── */
+#topo{position:sticky;top:0;z-index:200;background:var(--az);box-shadow:0 2px 12px rgba(0,0,0,.4);}
+#topo-inner{display:flex;align-items:center;height:50px;gap:0;}
+#logo{padding:0 18px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff;letter-spacing:.04em;white-space:nowrap;border-right:1px solid rgba(255,255,255,.15);}
+#logo small{display:block;font-size:9px;font-weight:400;color:rgba(255,255,255,.5);letter-spacing:.08em;}
+#progresso-wrap{flex:1;padding:0 18px;display:flex;align-items:center;gap:12px;}
+.prog-item{display:flex;flex-direction:column;align-items:center;min-width:56px;}
+.prog-val{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#fff;line-height:1;}
+.prog-lbl{font-size:8px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;}
+.prog-div{width:1px;height:28px;background:rgba(255,255,255,.15);}
+.prog-bar-wrap{flex:1;display:flex;flex-direction:column;gap:3px;}
+.prog-bar-row{display:flex;align-items:center;gap:6px;font-size:9px;color:rgba(255,255,255,.6);}
+.prog-bar-track{flex:1;height:5px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;}
+.prog-bar-fill{height:100%;border-radius:3px;transition:width .4s ease;}
+#topo-right{display:flex;align-items:center;gap:8px;padding-right:14px;}
+#atualizacao-badge{font-size:9px;color:rgba(255,255,255,.5);white-space:nowrap;text-align:right;line-height:1.4;}
+#usuario-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:3px 10px;font-size:10px;color:#fff;font-weight:600;font-family:'Barlow Condensed',sans-serif;white-space:nowrap;}
+.topo-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;color:#fff;cursor:pointer;transition:background .15s;white-space:nowrap;}
+.topo-btn:hover{background:rgba(255,255,255,.25);}
+.topo-btn.primary{background:var(--lj);border-color:var(--lj);}
+.topo-btn.danger{background:rgba(220,38,38,.3);border-color:rgba(220,38,38,.5);}
+
+/* ── ÍNDICE ── */
+#indice{background:#fff;border-bottom:2px solid var(--bd);padding:10px 18px;overflow-x:auto;white-space:nowrap;}
+.idx-btn{display:inline-flex;flex-direction:column;align-items:center;background:var(--cz);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;margin-right:6px;cursor:pointer;transition:all .15s;min-width:78px;text-align:center;vertical-align:top;}
+.idx-btn:hover{background:var(--cl);border-color:var(--md);}
+.idx-btn.ativo{background:var(--az);border-color:var(--az);}
+.idx-btn.ativo .idx-titulo,.idx-btn.ativo .idx-data,.idx-btn.ativo .idx-pct{color:#fff!important;}
+.idx-btn.ativo .idx-bar-fill{background:#fff;}
+.idx-btn.concluido{background:var(--verde-bg);border-color:var(--verde-bd);}
+.idx-btn.concluido .idx-titulo{color:var(--verde);}
+.idx-titulo{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--az);letter-spacing:.04em;}
+.idx-data{font-size:9px;color:var(--lv);margin-top:1px;}
+.idx-pct{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;color:var(--lj);margin-top:2px;}
+.idx-bar{width:100%;height:3px;background:#e5e7eb;border-radius:2px;margin-top:3px;overflow:hidden;}
+.idx-bar-fill{height:100%;background:var(--lj);border-radius:2px;transition:width .3s;}
+
+/* ── MAIN ── */
+#main{max-width:1040px;margin:0 auto;padding:16px;}
+.grupo-page{display:none;}
+.grupo-page.ativo{display:block;}
+
+/* ── HEADER GRUPO ── */
+.g-header{background:var(--az);border-radius:8px 8px 0 0;display:flex;align-items:stretch;}
+.g-hl{padding:14px 20px;flex:1;}
+.g-tipo{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;}
+.g-data{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#fff;}
+.g-sub{font-size:10px;color:rgba(255,255,255,.45);margin-top:2px;}
+.g-badge{background:var(--lj);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;padding:14px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:100px;border-radius:0 8px 0 0;text-align:center;}
+.g-badge small{font-size:8px;font-weight:400;opacity:.8;text-transform:uppercase;letter-spacing:.1em;}
+.g-badge.hist{background:#374151;border-radius:8px 8px 0 0;}
+.g-badge.hoje{background:var(--verde);}
+.g-stats{background:rgba(255,255,255,.07);border-top:1px solid rgba(255,255,255,.1);padding:8px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.g-stat{display:flex;flex-direction:column;}
+.g-stat-v{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#fff;}
+.g-stat-l{font-size:8px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em;}
+.g-stat-div{width:1px;height:24px;background:rgba(255,255,255,.15);}
+.pill{border-radius:20px;padding:2px 10px;font-size:9px;font-weight:600;letter-spacing:.05em;margin-left:auto;}
+.pill-manha{background:rgba(255,200,50,.2);border:1px solid rgba(255,200,50,.35);color:#fde68a;}
+.pill-hist{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);}
+.pill-hoje{background:rgba(22,163,74,.3);border:1px solid rgba(22,163,74,.5);color:#86efac;}
+
+/* ── SEÇÕES ── */
+.body-wrap{padding:14px;display:flex;flex-direction:column;gap:12px;}
+.sec{border:1px solid var(--bd);border-radius:8px;overflow:hidden;}
+.sec-title{background:var(--az);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;display:flex;align-items:center;gap:8px;}
+.badge-count{background:rgba(255,255,255,.2);border-radius:20px;padding:1px 8px;font-size:10px;}
+
+/* ── PRODUÇÃO ── */
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.prod-col{border-right:1px solid var(--bd);}
+.prod-col:last-child{border-right:none;}
+.prod-col-head{padding:7px 10px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--bd);}
+.prod-col-head .ps{font-size:8px;font-weight:400;margin-top:2px;opacity:.7;}
+.c-est .prod-col-head{background:var(--verde-bg);color:var(--verde);}
+.c-d1  .prod-col-head{background:var(--am-bg);color:var(--am);}
+.c-d2  .prod-col-head{background:var(--azl-bg);color:var(--azl);}
+.c-prx .prod-col-head{background:var(--roxo-bg);color:var(--roxo);}
+.prod-col table{width:100%;border-collapse:collapse;}
+.prod-col table td{padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;}
+.prod-col table td.pk{font-family:'Barlow Condensed',sans-serif;font-weight:600;width:28px;}
+.prod-col table td.pl{color:var(--lv);font-size:9.5px;}
+.prod-col table td.pv{text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:600;}
+.prod-col table tr.pt td{padding:5px 10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;border-top:2px solid var(--bd);background:var(--cz);text-align:right;}
+.c-est table tr.pt td{color:var(--verde);}
+.c-d1  table tr.pt td{color:var(--am);}
+.c-d2  table tr.pt td{color:var(--azl);}
+.c-prx table tr.pt td{color:var(--roxo);}
+.prod-note{background:var(--am-bg);border-top:1px solid var(--am-bd);padding:7px 14px;font-size:10px;color:var(--am);}
+
+/* ── TABELA ESCOLAS ── */
+.tw{overflow-x:auto;}
+table.et{width:100%;border-collapse:collapse;font-size:11.5px;}
+table.et thead tr{background:#e8f0f8;}
+table.et thead th{font-family:'Barlow Condensed',sans-serif;font-size:9.5px;font-weight:700;color:var(--az);letter-spacing:.07em;text-transform:uppercase;padding:7px 6px;border-bottom:2px solid var(--md);white-space:nowrap;text-align:center;}
+table.et thead th.tnm{text-align:left;}
+table.et tbody tr:nth-child(even){background:var(--cz);}
+table.et tbody tr:hover{background:#eaf2fb;}
+table.et tbody tr.entregue{background:#f0fdf4!important;}
+table.et tbody tr.em-rota{background:#fffbeb!important;}
+table.et tbody tr.etr{background:var(--cl)!important;border-top:2px solid var(--md);font-weight:700;}
+table.et td{padding:6px 6px;border-bottom:1px solid #e8eaed;text-align:center;vertical-align:middle;}
+table.et td.sq{color:#94a3b8;font-size:10px;width:22px;}
+table.et td.rt{font-family:'Barlow Condensed',sans-serif;font-weight:600;color:var(--md);width:40px;}
+table.et td.nm{text-align:left;max-width:260px;}
+table.et td.tt{font-weight:700;color:var(--lj);}
+table.et td.etl{text-align:left;font-family:'Barlow Condensed',sans-serif;color:var(--az);}
+.rb{display:inline-block;font-size:7.5px;font-weight:700;padding:1px 4px;border-radius:3px;margin-left:3px;vertical-align:middle;font-family:'Barlow Condensed',sans-serif;}
+
+/* ── STATUS BOTÕES ── */
+.st-btn{border:none;border-radius:5px;padding:4px 10px;font-size:9px;font-weight:700;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;transition:all .15s;white-space:nowrap;}
+.st-btn.pendente{background:#f1f5f9;color:#64748b;border:1px solid #cbd5e1;}
+.st-btn.em-rota{background:#fef9c3;color:#854d0e;border:1px solid #fde047;}
+.st-btn.entregue{background:#dcfce7;color:#166534;border:1px solid #86efac;}
+.st-btn:hover{filter:brightness(.93);}
+.st-btn.readonly{cursor:default;pointer-events:none;}
+
+/* ── INFOGRÁFICO ── */
+.info-sec{background:var(--cz);border:1px solid var(--bd);border-radius:8px;overflow:hidden;}
+.info-body{padding:12px 14px;display:flex;flex-direction:column;gap:12px;}
+.irow1{display:flex;gap:12px;}
+.icard{background:#fff;border:1px solid var(--bd);border-radius:7px;padding:10px 14px;display:flex;align-items:center;gap:12px;flex:1;}
+.ilab h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--az);margin-bottom:3px;}
+.iv{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--lj);line-height:1;}
+.iv span{font-size:13px;color:var(--lv);font-weight:400;}
+.is{font-size:9px;color:var(--lv);margin-top:2px;}
+.ibar{height:5px;background:#e5e7eb;border-radius:3px;overflow:hidden;width:140px;margin-top:5px;}
+.ibar div{height:100%;border-radius:3px;transition:width .4s;}
+.itip{background:#fff;border:1px solid var(--bd);border-radius:7px;padding:10px 14px;}
+.itip-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--az);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+.dg{display:flex;flex-wrap:wrap;gap:10px;}
+.di{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.dl{font-size:9px;text-align:center;color:var(--lv);font-family:'Barlow Condensed',sans-serif;font-weight:600;line-height:1.3;}
+.dl b{font-size:10px;color:var(--tx);}
+.dl small{font-size:8px;}
+
+/* ── NOTA ── */
+.nota-box{background:var(--verde-bg);border:1px solid var(--verde-bd);border-radius:6px;padding:10px 13px;font-size:10.5px;color:var(--verde);}
+
+/* ── RODAPÉ GRUPO ── */
+.ftr{background:#f8fafc;border:1px solid var(--bd);border-top:none;border-radius:0 0 8px 8px;padding:7px 14px;display:flex;justify-content:space-between;font-size:9px;color:var(--lv);}
+
+/* ── MODAL GENÉRICO ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;}
+.modal-overlay.aberto{display:flex;}
+.modal-box{background:#fff;border-radius:10px;padding:24px;max-width:440px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.modal-box h3{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--az);margin-bottom:8px;}
+.modal-box p{font-size:12px;color:var(--lv);margin-bottom:14px;line-height:1.5;}
+.modal-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.modal-btn{flex:1;border:none;border-radius:6px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.04em;transition:opacity .15s;min-width:90px;}
+.modal-btn:hover{opacity:.85;}
+.btn-pend{background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;}
+.btn-rota{background:#fef9c3;color:#854d0e;border:1px solid #fde047;}
+.btn-entregue{background:#dcfce7;color:#166534;border:1px solid #86efac;}
+.btn-cancel{background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;flex:0;padding:10px 16px;}
+.modal-field label{display:block;font-size:11px;font-weight:600;color:var(--lv);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;margin-top:12px;}
+.modal-field input{width:100%;border:1.5px solid var(--bd);border-radius:6px;padding:9px 11px;font-size:13px;font-family:'Barlow',sans-serif;outline:none;transition:border .2s;}
+.modal-field input:focus{border-color:var(--md);}
+.modal-error{color:#dc2626;font-size:11px;margin-top:6px;display:none;}
+
+/* ── PAINEL ADMIN ── */
+.admin-panel{background:linear-gradient(135deg,#fef9c3,#fffbeb);border:1px solid #fde068;border-radius:8px;padding:14px 16px;margin-bottom:12px;}
+.admin-panel h4{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+.admin-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.admin-btn{background:#fff;border:1px solid #fde068;border-radius:6px;padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:#92400e;cursor:pointer;letter-spacing:.04em;transition:all .15s;}
+.admin-btn:hover{background:#fef9c3;}
+.admin-btn.primary{background:var(--az);color:#fff;border-color:var(--az);}
+.admin-btn.primary:hover{background:var(--md);}
+
+@media print{#topo,#indice,.admin-panel,.st-btn{display:none!important;}.grupo-page{display:block!important;page-break-after:always;}}
+</style>
+</head>
+<body>
+
+<!-- ══ TELA DE LOGIN ══ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">Prefeitura Municipal de Cuiabá · SMECEL / CTA</div>
+    <div class="login-title">Kit Escolar 2026</div>
+    <div class="login-sub">Controle de Produção e Entregas</div>
+    <div class="login-field">
+      <label>Usuário</label>
+      <input type="text" id="login-user" placeholder="admin ou leitor" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label>Senha</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()">
+    </div>
+    <button class="login-btn" onclick="fazerLogin()">Entrar →</button>
+    <div class="login-error" id="login-error">Usuário ou senha incorretos.</div>
+    <div class="login-info">
+      <b>Perfis disponíveis:</b><br>
+      🔑 <b>admin</b> — atualiza status e exporta o programa<br>
+      👁 <b>leitor</b> — visualização apenas
+    </div>
+  </div>
+</div>
+
+<!-- ══ APLICATIVO ══ -->
+<div id="app" style="display:none">
+
+<!-- TOPO -->
+<div id="topo">
+  <div id="topo-inner">
+    <div id="logo">Kit Escolar 2026<small>SMECEL / CTA · PMC</small></div>
+    <div id="progresso-wrap">
+      <div class="prog-item"><span class="prog-val" id="prog-esc">—</span><span class="prog-lbl">Escolas</span></div>
+      <div class="prog-div"></div>
+      <div class="prog-item"><span class="prog-val" id="prog-kits">—</span><span class="prog-lbl">Kits entregues</span></div>
+      <div class="prog-div"></div>
+      <div class="prog-bar-wrap">
+        <div class="prog-bar-row"><span id="prog-esc-pct">0%</span><div class="prog-bar-track"><div class="prog-bar-fill" id="bar-esc" style="width:0%;background:#58a6ff"></div></div></div>
+        <div class="prog-bar-row"><span id="prog-kits-pct">0%</span><div class="prog-bar-track"><div class="prog-bar-fill" id="bar-kits" style="width:0%;background:var(--lj)"></div></div></div>
+      </div>
+    </div>
+    <div id="topo-right">
+      <div id="atualizacao-badge"></div>
+      <span id="usuario-badge">—</span>
+      <button class="topo-btn" id="btn-admin-senha" onclick="abrirModalSenha()" style="display:none">🔐 Senhas</button>
+      <button class="topo-btn primary" id="btn-exportar" onclick="exportarPrograma()" style="display:none">📤 Exportar</button>
+      <button class="topo-btn danger" onclick="fazerLogout()">Sair</button>
+    </div>
+  </div>
+</div>
+
+<!-- ÍNDICE -->
+<div id="indice"><div id="indice-inner"></div></div>
+
+<!-- MAIN -->
+<div id="main"><div id="conteudo"></div></div>
+
+</div><!-- /app -->
+
+<!-- MODAL STATUS -->
+<div class="modal-overlay" id="modal-status">
+  <div class="modal-box">
+    <h3>Atualizar status</h3>
+    <p id="modal-status-nome" style="font-weight:600;color:var(--tx);font-size:13px;margin-bottom:14px;">—</p>
+    <div class="modal-btns">
+      <button class="modal-btn btn-pend"     onclick="aplicarStatus('PENDENTE')">⏳ Pendente</button>
+      <button class="modal-btn btn-rota"     onclick="aplicarStatus('EM ROTA')">🚚 Em Rota</button>
+      <button class="modal-btn btn-entregue" onclick="aplicarStatus('ENTREGUE')">✅ Entregue</button>
+      <button class="modal-btn btn-cancel"   onclick="fecharModal('modal-status')">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SENHA ADMIN -->
+<div class="modal-overlay" id="modal-senha">
+  <div class="modal-box">
+    <h3>🔐 Alterar senhas</h3>
+    <p>As novas senhas valerão apenas no arquivo exportado. Para aplicar agora, altere e exporte.</p>
+    <div class="modal-field"><label>Nova senha — Admin</label><input type="password" id="nova-senha-admin" placeholder="mínimo 4 caracteres"></div>
+    <div class="modal-field"><label>Nova senha — Leitor</label><input type="password" id="nova-senha-leitor" placeholder="mínimo 4 caracteres"></div>
+    <div class="modal-error" id="senha-error">Preencha ambas as senhas (mín. 4 caracteres).</div>
+    <div class="modal-btns" style="margin-top:16px;">
+      <button class="modal-btn btn-entregue" onclick="salvarSenhas()">Salvar senhas</button>
+      <button class="modal-btn btn-cancel"   onclick="fecharModal('modal-senha')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  DADOS EMBUTIDOS
+// ══════════════════════════════════════════════════════════════
+const CFG = {"escolas": [{"id": "r2_0_0", "rota": "2.0", "reg": "LESTE", "nome": "EMEB Jescelino José Reiners", "A": 0, "B": 0, "C": 0, "D1": 65, "D2": 32, "E1": 69, "E2": 55, "F3": 53, "F4": 42, "F5": 36, "status": "ENTREGUE"}, {"id": "rx_1", "rota": "", "reg": "", "nome": "EMEB Jescelino José Reiners (SALAS ANEXAS) + EMEB Presidente Tancredo Neves (se faz necessário pois estão ocupando o mesmo prédio)", "A": 0, "B": 0, "C": 0, "D1": 11, "D2": 22, "E1": 22, "E2": 24, "F3": 22, "F4": 20, "F5": 69, "status": "ENTREGUE"}, {"id": "r3_0_2", "rota": "3.0", "reg": "OESTE", "nome": "EMEB Profª Esmeralda de Campos Fontes", "A": 0, "B": 0, "C": 0, "D1": 42, "D2": 35, "E1": 34, "E2": 21, "F3": 40, "F4": 45, "F5": 42, "status": ""}, {"id": "r4_0_3", "rota": "4.0", "reg": "LESTE", "nome": "CEIC Santa Inês – Poção", "A": 36, "B": 58, "C": 89, "D1": 49, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "EM ROTA"}, {"id": "r5_0_4", "rota": "5.0", "reg": "LESTE", "nome": "CEIC São Francisco de Assis", "A": 0, "B": 31, "C": 92, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r6_0_5", "rota": "6.0", "reg": "CAMPO", "nome": "EMEBC Herbert de Souza", "A": 0, "B": 0, "C": 0, "D1": 50, "D2": 46, "E1": 46, "E2": 66, "F3": 69, "F4": 59, "F5": 59, "status": ""}, {"id": "r7_0_6", "rota": "7.0", "reg": "SUL", "nome": "CMEI Jaira Cuiabano Correa da Costa", "A": 23, "B": 29, "C": 127, "D1": 71, "D2": 72, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r8_0_7", "rota": "8.0", "reg": "SUL", "nome": "CEIC Portal da Fé", "A": 0, "B": 10, "C": 82, "D1": 95, "D2": 89, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r9_0_8", "rota": "9.0", "reg": "SUL", "nome": "EMEB Profº Zeferino Leite de Oliveira", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 217, "E2": 274, "F3": 292, "F4": 240, "F5": 240, "status": "ENTREGUE"}, {"id": "r10_0_9", "rota": "10.0", "reg": "SUL", "nome": "CMEI Professor Ady de Figueiredo", "A": 25, "B": 29, "C": 128, "D1": 74, "D2": 73, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r11_0_10", "rota": "11.0", "reg": "SUL", "nome": "EMEB Senador Gastão Matos Muller", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 0, "E2": 223, "F3": 171, "F4": 244, "F5": 242, "status": ""}, {"id": "r12_0_11", "rota": "12.0", "reg": "SUL", "nome": "CEIC Rafael Rueda CAIC", "A": 17, "B": 45, "C": 109, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r13_0_12", "rota": "13.0", "reg": "SUL", "nome": "EMEB Jean Carlos Pinho Santos", "A": 0, "B": 0, "C": 0, "D1": 200, "D2": 201, "E1": 241, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r14_0_13", "rota": "14.0", "reg": "CAMPO", "nome": "EMEBC Novo Renascer", "A": 0, "B": 0, "C": 0, "D1": 9, "D2": 5, "E1": 18, "E2": 21, "F3": 22, "F4": 19, "F5": 30, "status": ""}, {"id": "r15_0_14", "rota": "15.0", "reg": "SUL", "nome": "CEIC Clóvis Dias Ferreira", "A": 19, "B": 87, "C": 185, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r16_0_15", "rota": "16.0", "reg": "SUL", "nome": "CMEI Governador José Garcia Neto", "A": 22, "B": 30, "C": 119, "D1": 59, "D2": 38, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r17_0_16", "rota": "17.0", "reg": "SUL", "nome": "CEIC São Benedito", "A": 0, "B": 22, "C": 58, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r18_0_17", "rota": "18.0", "reg": "SUL", "nome": "EMEB São Sebastião", "A": 0, "B": 0, "C": 0, "D1": 46, "D2": 50, "E1": 80, "E2": 81, "F3": 106, "F4": 72, "F5": 79, "status": ""}, {"id": "r19_0_18", "rota": "19.0", "reg": "SUL", "nome": "CMEI Antonio Batista da Cruz", "A": 16, "B": 29, "C": 114, "D1": 45, "D2": 26, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r20_0_19", "rota": "20.0", "reg": "SUL", "nome": "CEIC Manoelino de Jesus", "A": 25, "B": 36, "C": 82, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r21_0_20", "rota": "21.0", "reg": "SUL", "nome": "EMEB Profº Onofre de Oliveira", "A": 0, "B": 0, "C": 0, "D1": 49, "D2": 50, "E1": 54, "E2": 81, "F3": 54, "F4": 57, "F5": 60, "status": ""}, {"id": "r22_0_21", "rota": "22.0", "reg": "SUL", "nome": "EMEB Jesus Criança", "A": 0, "B": 0, "C": 0, "D1": 27, "D2": 49, "E1": 54, "E2": 81, "F3": 53, "F4": 50, "F5": 69, "status": ""}, {"id": "r23_0_22", "rota": "23.0", "reg": "SUL", "nome": "EMEB Ana Teresa Arco Krause", "A": 0, "B": 0, "C": 0, "D1": 84, "D2": 100, "E1": 108, "E2": 55, "F3": 110, "F4": 117, "F5": 120, "status": ""}, {"id": "r24_0_23", "rota": "24.0", "reg": "SUL", "nome": "EMEB Senador Darcy Ribeiro", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 49, "E2": 81, "F3": 73, "F4": 60, "F5": 60, "status": ""}, {"id": "r25_0_24", "rota": "25.0", "reg": "SUL", "nome": "CMEI Jornalista Marcos Coutinho", "A": 27, "B": 30, "C": 123, "D1": 56, "D2": 43, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r26_0_25", "rota": "26.0", "reg": "SUL", "nome": "CEIC Marechal Rondon", "A": 0, "B": 17, "C": 65, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r27_0_26", "rota": "27.0", "reg": "SUL", "nome": "EMEB Vereador Paulo de Campos Borges", "A": 0, "B": 0, "C": 0, "D1": 34, "D2": 44, "E1": 79, "E2": 98, "F3": 78, "F4": 59, "F5": 79, "status": ""}, {"id": "r28_0_27", "rota": "28.0", "reg": "SUL", "nome": "CMEI Edgar Santana de Amorim", "A": 14, "B": 28, "C": 76, "D1": 38, "D2": 27, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r29_0_28", "rota": "29.0", "reg": "SUL", "nome": "CMEI Aliane Fatima Rodrigues Monteiro", "A": 18, "B": 29, "C": 80, "D1": 36, "D2": 29, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r30_0_29", "rota": "30.0", "reg": "SUL", "nome": "EMEB Professora Lidioliria Santana", "A": 0, "B": 0, "C": 0, "D1": 53, "D2": 71, "E1": 53, "E2": 51, "F3": 58, "F4": 52, "F5": 51, "status": ""}, {"id": "r31_0_30", "rota": "31.0", "reg": "SUL", "nome": "CMEI Dr. Leonel de Moura Brizola", "A": 27, "B": 29, "C": 126, "D1": 70, "D2": 32, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r32_0_31", "rota": "32.0", "reg": "SUL", "nome": "CEIC Jamil Boutros Nadaf", "A": 0, "B": 27, "C": 97, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r33_0_32", "rota": "33.0", "reg": "SUL", "nome": "EMEB Maximiano Arcanjo da Cruz", "A": 0, "B": 0, "C": 0, "D1": 50, "D2": 44, "E1": 93, "E2": 92, "F3": 93, "F4": 99, "F5": 111, "status": ""}, {"id": "r34_0_33", "rota": "34.0", "reg": "SUL", "nome": "EMEB Constança Figueiredo Palma Bem Bem", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 54, "E2": 66, "F3": 76, "F4": 89, "F5": 79, "status": ""}, {"id": "r35_0_34", "rota": "35.0", "reg": "SUL", "nome": "EMEB Osmar José do Carmo Cabral", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 105, "E2": 76, "F3": 99, "F4": 161, "F5": 153, "status": ""}, {"id": "r36_0_35", "rota": "36.0", "reg": "SUL", "nome": "EMEB Ana Luiza Prado Bastos", "A": 0, "B": 0, "C": 0, "D1": 200, "D2": 137, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r37_0_36", "rota": "37.0", "reg": "SUL", "nome": "CMEI Vereador Julio Cesar Pinheiro", "A": 15, "B": 30, "C": 64, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r38_0_37", "rota": "38.0", "reg": "SUL", "nome": "EMEB Liberdade", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 96, "E1": 107, "E2": 103, "F3": 91, "F4": 0, "F5": 0, "status": ""}, {"id": "r39_0_38", "rota": "39.0", "reg": "SUL", "nome": "CEIC Maria Nery Batista Ribeiro", "A": 0, "B": 23, "C": 63, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r40_0_39", "rota": "40.0", "reg": "SUL", "nome": "EMEB Maria Elazir Correa de Figueiredo", "A": 0, "B": 0, "C": 0, "D1": 93, "D2": 99, "E1": 107, "E2": 108, "F3": 135, "F4": 133, "F5": 119, "status": ""}, {"id": "r41_0_40", "rota": "41.0", "reg": "SUL", "nome": "CEIC Lais Amiccuci Soares Martins", "A": 0, "B": 30, "C": 73, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r42_0_41", "rota": "42.0", "reg": "SUL", "nome": "EMEB Ministro Marcos Freire", "A": 0, "B": 0, "C": 0, "D1": 118, "D2": 150, "E1": 163, "E2": 180, "F3": 186, "F4": 178, "F5": 178, "status": ""}, {"id": "r43_0_42", "rota": "43.0", "reg": "SUL", "nome": "CEIC Helenita Paes de Assunção", "A": 0, "B": 30, "C": 72, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r44_0_43", "rota": "44.0", "reg": "SUL", "nome": "CEIC Mariuza do Carmo Ojeda de Barros", "A": 0, "B": 29, "C": 103, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r45_0_44", "rota": "45.0", "reg": "SUL", "nome": "CMEI Auro Ida", "A": 26, "B": 27, "C": 120, "D1": 66, "D2": 67, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r46_0_45", "rota": "46.0", "reg": "SUL", "nome": "EMEB Francisco Pedroso da Silva", "A": 0, "B": 0, "C": 0, "D1": 28, "D2": 50, "E1": 105, "E2": 97, "F3": 100, "F4": 114, "F5": 129, "status": ""}, {"id": "r47_0_46", "rota": "47.0", "reg": "CAMPO", "nome": "EMEBC Nova Esperança", "A": 0, "B": 0, "C": 0, "D1": 34, "D2": 39, "E1": 37, "E2": 43, "F3": 35, "F4": 36, "F5": 52, "status": ""}, {"id": "r48_0_47", "rota": "48.0", "reg": "SUL", "nome": "EMEB Clovis Huguenei Neto", "A": 0, "B": 0, "C": 0, "D1": 46, "D2": 50, "E1": 53, "E2": 54, "F3": 54, "F4": 61, "F5": 63, "status": ""}, {"id": "r49_0_48", "rota": "49.0", "reg": "SUL", "nome": "EMEB Joana Dark da Silva", "A": 0, "B": 0, "C": 0, "D1": 54, "D2": 76, "E1": 79, "E2": 102, "F3": 81, "F4": 60, "F5": 119, "status": ""}, {"id": "r50_0_49", "rota": "50.0", "reg": "SUL", "nome": "CMEI Engenheiro Oscar Amelito", "A": 24, "B": 29, "C": 123, "D1": 74, "D2": 70, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r51_0_50", "rota": "51.0", "reg": "SUL", "nome": "EMEB Padre Raimundo Conceição Pombo Moreira da Cruz", "A": 0, "B": 0, "C": 0, "D1": 26, "D2": 25, "E1": 108, "E2": 108, "F3": 107, "F4": 108, "F5": 60, "status": ""}, {"id": "r52_0_51", "rota": "52.0", "reg": "SUL", "nome": "CMEI Professora Marilia Ines Pedrollo Salomoni", "A": 26, "B": 27, "C": 126, "D1": 75, "D2": 71, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r53_0_52", "rota": "53.0", "reg": "SUL", "nome": "EMEB Silva Freire", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 81, "E2": 106, "F3": 107, "F4": 120, "F5": 0, "status": ""}, {"id": "r54_0_53", "rota": "54.0", "reg": "SUL", "nome": "EMEB Eugênia Pereira de Mello", "A": 0, "B": 0, "C": 0, "D1": 107, "D2": 150, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r55_0_54", "rota": "55.0", "reg": "SUL", "nome": "EMEB José Torquato da Silva", "A": 0, "B": 0, "C": 0, "D1": 100, "D2": 125, "E1": 135, "E2": 136, "F3": 136, "F4": 161, "F5": 242, "status": ""}, {"id": "r56_0_55", "rota": "56.0", "reg": "SUL", "nome": "CEIC Amalia Curvo de Campos", "A": 0, "B": 21, "C": 82, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r57_0_56", "rota": "57.0", "reg": "SUL", "nome": "CEIC Lelita Lino Da Silva", "A": 0, "B": 28, "C": 83, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r58_0_57", "rota": "58.0", "reg": "SUL", "nome": "EMEB Tereza Benguela", "A": 0, "B": 0, "C": 0, "D1": 99, "D2": 79, "E1": 54, "E2": 107, "F3": 82, "F4": 109, "F5": 0, "status": ""}, {"id": "r59_0_58", "rota": "59.0", "reg": "SUL", "nome": "EMEB Floriano Bocheneki", "A": 0, "B": 0, "C": 0, "D1": 75, "D2": 74, "E1": 80, "E2": 81, "F3": 79, "F4": 60, "F5": 89, "status": ""}, {"id": "r60_0_59", "rota": "60.0", "reg": "SUL", "nome": "CEIC Professor Aecim Tocantins", "A": 0, "B": 28, "C": 95, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r61_0_60", "rota": "61.0", "reg": "SUL", "nome": "CEIC José Gabriel da Costa", "A": 0, "B": 27, "C": 67, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r62_0_61", "rota": "62.0", "reg": "SUL", "nome": "CEIC Silva Freire", "A": 0, "B": 22, "C": 87, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r63_0_62", "rota": "63.0", "reg": "SUL", "nome": "EMEB Moacyr Gratidiano Dorileo", "A": 0, "B": 0, "C": 0, "D1": 39, "D2": 0, "E1": 153, "E2": 139, "F3": 161, "F4": 0, "F5": 0, "status": ""}, {"id": "r64_0_63", "rota": "64.0", "reg": "SUL", "nome": "EMEB Profª Maria Dimpina Lobo Duarte", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 124, "F5": 214, "status": ""}, {"id": "r65_0_64", "rota": "65.0", "reg": "LESTE", "nome": "CMEI Manoel de Barros", "A": 26, "B": 28, "C": 121, "D1": 73, "D2": 68, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r66_0_65", "rota": "66.0", "reg": "LESTE", "nome": "EMEB Carlos Alberto Reyes Maldonado", "A": 0, "B": 0, "C": 0, "D1": 45, "D2": 72, "E1": 132, "E2": 128, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r67_0_66", "rota": "67.0", "reg": "LESTE", "nome": "EMEB Profª Maria Ambrósio Pommot", "A": 0, "B": 0, "C": 0, "D1": 51, "D2": 50, "E1": 55, "E2": 54, "F3": 181, "F4": 194, "F5": 179, "status": ""}, {"id": "r68_0_67", "rota": "68.0", "reg": "LESTE", "nome": "CEIC Colomba Cacelia Lombardi Dorileo", "A": 0, "B": 67, "C": 157, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r69_0_68", "rota": "69.0", "reg": "LESTE", "nome": "EMEB Dejani Ribeiro Campos", "A": 0, "B": 0, "C": 0, "D1": 98, "D2": 100, "E1": 108, "E2": 133, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r70_0_69", "rota": "70.0", "reg": "LESTE", "nome": "EMEB Dr. Fábio Firmino Leite", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 138, "F4": 154, "F5": 180, "status": ""}, {"id": "r71_0_70", "rota": "71.0", "reg": "LESTE", "nome": "Creche João Crisostomo de Figueiredo", "A": 0, "B": 0, "C": 63, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r72_0_71", "rota": "72.0", "reg": "LESTE", "nome": "EMEB Celina Fialho Bezerra", "A": 0, "B": 0, "C": 0, "D1": 74, "D2": 75, "E1": 162, "E2": 159, "F3": 160, "F4": 126, "F5": 161, "status": ""}, {"id": "r73_0_72", "rota": "73.0", "reg": "LESTE", "nome": "CEIC Edna Catharina Pierri Ricci", "A": 0, "B": 27, "C": 97, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r74_0_73", "rota": "74.0", "reg": "LESTE", "nome": "CMEI Regina Pia Padilla de Borbon Neves", "A": 25, "B": 30, "C": 123, "D1": 73, "D2": 71, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r75_0_74", "rota": "75.0", "reg": "LESTE", "nome": "CEIC Risoleta Neves", "A": 25, "B": 30, "C": 94, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r76_0_75", "rota": "76.0", "reg": "LESTE", "nome": "EMEB Irmã Maria Betty de Souza Pires", "A": 0, "B": 0, "C": 0, "D1": 37, "D2": 50, "E1": 54, "E2": 54, "F3": 54, "F4": 107, "F5": 60, "status": ""}, {"id": "r77_0_76", "rota": "77.0", "reg": "LESTE", "nome": "EMEB Silvino Leite de Arruda", "A": 0, "B": 0, "C": 0, "D1": 48, "D2": 47, "E1": 71, "E2": 110, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r78_0_77", "rota": "78.0", "reg": "LESTE", "nome": "CEIC José Luiz Borges Garcia", "A": 0, "B": 36, "C": 112, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r79_0_78", "rota": "79.0", "reg": "LESTE", "nome": "EMEB 12 de Outubro", "A": 0, "B": 0, "C": 0, "D1": 41, "D2": 75, "E1": 54, "E2": 26, "F3": 110, "F4": 90, "F5": 120, "status": ""}, {"id": "r80_0_79", "rota": "80.0", "reg": "LESTE", "nome": "EMEB Professora Francisca Figeiredo Arruda Martins", "A": 0, "B": 0, "C": 0, "D1": 75, "D2": 75, "E1": 81, "E2": 81, "F3": 81, "F4": 87, "F5": 0, "status": ""}, {"id": "r81_0_80", "rota": "81.0", "reg": "LESTE", "nome": "CEIC CAIC Eldorado", "A": 27, "B": 44, "C": 109, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r82_0_81", "rota": "82.0", "reg": "LESTE", "nome": "EMEB Dr. Orlando Nigro", "A": 0, "B": 0, "C": 0, "D1": 105, "D2": 112, "E1": 101, "E2": 116, "F3": 112, "F4": 99, "F5": 101, "status": ""}, {"id": "r83_0_82", "rota": "83.0", "reg": "LESTE", "nome": "CEIC Benedita Dias Evangelista", "A": 0, "B": 25, "C": 69, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r84_0_83", "rota": "84.0", "reg": "LESTE", "nome": "CEIC Rosângela Campos Vieira Passos", "A": 23, "B": 33, "C": 80, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r85_0_84", "rota": "85.0", "reg": "LESTE", "nome": "EMEB Profª Guilhermina de Figueiredo", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 81, "F4": 58, "F5": 100, "status": ""}, {"id": "r86_0_85", "rota": "86.0", "reg": "LESTE", "nome": "EMEB Lisaldo Farias Sodré (antiga EMEB 8 de Abril)", "A": 0, "B": 0, "C": 37, "D1": 64, "D2": 80, "E1": 79, "E2": 104, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r87_0_86", "rota": "87.0", "reg": "LESTE", "nome": "EMEB José Luiz Borges Garcia", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 54, "E2": 81, "F3": 81, "F4": 90, "F5": 128, "status": ""}, {"id": "r88_0_87", "rota": "88.0", "reg": "LESTE", "nome": "EMEB Augusto Mário Vieira", "A": 0, "B": 0, "C": 41, "D1": 50, "D2": 67, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r89_0_88", "rota": "89.0", "reg": "LESTE", "nome": "EMEB Prof.ª Elza Luiza Esteves", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 79, "E2": 93, "F3": 55, "F4": 75, "F5": 60, "status": ""}, {"id": "r90_0_89", "rota": "90.0", "reg": "LESTE", "nome": "EMEB Quintino Pereira de Freitas", "A": 0, "B": 28, "C": 94, "D1": 75, "D2": 74, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r91_0_90", "rota": "91.0", "reg": "LESTE", "nome": "EMEB Profª Tereza Lobo", "A": 0, "B": 0, "C": 0, "D1": 51, "D2": 51, "E1": 134, "E2": 130, "F3": 142, "F4": 108, "F5": 119, "status": ""}, {"id": "r92_0_91", "rota": "92.0", "reg": "LESTE", "nome": "CEIC Mariana Fernandes Macedo", "A": 0, "B": 27, "C": 83, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r93_0_92", "rota": "93.0", "reg": "LESTE", "nome": "CEIC São José Operário", "A": 7, "B": 34, "C": 163, "D1": 105, "D2": 100, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "EM ROTA"}, {"id": "r94_0_93", "rota": "94.0", "reg": "LESTE", "nome": "CEIC São Matheus", "A": 0, "B": 18, "C": 64, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r95_0_94", "rota": "95.0", "reg": "LESTE", "nome": "CEIC Josefa Catarina de Almeida", "A": 0, "B": 29, "C": 93, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r96_0_95", "rota": "96.0", "reg": "LESTE", "nome": "EMEB Dom Bosco do Praeirinho", "A": 0, "B": 0, "C": 0, "D1": 64, "D2": 58, "E1": 54, "E2": 42, "F3": 46, "F4": 54, "F5": 0, "status": ""}, {"id": "r97_0_96", "rota": "97.0", "reg": "LESTE", "nome": "EMEB Profº Hélio de Souza Vieira", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 17, "E2": 52, "F3": 53, "F4": 29, "F5": 177, "status": ""}, {"id": "r98_0_97", "rota": "98.0", "reg": "LESTE", "nome": "EMEB Antonio Ferreira Valentim", "A": 0, "B": 0, "C": 0, "D1": 27, "D2": 47, "E1": 44, "E2": 49, "F3": 44, "F4": 41, "F5": 0, "status": ""}, {"id": "r99_0_98", "rota": "99.0", "reg": "LESTE", "nome": "EMEB Profº Filogonio Correa", "A": 0, "B": 0, "C": 0, "D1": 81, "D2": 68, "E1": 82, "E2": 56, "F3": 79, "F4": 77, "F5": 0, "status": ""}, {"id": "r100_0_99", "rota": "100.0", "reg": "LESTE", "nome": "EMEB Santa Cecília", "A": 0, "B": 0, "C": 0, "D1": 20, "D2": 20, "E1": 26, "E2": 0, "F3": 52, "F4": 43, "F5": 60, "status": ""}, {"id": "r101_0_100", "rota": "101.0", "reg": "LESTE", "nome": "EMEB Agostinho Simplício de Figueiredo", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 26, "E1": 53, "E2": 75, "F3": 27, "F4": 30, "F5": 30, "status": ""}, {"id": "r102_0_101", "rota": "102.0", "reg": "LESTE", "nome": "CEIC Dona Micaela Henrique de Souza Lima", "A": 0, "B": 21, "C": 61, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r103_0_102", "rota": "103.0", "reg": "LESTE", "nome": "EMEB Maria da Glória de Souza", "A": 0, "B": 0, "C": 0, "D1": 41, "D2": 24, "E1": 43, "E2": 48, "F3": 38, "F4": 41, "F5": 54, "status": ""}, {"id": "r104_0_103", "rota": "104.0", "reg": "LESTE", "nome": "CEIC Prof. Monserrat Ismênia de Moraes Borge", "A": 22, "B": 36, "C": 101, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r105_0_104", "rota": "105.0", "reg": "LESTE", "nome": "CEIC Santa Clara", "A": 0, "B": 22, "C": 78, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r106_0_105", "rota": "106.0", "reg": "LESTE", "nome": "EMEB Henrique da Silva Prado", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 18, "E1": 84, "E2": 46, "F3": 52, "F4": 61, "F5": 64, "status": ""}, {"id": "r107_0_106", "rota": "107.0", "reg": "LESTE", "nome": "CEIC Lucila Ferreira Fortes", "A": 16, "B": 33, "C": 69, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r108_0_107", "rota": "108.0", "reg": "LESTE", "nome": "CMEI Coronel José Meirelles", "A": 25, "B": 28, "C": 85, "D1": 95, "D2": 63, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r109_0_108", "rota": "109.0", "reg": "NORTE", "nome": "CMEI Antonio Marcos Ruzzene Balbino", "A": 26, "B": 30, "C": 104, "D1": 76, "D2": 53, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r110_0_109", "rota": "110.0", "reg": "NORTE", "nome": "CEIC Inocencio Leocadio da Rosa", "A": 0, "B": 37, "C": 71, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r111_0_110", "rota": "111.0", "reg": "NORTE", "nome": "EMEB Senhorinha Ana Alves de Oliveira", "A": 0, "B": 0, "C": 0, "D1": 38, "D2": 49, "E1": 81, "E2": 54, "F3": 89, "F4": 68, "F5": 103, "status": ""}, {"id": "r112_0_111", "rota": "112.0", "reg": "NORTE", "nome": "CEIC Maria Ligia Borges Garcia", "A": 0, "B": 30, "C": 71, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r113_0_112", "rota": "113.0", "reg": "NORTE", "nome": "EMEB Antônia Tita Maciel de Campos", "A": 0, "B": 0, "C": 0, "D1": 50, "D2": 50, "E1": 159, "E2": 134, "F3": 161, "F4": 142, "F5": 149, "status": ""}, {"id": "r114_0_113", "rota": "114.0", "reg": "NORTE", "nome": "CEIC Alê Guilherme Arfux da Costa Ribeiro", "A": 0, "B": 37, "C": 103, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r115_0_114", "rota": "115.0", "reg": "NORTE", "nome": "EMEB Lenine de Campos Povoas", "A": 0, "B": 0, "C": 0, "D1": 49, "D2": 50, "E1": 81, "E2": 103, "F3": 81, "F4": 85, "F5": 104, "status": ""}, {"id": "r116_0_115", "rota": "116.0", "reg": "NORTE", "nome": "EMEB Orzina de Amorim Soares", "A": 0, "B": 0, "C": 0, "D1": 49, "D2": 50, "E1": 81, "E2": 160, "F3": 106, "F4": 120, "F5": 146, "status": ""}, {"id": "r117_0_116", "rota": "117.0", "reg": "NORTE", "nome": "EMEB Maria Lucila da Silva Barros", "A": 0, "B": 0, "C": 0, "D1": 21, "D2": 40, "E1": 46, "E2": 24, "F3": 37, "F4": 50, "F5": 30, "status": ""}, {"id": "r118_0_117", "rota": "118.0", "reg": "NORTE", "nome": "CEIC Altos da Gloria", "A": 0, "B": 28, "C": 64, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r119_0_118", "rota": "119.0", "reg": "NORTE", "nome": "EMEB Profª Gracildes de Mello Dantas", "A": 0, "B": 0, "C": 0, "D1": 75, "D2": 75, "E1": 81, "E2": 127, "F3": 97, "F4": 98, "F5": 108, "status": ""}, {"id": "r120_0_119", "rota": "120.0", "reg": "NORTE", "nome": "CEIC Profª Luciene Ferreira de Oliveira (antiga creche Jardim Umuarama)", "A": 0, "B": 24, "C": 63, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r121_0_120", "rota": "121.0", "reg": "NORTE", "nome": "EMEB Rafael Rueda", "A": 0, "B": 0, "C": 0, "D1": 118, "D2": 77, "E1": 81, "E2": 76, "F3": 82, "F4": 57, "F5": 78, "status": ""}, {"id": "r122_0_121", "rota": "122.0", "reg": "NORTE", "nome": "EMEB Profº Firmo Jose Rodrigues", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 190, "E2": 264, "F3": 267, "F4": 193, "F5": 179, "status": ""}, {"id": "r123_0_122", "rota": "123.0", "reg": "NORTE", "nome": "CMEI Prefeito Dante de Oliveira", "A": 28, "B": 30, "C": 126, "D1": 72, "D2": 125, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r124_0_123", "rota": "124.0", "reg": "NORTE", "nome": "CEIC Wilmon Ferreira De Souza", "A": 15, "B": 33, "C": 103, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r125_0_124", "rota": "125.0", "reg": "NORTE", "nome": "CMEI Maria Conceição Oliveira de Souza", "A": 18, "B": 30, "C": 125, "D1": 73, "D2": 71, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r126_0_125", "rota": "126.0", "reg": "NORTE", "nome": "CMEI Paulo Ronan Ferraz Santos", "A": 23, "B": 28, "C": 119, "D1": 69, "D2": 74, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r127_0_126", "rota": "127.0", "reg": "NORTE", "nome": "CMEI Sergio Luiz Ferreira da Silva", "A": 25, "B": 57, "C": 127, "D1": 93, "D2": 100, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r128_0_127", "rota": "128.0", "reg": "NORTE", "nome": "EMEB Aristotelino Alves Praeiro", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 205, "E2": 163, "F3": 163, "F4": 181, "F5": 237, "status": ""}, {"id": "r129_0_128", "rota": "129.0", "reg": "NORTE", "nome": "CEIC Pe. Armando Cavallo", "A": 0, "B": 28, "C": 83, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r130_0_129", "rota": "130.0", "reg": "NORTE", "nome": "CMEI Joana Mont´Serrat Spindola", "A": 21, "B": 30, "C": 121, "D1": 71, "D2": 59, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r131_0_130", "rota": "131.0", "reg": "NORTE", "nome": "CEIC Santa Inês – CPA", "A": 0, "B": 28, "C": 72, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r132_0_131", "rota": "132.0", "reg": "NORTE", "nome": "CMEI Plácido Flaviano Curvo Filho", "A": 32, "B": 77, "C": 182, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r133_0_132", "rota": "133.0", "reg": "NORTE", "nome": "EMEB Dep. Ulisses Guimarães", "A": 0, "B": 0, "C": 0, "D1": 47, "D2": 0, "E1": 78, "E2": 81, "F3": 0, "F4": 167, "F5": 180, "status": ""}, {"id": "r134_0_133", "rota": "134.0", "reg": "NORTE", "nome": "EMEB Pedrosa de Morais e Silva", "A": 0, "B": 0, "C": 0, "D1": 50, "D2": 97, "E1": 153, "E2": 115, "F3": 169, "F4": 0, "F5": 0, "status": ""}, {"id": "r135_0_134", "rota": "135.0", "reg": "NORTE", "nome": "CMEI Jornalista Paulo Maria Ferreira Leite", "A": 27, "B": 29, "C": 63, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r136_0_135", "rota": "136.0", "reg": "NORTE", "nome": "CEIC Nasla Joaquim Aschar", "A": 0, "B": 33, "C": 125, "D1": 64, "D2": 67, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "EM ROTA"}, {"id": "r137_0_136", "rota": "137.0", "reg": "NORTE", "nome": "CEIC Maria Eunice Duarte Barros", "A": 0, "B": 34, "C": 123, "D1": 53, "D2": 42, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r138_0_137", "rota": "138.0", "reg": "NORTE", "nome": "CMEI Nevio Lotufo", "A": 27, "B": 30, "C": 107, "D1": 66, "D2": 60, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r139_0_138", "rota": "139.0", "reg": "NORTE", "nome": "EMEB Ten. Octacilio Sebastião da Cruz", "A": 0, "B": 0, "C": 0, "D1": 47, "D2": 64, "E1": 158, "E2": 186, "F3": 189, "F4": 146, "F5": 180, "status": ""}, {"id": "r140_0_139", "rota": "140.0", "reg": "NORTE", "nome": "CEIC Naídes Rodrigues R. da Cruz", "A": 0, "B": 0, "C": 86, "D1": 66, "D2": 74, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "EM ROTA"}, {"id": "r141_0_140", "rota": "141.0", "reg": "NORTE", "nome": "CEIC João Batista Scalabrini", "A": 0, "B": 30, "C": 82, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r142_0_141", "rota": "142.0", "reg": "NORTE", "nome": "EMEB Cel. Octayde Jorge da Silva", "A": 0, "B": 0, "C": 0, "D1": 54, "D2": 65, "E1": 112, "E2": 107, "F3": 109, "F4": 104, "F5": 119, "status": ""}, {"id": "r143_0_142", "rota": "143.0", "reg": "NORTE", "nome": "CEIC Josefa da Silva Parente", "A": 0, "B": 0, "C": 81, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r144_0_143", "rota": "144.0", "reg": "NORTE", "nome": "EMEB Madre Marta Cerutti", "A": 0, "B": 0, "C": 0, "D1": 49, "D2": 50, "E1": 81, "E2": 81, "F3": 55, "F4": 62, "F5": 60, "status": ""}, {"id": "r145_0_144", "rota": "145.0", "reg": "OESTE", "nome": "EMEB Profª Rita Caldas Castrillon", "A": 0, "B": 0, "C": 0, "D1": 29, "D2": 37, "E1": 48, "E2": 42, "F3": 51, "F4": 52, "F5": 42, "status": ""}, {"id": "r146_0_145", "rota": "146.0", "reg": "OESTE", "nome": "EMEB Profº Francisval de Brito", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 100, "E2": 106, "F3": 108, "F4": 119, "F5": 134, "status": ""}, {"id": "r147_0_146", "rota": "147.0", "reg": "OESTE", "nome": "EMEB Profº Ranulpho Paes de Barros", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 175, "E2": 135, "F3": 164, "F4": 146, "F5": 147, "status": ""}, {"id": "r148_0_147", "rota": "148.0", "reg": "OESTE", "nome": "EMEB Maria Eunice Duarte Barros", "A": 0, "B": 0, "C": 0, "D1": 112, "D2": 142, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r149_0_148", "rota": "149.0", "reg": "OESTE", "nome": "CEIC Sebastiao Tolomeu", "A": 24, "B": 43, "C": 125, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r150_0_149", "rota": "150.0", "reg": "OESTE", "nome": "EMEB São João Bosco", "A": 0, "B": 0, "C": 40, "D1": 122, "D2": 105, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r151_0_150", "rota": "151.0", "reg": "OESTE", "nome": "CEIC Maria Benedita Martins de Oliveira", "A": 0, "B": 29, "C": 74, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r152_0_151", "rota": "152.0", "reg": "OESTE", "nome": "EMEB Profª Alzira Valladares", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 119, "E2": 107, "F3": 98, "F4": 103, "F5": 100, "status": ""}, {"id": "r153_0_152", "rota": "153.0", "reg": "OESTE", "nome": "EMEB Adelina Pereira Ventura", "A": 0, "B": 0, "C": 0, "D1": 95, "D2": 103, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r154_0_153", "rota": "154.0", "reg": "OESTE", "nome": "CEIC Jose Nicolau Pinto", "A": 0, "B": 23, "C": 63, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r155_0_154", "rota": "155.0", "reg": "OESTE", "nome": "EMEB Gláucia Maria Borges Garcia", "A": 0, "B": 0, "C": 0, "D1": 48, "D2": 48, "E1": 64, "E2": 75, "F3": 76, "F4": 73, "F5": 80, "status": ""}, {"id": "r156_0_155", "rota": "156.0", "reg": "OESTE", "nome": "CEIC Renisea G. Barua", "A": 0, "B": 0, "C": 88, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r157_0_156", "rota": "157.0", "reg": "OESTE", "nome": "EMEB Maria Tomich Monteiro da Silva", "A": 0, "B": 0, "C": 0, "D1": 43, "D2": 48, "E1": 52, "E2": 48, "F3": 50, "F4": 51, "F5": 45, "status": ""}, {"id": "r158_0_157", "rota": "158.0", "reg": "OESTE", "nome": "CEIC Francisco Santana", "A": 22, "B": 23, "C": 60, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r159_0_158", "rota": "159.0", "reg": "OESTE", "nome": "CEIC Macaria Militona de Santana", "A": 0, "B": 23, "C": 97, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r160_0_159", "rota": "160.0", "reg": "OESTE", "nome": "EMEB Mal. Cândido Mariano da Silva Rondon", "A": 0, "B": 0, "C": 0, "D1": 49, "D2": 49, "E1": 55, "E2": 50, "F3": 75, "F4": 59, "F5": 59, "status": ""}, {"id": "r161_0_160", "rota": "161.0", "reg": "OESTE", "nome": "CEIC Tertuliana Maria (Mãe Nhara)", "A": 0, "B": 30, "C": 81, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r162_0_161", "rota": "162.0", "reg": "OESTE", "nome": "EMEB Juarez Sodré Farias", "A": 0, "B": 0, "C": 27, "D1": 88, "D2": 112, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": ""}, {"id": "r163_0_162", "rota": "163.0", "reg": "OESTE", "nome": "EMEB Profº Ezequiel Pompeu Ribeiro de Siqueira", "A": 0, "B": 0, "C": 0, "D1": 0, "D2": 0, "E1": 97, "E2": 96, "F3": 55, "F4": 80, "F5": 101, "status": ""}, {"id": "r164_0_163", "rota": "164.0", "reg": "OESTE", "nome": "CEIC Espaço Livre", "A": 27, "B": 39, "C": 97, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r165_0_164", "rota": "165.0", "reg": "OESTE", "nome": "CEIC Elzira Cavalcante Silva", "A": 14, "B": 28, "C": 64, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r166_0_165", "rota": "166.0", "reg": "CAMPO", "nome": "EMEBC Profª Hilda Caetano de Oliveira Leite", "A": 0, "B": 0, "C": 0, "D1": 39, "D2": 39, "E1": 48, "E2": 37, "F3": 50, "F4": 32, "F5": 51, "status": "EM ROTA"}, {"id": "r167_0_166", "rota": "167.0", "reg": "OESTE", "nome": "EMEB Nossa Senhora Aparecida", "A": 0, "B": 0, "C": 0, "D1": 55, "D2": 50, "E1": 75, "E2": 69, "F3": 76, "F4": 69, "F5": 84, "status": ""}, {"id": "r168_0_167", "rota": "168.0", "reg": "OESTE", "nome": "CEIC Maria de Figueiredo Nunes", "A": 0, "B": 29, "C": 87, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r169_0_168", "rota": "169.0", "reg": "CAMPO", "nome": "EMEBC Nossa Senhora Penha de França", "A": 0, "B": 0, "C": 0, "D1": 25, "D2": 25, "E1": 42, "E2": 60, "F3": 31, "F4": 35, "F5": 53, "status": ""}, {"id": "r170_0_169", "rota": "170.0", "reg": "CAMPO", "nome": "EMEBC Profº Udeney Gonçalves de Amorim", "A": 0, "B": 0, "C": 0, "D1": 12, "D2": 15, "E1": 16, "E2": 20, "F3": 10, "F4": 19, "F5": 18, "status": ""}, {"id": "r171_0_170", "rota": "171.0", "reg": "CAMPO", "nome": "EMEBC Profª Benedita Xavier Rodrigues", "A": 0, "B": 0, "C": 0, "D1": 67, "D2": 77, "E1": 78, "E2": 67, "F3": 60, "F4": 77, "F5": 64, "status": "EM ROTA"}, {"id": "r172_0_171", "rota": "172.0", "reg": "CAMPO", "nome": "EMEBC Estevão Alves", "A": 0, "B": 0, "C": 0, "D1": 20, "D2": 16, "E1": 18, "E2": 12, "F3": 24, "F4": 24, "F5": 26, "status": ""}, {"id": "r1_0_172", "rota": "1.0", "reg": "SUL", "nome": "Associação Filantrópica São Judas Tadeu", "A": 0, "B": 17, "C": 76, "D1": 91, "D2": 57, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r2_0_173", "rota": "2.0", "reg": "SUL", "nome": "Escola Filantrôpica Superar", "A": 0, "B": 0, "C": 29, "D1": 17, "D2": 16, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r3_0_174", "rota": "3.0", "reg": "SUL", "nome": "Creche Nina Zaque  ( Seara de Luz)", "A": 0, "B": 31, "C": 39, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r4_0_175", "rota": "4.0", "reg": "SUL", "nome": "Associação Dona Alice Rodrigues (Creche Leãozinho Kids)", "A": 0, "B": 0, "C": 1, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r5_0_176", "rota": "5.0", "reg": "SUL", "nome": "Entidade Assistencial Criança Feliz", "A": 0, "B": 12, "C": 31, "D1": 12, "D2": 8, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r6_0_177", "rota": "6.0", "reg": "SUL", "nome": "Creche Filantrópica Boa Vontade", "A": 4, "B": 14, "C": 19, "D1": 10, "D2": 11, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r7_0_178", "rota": "7.0", "reg": "NORTE", "nome": "Obras Sociais da Associação Irmão Praeiro", "A": 0, "B": 0, "C": 24, "D1": 43, "D2": 48, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r8_0_179", "rota": "8.0", "reg": "NORTE", "nome": "Instituto de Promoção Humana Papa João XXIII", "A": 0, "B": 0, "C": 46, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r9_0_180", "rota": "9.0", "reg": "NORTE", "nome": "Associação Espírita Yvonne Amaral Pereira", "A": 0, "B": 0, "C": 28, "D1": 18, "D2": 8, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r10_0_181", "rota": "10.0", "reg": "NORTE", "nome": "Obras Sociais Vianna de Carvalho", "A": 0, "B": 7, "C": 72, "D1": 36, "D2": 42, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r11_0_182", "rota": "11.0", "reg": "NORTE", "nome": "Associação Beneficente e Sociedade Menino Jesus", "A": 0, "B": 1, "C": 10, "D1": 8, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r12_0_183", "rota": "12.0", "reg": "NORTE", "nome": "Associação Assistencial Jesus é o Caminho e a Vida (Estrelinha de Jesus)", "A": 4, "B": 13, "C": 35, "D1": 25, "D2": 29, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r13_0_184", "rota": "13.0", "reg": "NORTE", "nome": "Clube de Mães Raios de Sol", "A": 0, "B": 18, "C": 41, "D1": 21, "D2": 15, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r14_0_185", "rota": "14.0", "reg": "OESTE", "nome": "Associação Beneficente Educativa Cultural Voz da Verdade", "A": 0, "B": 13, "C": 59, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r15_0_186", "rota": "15.0", "reg": "OESTE", "nome": "Creche Falcãozinho", "A": 1, "B": 13, "C": 5, "D1": 0, "D2": 0, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}, {"id": "r16_0_187", "rota": "16.0", "reg": "CAMPO", "nome": "Creche Voz da Verdade (Unidade do Distrito da Guia)", "A": 0, "B": 22, "C": 70, "D1": 22, "D2": 12, "E1": 0, "E2": 0, "F3": 0, "F4": 0, "F5": 0, "status": "ENTREGUE"}], "estoque_inicial": {"A": 114, "B": 263, "C": 129, "D1": 343, "D2": 217, "E1": 74, "E2": 77, "F3": 0, "F4": 68, "F5": 1677}, "tipos": ["A", "B", "C", "D1", "D2", "E1", "E2", "F3", "F4", "F5"], "meta_tipo": {"A": 894, "B": 2624, "C": 8593, "D1": 6397, "D2": 6531, "E1": 6779, "E2": 7046, "F3": 6942, "F4": 6725, "F5": 7114}, "meta_kits": 59645, "meta_esc": 188, "datas_disponiveis": ["2026-04-16", "2026-04-17", "2026-04-20", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-14", "2026-05-15", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-22"], "feriados": ["2026-04-21", "2026-05-01"], "data_hoje": "2026-04-15", "n_dias_padrao": 25};
+let SENHAS = {"admin": "smecel2026", "leitor": "kitescolar"};
+// ESTADO_EMBUTIDO é injetado pelo exportador (null = usar localStorage)
+const ESTADO_EMBUTIDO = null;
+
+const TIPOS = ['A','B','C','D1','D2','E1','E2','F3','F4','F5'];
+const KIT_LABELS = {A:'Berçário',B:'Maternal',C:'Jardim I+II',D1:'Pré I',D2:'Pré II',E1:'1º Ano',E2:'2º Ano',F3:'3º Ano',F4:'4º Ano',F5:'5º Ano+'};
+const TIPO_CORES = {A:'#6366f1',B:'#8b5cf6',C:'#ec4899',D1:'#f59e0b',D2:'#f97316',E1:'#10b981',E2:'#14b8a6',F3:'#3b82f6',F4:'#0ea5e9',F5:'#06b6d4'};
+const BADGE_CORES = {SUL:['#b45309','#ffecd2'],LESTE:['#166534','#dcfce7'],NORTE:['#1e40af','#dbeafe'],OESTE:['#7e22ce','#fae8ff'],CAMPO:['#854d0e','#fef9c3']};
+const EST_INICIAL = Object.assign({}, CFG.estoque_inicial);
+const DATAS_BASE = CFG.datas_disponiveis;
+const DIAS_PT = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+const MESES_PT = ['','janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+
+// ══════════════════════════════════════════════════════════════
+//  AUTENTICAÇÃO
+// ══════════════════════════════════════════════════════════════
+let perfilAtual = null; // 'admin' | 'leitor'
+
+function fazerLogin() {
+  const user = document.getElementById('login-user').value.trim().toLowerCase();
+  const pass = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-error');
+  if ((user === 'admin' && pass === SENHAS.admin) ||
+      (user === 'leitor' && pass === SENHAS.leitor)) {
+    perfilAtual = user === 'admin' ? 'admin' : 'leitor';
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('usuario-badge').textContent = perfilAtual === 'admin' ? '🔑 Administrador' : '👁 Leitor';
+    if (perfilAtual === 'admin') {
+      document.getElementById('btn-exportar').style.display = '';
+      document.getElementById('btn-admin-senha').style.display = '';
+    }
+    err.style.display = 'none';
+    inicializarEstado();
+    renderTudo();
+  } else {
+    err.style.display = 'block';
+    document.getElementById('login-pass').value = '';
+  }
+}
+
+function fazerLogout() {
+  perfilAtual = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+function abrirModalSenha() {
+  document.getElementById('nova-senha-admin').value = '';
+  document.getElementById('nova-senha-leitor').value = '';
+  document.getElementById('senha-error').style.display = 'none';
+  document.getElementById('modal-senha').classList.add('aberto');
+}
+
+function salvarSenhas() {
+  const na = document.getElementById('nova-senha-admin').value;
+  const nl = document.getElementById('nova-senha-leitor').value;
+  const err = document.getElementById('senha-error');
+  if (na.length < 4 || nl.length < 4) { err.style.display='block'; return; }
+  SENHAS.admin = na; SENHAS.leitor = nl;
+  err.style.display = 'none';
+  fecharModal('modal-senha');
+  alert('Senhas atualizadas. Clique em "Exportar" para gerar o arquivo com as novas senhas.');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  ESTADO
+// ══════════════════════════════════════════════════════════════
+let estado = {};
+let ultimaAtualizacao = null;
+let grupoAtivo = 'hist';
+
+function inicializarEstado() {
+  // Se há estado embutido (arquivo exportado), usa ele
+  if (ESTADO_EMBUTIDO) {
+    estado = ESTADO_EMBUTIDO.status || {};
+    ultimaAtualizacao = ESTADO_EMBUTIDO.atualizado || null;
+    atualizarBadgeAtualizacao();
+    return;
+  }
+  // Senão tenta localStorage
+  const salvo = localStorage.getItem('kit_escolar_2026_v2');
+  if (salvo) {
+    try {
+      const s = JSON.parse(salvo);
+      estado = s.status || {};
+      ultimaAtualizacao = s.atualizado || null;
+      atualizarBadgeAtualizacao();
+      return;
+    } catch(e){}
+  }
+  // Padrão: status original da planilha
+  CFG.escolas.forEach(e => { estado[e.id] = e.status || 'PENDENTE'; });
+}
+
+function salvarLocal() {
+  ultimaAtualizacao = new Date().toISOString();
+  localStorage.setItem('kit_escolar_2026_v2', JSON.stringify({
+    status: estado,
+    atualizado: ultimaAtualizacao,
+    senhas: SENHAS
+  }));
+  atualizarBadgeAtualizacao();
+}
+
+function atualizarBadgeAtualizacao() {
+  const el = document.getElementById('atualizacao-badge');
+  if (!el) return;
+  if (ultimaAtualizacao) {
+    const d = new Date(ultimaAtualizacao);
+    const dia = String(d.getDate()).padStart(2,'0');
+    const mes = String(d.getMonth()+1).padStart(2,'0');
+    const h = String(d.getHours()).padStart(2,'0');
+    const m = String(d.getMinutes()).padStart(2,'0');
+    el.innerHTML = `Última atualização<br><b style="color:#fff">${dia}/${mes}/${d.getFullYear()} ${h}:${m}</b>`;
+  } else {
+    el.textContent = '';
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  EXPORTAR
+// ══════════════════════════════════════════════════════════════
+function exportarPrograma() {
+  salvarLocal();
+  // Lê o HTML atual e injeta o estado + senhas
+  const estadoJson = JSON.stringify({ status: estado, atualizado: ultimaAtualizacao });
+  const senhasJson = JSON.stringify(SENHAS);
+  let src = document.documentElement.outerHTML;
+  // Substituir os placeholders
+  src = src.replace('const ESTADO_EMBUTIDO = null;',
+    `const ESTADO_EMBUTIDO = ${estadoJson};`);
+  src = src.replace('let SENHAS = {"admin": "smecel2026", "leitor": "kitescolar"};',
+    `let SENHAS = ${senhasJson};`);
+  const blob = new Blob([src], {type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  const d = new Date();
+  const tag = `${String(d.getDate()).padStart(2,'0')}${String(d.getMonth()+1).padStart(2,'0')}${d.getFullYear()}_${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}`;
+  a.href = URL.createObjectURL(blob);
+  a.download = `kit_escolar_2026_${tag}.html`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  MODAL STATUS
+// ══════════════════════════════════════════════════════════════
+let modalEscId = null;
+
+function abrirModalStatus(id, nome) {
+  if (perfilAtual !== 'admin') return;
+  modalEscId = id;
+  document.getElementById('modal-status-nome').textContent = nome;
+  document.getElementById('modal-status').classList.add('aberto');
+}
+
+function fecharModal(id) {
+  document.getElementById(id).classList.remove('aberto');
+  modalEscId = null;
+}
+
+function aplicarStatus(novoStatus) {
+  if (!modalEscId) return;
+  estado[modalEscId] = novoStatus;
+  fecharModal('modal-status');
+  salvarLocal();
+  renderTudo();
+}
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('aberto'); });
+});
+
+// ══════════════════════════════════════════════════════════════
+//  CÁLCULOS
+// ══════════════════════════════════════════════════════════════
+function vtot(e){ return TIPOS.reduce((s,k)=>s+(e[k]||0),0); }
+
+function calcAcumulados() {
+  const esc = CFG.escolas.map(e => ({...e, st: estado[e.id]||'PENDENTE'}));
+  const entregues = esc.filter(e=>e.st==='ENTREGUE');
+  const emRota    = esc.filter(e=>e.st==='EM ROTA');
+  const pendentes = esc.filter(e=>e.st==='PENDENTE');
+  const acumEsc  = entregues.length + emRota.length;
+  const acumKits = [...entregues,...emRota].reduce((s,e)=>s+vtot(e),0);
+  const acumTipo = {}; TIPOS.forEach(k=>{ acumTipo[k]=[...entregues,...emRota].reduce((s,e)=>s+(e[k]||0),0); });
+  return {entregues,emRota,pendentes,acumEsc,acumKits,acumTipo};
+}
+
+function agrupar(lista, n) {
+  if (!lista.length||!n) return [];
+  const total = lista.reduce((s,e)=>s+vtot(e),0);
+  const alvo = total/n;
+  const grupos=[]; let cur=[]; let vol=0;
+  lista.forEach((e,i)=>{
+    cur.push(e); vol+=vtot(e);
+    const rest=lista.length-i-1, grest=n-grupos.length-1;
+    if(vol>=alvo&&grupos.length<n-1&&rest>=grest){grupos.push([...cur]);cur=[];vol=0;}
+  });
+  if(cur.length) grupos.push(cur);
+  return grupos;
+}
+
+function calcProd(g, est) {
+  const nec={}; TIPOS.forEach(k=>{nec[k]=g.reduce((s,e)=>s+(e[k]||0),0);});
+  const uso={},prod={}; const e2=Object.assign({},est);
+  TIPOS.forEach(k=>{const u=Math.min(e2[k]||0,nec[k]);uso[k]=u;prod[k]=Math.max(nec[k]-u,0);e2[k]=Math.max((e2[k]||0)-u,0);});
+  const d1={},d2={};
+  TIPOS.forEach(k=>{d1[k]=Math.ceil(prod[k]/2);d2[k]=prod[k]-Math.ceil(prod[k]/2);});
+  return {nec,uso,prod,d1,d2,estRest:e2};
+}
+
+// ══════════════════════════════════════════════════════════════
+//  HELPERS HTML
+// ══════════════════════════════════════════════════════════════
+function donut(pct,cor,sz=88){
+  pct=Math.min(Math.max(pct,0),100);
+  const r=30,c=sz/2,ci=2*Math.PI*r,da=(pct/100)*ci,ga=ci-da;
+  return `<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}">
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#e5e7eb" stroke-width="9"/>
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${cor}" stroke-width="9"
+      stroke-dasharray="${da.toFixed(2)} ${ga.toFixed(2)}" stroke-linecap="round"
+      transform="rotate(-90 ${c} ${c})"/>
+    <text x="${c}" y="${c+4}" text-anchor="middle" font-size="11" font-weight="700"
+      fill="${cor}" font-family="Barlow Condensed,sans-serif">${pct===0?'N/A':pct.toFixed(0)+'%'}</text>
+  </svg>`;
+}
+
+function ptable(d){
+  let r='',t=0;
+  TIPOS.forEach(k=>{const v=d[k]||0;t+=v;r+=`<tr${v===0?' style="color:#d1d5db"':''}><td class="pk">${k}</td><td class="pl">${KIT_LABELS[k]}</td><td class="pv">${v||'—'}</td></tr>`;});
+  r+=`<tr class="pt"><td colspan="2">Total</td><td>${t.toLocaleString('pt-BR')}</td></tr>`;
+  return r;
+}
+
+function thRow(){
+  return `<thead><tr><th>#</th><th>Rota</th><th class="tnm">Unidade Escolar</th>
+    <th>A</th><th>B</th><th>C</th><th>D1</th><th>D2</th><th>E1</th><th>E2</th><th>F3</th><th>F4</th><th>F5</th>
+    <th>Total</th><th>Status</th></tr></thead>`;
+}
+
+function escRow(e, seq) {
+  const s = estado[e.id]||'PENDENTE';
+  const t = vtot(e);
+  const reg = e.reg||'';
+  const bc = BADGE_CORES[reg]||['#374151','#f3f4f6'];
+  const trCls = s==='ENTREGUE'?' class="entregue"':s==='EM ROTA'?' class="em-rota"':'';
+  const f = v => v||'—';
+  const isAdmin = perfilAtual==='admin';
+  const stHtml = isAdmin
+    ? `<button class="st-btn ${s==='ENTREGUE'?'entregue':s==='EM ROTA'?'em-rota':'pendente'}"
+        onclick="abrirModalStatus('${e.id}','${e.nome.replace(/'/g,"\'")}')">
+        ${s==='ENTREGUE'?'✅ Entregue':s==='EM ROTA'?'🚚 Em Rota':'⏳ Pendente'}
+       </button>`
+    : `<span class="st-btn ${s==='ENTREGUE'?'entregue':s==='EM ROTA'?'em-rota':'pendente'} readonly">
+        ${s==='ENTREGUE'?'✅ Entregue':s==='EM ROTA'?'🚚 Em Rota':'⏳ Pendente'}
+       </span>`;
+  return `<tr${trCls}><td class="sq">${seq}</td><td class="rt">${e.rota||'—'}</td>
+    <td class="nm">${e.nome} <span class="rb" style="background:${bc[1]};color:${bc[0]}">${reg}</span></td>
+    <td>${f(e.A)}</td><td>${f(e.B)}</td><td>${f(e.C)}</td><td>${f(e.D1)}</td><td>${f(e.D2)}</td>
+    <td>${f(e.E1)}</td><td>${f(e.E2)}</td><td>${f(e.E3)}</td><td>${f(e.F3)}</td><td>${f(e.F4)}</td><td>${f(e.F5)}</td>
+    <td class="tt">${t}</td><td>${stHtml}</td></tr>`;
+}
+
+function totRow(lista){
+  const t={}; TIPOS.forEach(k=>{t[k]=lista.reduce((s,e)=>s+(e[k]||0),0);});
+  const tot=TIPOS.reduce((s,k)=>s+t[k],0);
+  return `<tr class="etr"><td colspan="2"></td><td class="etl">TOTAL</td>
+    ${TIPOS.map(k=>`<td>${t[k]||'—'}</td>`).join('')}
+    <td class="tt">${tot.toLocaleString('pt-BR')}</td><td></td></tr>`;
+}
+
+function infog(acumEsc,acumKits,acumTipo){
+  const mE=CFG.meta_esc,mK=CFG.meta_kits;
+  const pE=acumEsc/mE*100,pK=acumKits/mK*100;
+  let tp='';
+  TIPOS.forEach(k=>{
+    const tot=Math.max(CFG.meta_tipo[k]||0,1);
+    const pct=Math.min((acumTipo[k]||0)/tot*100,100);
+    tp+=`<div class="di">${donut(pct,TIPO_CORES[k],80)}
+      <div class="dl"><b>${k}</b><br><span>${KIT_LABELS[k]}</span><br>
+      <small>${(acumTipo[k]||0).toLocaleString('pt-BR')}/${(CFG.meta_tipo[k]||0).toLocaleString('pt-BR')}</small></div></div>`;
+  });
+  return `<div class="info-sec">
+    <div class="sec-title">📊 Infográfico de Evolução</div>
+    <div class="info-body">
+      <div class="irow1">
+        <div class="icard">${donut(pE,'#2d6a9f',100)}
+          <div class="ilab"><h4>Escolas atendidas</h4>
+          <div class="iv">${acumEsc}<span>/${mE}</span></div>
+          <div class="is">${pE.toFixed(1)}% concluído</div>
+          <div class="ibar"><div style="width:${pE.toFixed(1)}%;background:#2d6a9f"></div></div></div></div>
+        <div class="icard">${donut(pK,'#e07b00',100)}
+          <div class="ilab"><h4>Kits entregues</h4>
+          <div class="iv">${acumKits.toLocaleString('pt-BR')}<span>/${mK.toLocaleString('pt-BR')}</span></div>
+          <div class="is">${pK.toFixed(1)}% concluído</div>
+          <div class="ibar"><div style="width:${pK.toFixed(1)}%;background:#e07b00"></div></div></div></div>
+      </div>
+      <div class="itip"><div class="itip-title">Evolução por modelo de kit</div>
+        <div class="dg">${tp}</div></div>
+    </div></div>`;
+}
+
+function fmtData(ds){
+  const d=new Date(ds+'T12:00:00');
+  return `${DIAS_PT[d.getDay()]}, ${String(d.getDate()).padStart(2,'0')} de ${MESES_PT[d.getMonth()+1]} de ${d.getFullYear()}`;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════════════════════
+function renderTudo() {
+  const {entregues,emRota,pendentes,acumEsc,acumKits,acumTipo} = calcAcumulados();
+  const N=25;
+  const grupos = agrupar(pendentes,N);
+  
+  // Calcular produção em sequência
+  let est = Object.assign({},EST_INICIAL);
+  const prods = grupos.map(g=>{ const p=calcProd(g,est); est=p.estRest; return p; });
+
+  // TOPO
+  const mE=CFG.meta_esc,mK=CFG.meta_kits;
+  const pE=acumEsc/mE*100,pK=acumKits/mK*100;
+  document.getElementById('prog-esc').textContent=`${acumEsc}/${mE}`;
+  document.getElementById('prog-kits').textContent=`${acumKits.toLocaleString('pt-BR')}/${mK.toLocaleString('pt-BR')}`;
+  document.getElementById('prog-esc-pct').textContent=pE.toFixed(1)+'%';
+  document.getElementById('prog-kits-pct').textContent=pK.toFixed(1)+'%';
+  document.getElementById('bar-esc').style.width=pE.toFixed(1)+'%';
+  document.getElementById('bar-kits').style.width=pK.toFixed(1)+'%';
+
+  // ÍNDICE
+  let acumEscIdx=entregues.length+emRota.length;
+  let idxHtml='';
+  const btnCls=(id)=>` class="idx-btn${grupoAtivo===id?' ativo':''}"`;
+  const pctH=entregues.length/mE*100;
+  idxHtml+=`<button${btnCls('hist')} onclick="nav('hist')">
+    <span class="idx-titulo">📋 HISTÓRICO</span><span class="idx-data">${entregues.length} esc.</span>
+    <span class="idx-pct">${pctH.toFixed(0)}%</span>
+    <div class="idx-bar"><div class="idx-bar-fill" style="width:${pctH.toFixed(0)}%"></div></div></button>`;
+  const pctHj=(entregues.length+emRota.length)/mE*100;
+  idxHtml+=`<button${btnCls('hoje')} onclick="nav('hoje')">
+    <span class="idx-titulo">🚚 HOJE</span><span class="idx-data">15/04 · ${emRota.length} esc.</span>
+    <span class="idx-pct">${pctHj.toFixed(0)}%</span>
+    <div class="idx-bar"><div class="idx-bar-fill" style="width:${pctHj.toFixed(0)}%"></div></div></button>`;
+  grupos.forEach((g,i)=>{
+    acumEscIdx+=g.length;
+    const pG=acumEscIdx/mE*100;
+    const ds=DATAS_BASE[i]||'';
+    const dataS=ds?ds.slice(5).replace('-','/'):'—';
+    idxHtml+=`<button${btnCls('g'+i)} onclick="nav('g${i}')">
+      <span class="idx-titulo">G${String(i+1).padStart(2,'0')}</span>
+      <span class="idx-data">${dataS} · ${g.length} esc.</span>
+      <span class="idx-pct">${pG.toFixed(0)}%</span>
+      <div class="idx-bar"><div class="idx-bar-fill" style="width:${pG.toFixed(0)}%"></div></div></button>`;
+  });
+  document.getElementById('indice-inner').innerHTML=idxHtml;
+
+  // CONTEÚDO
+  let html='';
+
+  // ── HISTÓRICO ──
+  const volH=entregues.reduce((s,e)=>s+vtot(e),0);
+  const atH={}; TIPOS.forEach(k=>{atH[k]=entregues.reduce((s,e)=>s+(e[k]||0),0);});
+  const adminPanel = perfilAtual==='admin'
+    ? `<div class="admin-panel"><h4>🔑 Painel do Administrador</h4><div class="admin-actions">
+        <button class="admin-btn" onclick="salvarLocal()">💾 Salvar localmente</button>
+        <button class="admin-btn primary" onclick="exportarPrograma()">📤 Exportar arquivo para compartilhar</button>
+        <button class="admin-btn" onclick="abrirModalSenha()">🔐 Alterar senhas</button>
+       </div></div>`:'';
+  html+=`<div id="pg-hist" class="grupo-page${grupoAtivo==='hist'?' ativo':''}">
+    <div class="g-header"><div class="g-hl">
+      <div class="g-tipo">Kit Escolar 2026 · SMECEL / CTA · PMC</div>
+      <div class="g-data">Registro de Entregas Anteriores</div>
+      <div class="g-sub">Unidades que já receberam · Referência: 15/04/2026</div>
+    </div><div class="g-badge hist"><small>Grupo</small>HIST.</div></div>
+    <div class="g-stats">
+      <div class="g-stat"><span class="g-stat-v">${entregues.length}</span><span class="g-stat-l">Escolas</span></div>
+      <div class="g-stat-div"></div>
+      <div class="g-stat"><span class="g-stat-v">${volH.toLocaleString('pt-BR')}</span><span class="g-stat-l">Kits</span></div>
+      <div class="g-stat-div"></div>
+      <div class="g-stat"><span class="g-stat-v">${(volH/mK*100).toFixed(1)}%</span><span class="g-stat-l">Do total</span></div>
+      <span class="pill pill-hist">📋 HISTÓRICO</span>
+    </div>
+    <div class="body-wrap">
+      ${adminPanel}
+      <div class="sec"><div class="sec-title">🏫 Unidades que já receberam <span class="badge-count">${entregues.length} escolas</span></div>
+        <div class="tw"><table class="et">${thRow()}<tbody>
+          ${entregues.map((e,i)=>escRow(e,i+1)).join('')}${totRow(entregues)}</tbody></table></div></div>
+      ${infog(entregues.length,volH,atH)}
+    </div>
+    <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span>Histórico · 25 Dias Úteis</span></div>
+  </div>`;
+
+  // ── HOJE ──
+  const volHj=emRota.reduce((s,e)=>s+vtot(e),0);
+  const atHj={}; TIPOS.forEach(k=>{atHj[k]=(atH[k]||0)+emRota.reduce((s,e)=>s+(e[k]||0),0);});
+  const acHj=entregues.length+emRota.length, akHj=volH+volHj;
+  const necAmanha={}; if(grupos[0]) TIPOS.forEach(k=>{necAmanha[k]=grupos[0].reduce((s,e)=>s+(e[k]||0),0);});
+  const etmp=Object.assign({},EST_INICIAL);
+  const uAmanha={},pAmanha={};
+  TIPOS.forEach(k=>{const u=Math.min(etmp[k]||0,necAmanha[k]||0);uAmanha[k]=u;pAmanha[k]=Math.max((necAmanha[k]||0)-u,0);});
+  const d1A={},d2A={};
+  TIPOS.forEach(k=>{d1A[k]=Math.ceil(pAmanha[k]/2);d2A[k]=pAmanha[k]-Math.ceil(pAmanha[k]/2);});
+  const vAmanha=grupos[0]?grupos[0].reduce((s,e)=>s+vtot(e),0):0;
+  html+=`<div id="pg-hoje" class="grupo-page${grupoAtivo==='hoje'?' ativo':''}">
+    <div class="g-header"><div class="g-hl">
+      <div class="g-tipo">Kit Escolar 2026 · SMECEL / CTA · PMC</div>
+      <div class="g-data">Quarta-feira, 15 de abril de 2026</div>
+      <div class="g-sub">Entregas em rota · Kits não utilizam estoque atual</div>
+    </div><div class="g-badge hoje"><small>Hoje</small>15/04</div></div>
+    <div class="g-stats">
+      <div class="g-stat"><span class="g-stat-v">${emRota.length}</span><span class="g-stat-l">Em rota</span></div>
+      <div class="g-stat-div"></div>
+      <div class="g-stat"><span class="g-stat-v">${volHj.toLocaleString('pt-BR')}</span><span class="g-stat-l">Kits hoje</span></div>
+      <div class="g-stat-div"></div>
+      <div class="g-stat"><span class="g-stat-v">${acHj}/${mE}</span><span class="g-stat-l">Escolas acum.</span></div>
+      <div class="g-stat-div"></div>
+      <div class="g-stat"><span class="g-stat-v">${akHj.toLocaleString('pt-BR')}/${mK.toLocaleString('pt-BR')}</span><span class="g-stat-l">Kits acum.</span></div>
+      <span class="pill pill-hoje">🚚 EM ROTA AGORA</span>
+    </div>
+    <div class="body-wrap">
+      <div class="nota-box">ℹ️ Entregas em andamento. <strong>Os kits de hoje não consomem o estoque atual.</strong> A produção abaixo é para as entregas de amanhã (16/04).</div>
+      <div class="sec"><div class="sec-title">🏫 Quadro 1 — Em Rota Hoje <span class="badge-count">${emRota.length} escolas</span></div>
+        <div class="tw"><table class="et">${thRow()}<tbody>
+          ${emRota.map((e,i)=>escRow(e,i+1)).join('')}${totRow(emRota)}</tbody></table></div></div>
+      <div class="sec"><div class="sec-title">📦 Quadro 2 — Produção para Amanhã (16/04 · ${vAmanha.toLocaleString('pt-BR')} kits · ${grupos[0]?grupos[0].length:0} escolas)</div>
+        <div class="prod-grid">
+          <div class="prod-col c-est"><div class="prod-col-head">✅ Estoque disponível<div class="ps">Abatido da produção</div></div><table><tbody>${ptable(uAmanha)}</tbody></table></div>
+          <div class="prod-col c-d1"><div class="prod-col-head">🌙 Produzir agora — 50%<div class="ps">Carregar no início do dia 16/04</div></div><table><tbody>${ptable(d1A)}</tbody></table></div>
+          <div class="prod-col c-d2"><div class="prod-col-head">☀ Produzir amanhã — 50%<div class="ps">Carregar até o fim do dia 16/04</div></div><table><tbody>${ptable(d2A)}</tbody></table></div>
+          <div class="prod-col c-prx"><div class="prod-col-head">📋 Necessidade 16/04<div class="ps">${grupos[0]?grupos[0].length:0} escolas</div></div><table><tbody>${ptable(necAmanha)}</tbody></table></div>
+        </div>
+        <div class="prod-note">⚠ <b>Regra 50/50:</b> Os primeiros 50% são produzidos e carregados no início do dia de entrega. Os demais 50% são carregados até o fim do mesmo dia ou início do seguinte.</div>
+      </div>
+      ${infog(acHj,akHj,atHj)}
+    </div>
+    <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span>15/04/2026 · Em Rota · 25 Dias Úteis</span></div>
+  </div>`;
+
+  // ── GRUPOS PENDENTES ──
+  let acEAcum=acHj, akAcum=akHj;
+  const atAcum=Object.assign({},atHj);
+  grupos.forEach((g,idx)=>{
+    const ds=DATAS_BASE[idx]||''; const dataStr=ds?fmtData(ds):`Dia ${idx+1}`;
+    const dataShort=ds?ds.slice(5).replace('-','/'):'';
+    const p=prods[idx]; const vol=g.reduce((s,e)=>s+vtot(e),0);
+    acEAcum+=g.length; akAcum+=vol;
+    TIPOS.forEach(k=>{atAcum[k]=(atAcum[k]||0)+g.reduce((s,e)=>s+(e[k]||0),0);});
+    const sE=acEAcum,sK=akAcum,sT=Object.assign({},atAcum);
+    const prxDs=DATAS_BASE[idx+1]||'';
+    const prxShort=prxDs?prxDs.slice(5).replace('-','/'):'—';
+    const prxVol=grupos[idx+1]?grupos[idx+1].reduce((s,e)=>s+vtot(e),0):0;
+    const prx_d1=idx+1<grupos.length?prods[idx+1]?.d1||{}:{};
+    html+=`<div id="pg-g${idx}" class="grupo-page${grupoAtivo==='g'+idx?' ativo':''}">
+      <div class="g-header"><div class="g-hl">
+        <div class="g-tipo">Kit Escolar 2026 · SMECEL / CTA · PMC</div>
+        <div class="g-data">${dataStr}</div>
+        <div class="g-sub">Formulário de Produção e Entrega · 16/04 → ${DATAS_BASE[grupos.length-1]?DATAS_BASE[grupos.length-1].slice(5).replace('-','/'):''} · Feriados: 21/04 e 01/05</div>
+      </div><div class="g-badge"><small>Grupo</small>${String(idx+1).padStart(2,'0')}/${grupos.length}</div></div>
+      <div class="g-stats">
+        <div class="g-stat"><span class="g-stat-v">${g.length}</span><span class="g-stat-l">Escolas hoje</span></div>
+        <div class="g-stat-div"></div>
+        <div class="g-stat"><span class="g-stat-v">${vol.toLocaleString('pt-BR')}</span><span class="g-stat-l">Kits a entregar</span></div>
+        <div class="g-stat-div"></div>
+        <div class="g-stat"><span class="g-stat-v">${sE}/${mE}</span><span class="g-stat-l">Escolas acum.</span></div>
+        <div class="g-stat-div"></div>
+        <div class="g-stat"><span class="g-stat-v">${sK.toLocaleString('pt-BR')}/${mK.toLocaleString('pt-BR')}</span><span class="g-stat-l">Kits acum.</span></div>
+        <div class="g-stat-div"></div>
+        <div class="g-stat"><span class="g-stat-v">${(sE/mE*100).toFixed(1)}%</span><span class="g-stat-l">% Escolas</span></div>
+        <span class="pill pill-manha">☀ ENTREGA — MANHÃ</span>
+      </div>
+      <div class="body-wrap">
+        <div class="sec"><div class="sec-title">📦 Quadro 1 — Controle de Produção</div>
+          <div class="prod-grid">
+            <div class="prod-col c-est"><div class="prod-col-head">✅ Estoque disponível<div class="ps">Abatido da produção</div></div><table><tbody>${ptable(p.uso)}</tbody></table></div>
+            <div class="prod-col c-d1"><div class="prod-col-head">🌙 1ª metade — 50%<div class="ps">Carregar no início do dia de entrega</div></div><table><tbody>${ptable(p.d1)}</tbody></table></div>
+            <div class="prod-col c-d2"><div class="prod-col-head">☀ 2ª metade — 50%<div class="ps">Até o fim do dia / início do seguinte</div></div><table><tbody>${ptable(p.d2)}</tbody></table></div>
+            <div class="prod-col c-prx"><div class="prod-col-head">➡ 1ª metade do próximo<div class="ps">${prxShort} · ${prxVol.toLocaleString('pt-BR')} kits</div></div><table><tbody>${ptable(prx_d1)}</tbody></table></div>
+          </div>
+          <div class="prod-note">⚠ <b>Regra 50/50:</b> Os primeiros 50% são carregados no início do dia de entrega. Os demais 50% são carregados até o fim do mesmo dia ou início do seguinte. Ao marcar uma escola como Entregue, todos os grupos são recalculados automaticamente.</div>
+        </div>
+        <div class="sec"><div class="sec-title">🏫 Quadro 2 — Unidades Atendidas <span class="badge-count">${g.length} escolas</span></div>
+          <div class="tw"><table class="et">${thRow()}<tbody>
+            ${g.map((e,i)=>escRow(e,i+1)).join('')}${totRow(g)}</tbody></table></div></div>
+        ${infog(sE,sK,sT)}
+      </div>
+      <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span>G${String(idx+1).padStart(2,'0')}/${grupos.length} · ${dataShort} · 25 Dias Úteis</span></div>
+    </div>`;
+  });
+
+  document.getElementById('conteudo').innerHTML=html;
+}
+
+function nav(id){
+  grupoAtivo=id;
+  renderTudo();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Enter no login
+document.getElementById('login-pass').addEventListener('keydown',e=>{if(e.key==='Enter')fazerLogin();});
+document.getElementById('login-user').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('login-pass').focus();});
+</script>
+</body>
+</html>
