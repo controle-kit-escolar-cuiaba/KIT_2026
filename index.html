@@ -542,22 +542,30 @@ function aplicarStatus(novoStatus) {
   const grupoSalvo = grupoAtivo;
   const scrollY = window.scrollY;
   fecharModal('modal-status');
+
+  // Atualizar estado
   if (modoTeste) { estadoTeste[id] = novoStatus; }
   else { estadoProd[id] = novoStatus; }
-  // Atualizar ícone imediatamente
-  const btn = document.querySelector(`[data-esc-id="${id}"]`);
-  if (btn) {
+
+  // Atualizar ícone e linha imediatamente na tela (antes de qualquer re-render)
+  document.querySelectorAll(`[data-esc-id="${id}"]`).forEach(btn => {
     const cls = novoStatus === 'ENTREGUE' ? 'entregue' : novoStatus === 'EM ROTA' ? 'em-rota' : 'pendente';
     const ico = novoStatus === 'ENTREGUE' ? '✅ Entregue' : novoStatus === 'EM ROTA' ? '🚚 Em Rota' : '⏳ Pendente';
     btn.className = `st-btn ${cls}`;
     btn.textContent = ico;
     const tr = btn.closest('tr');
-    if (tr) tr.className = novoStatus === 'ENTREGUE' ? 'entregue' : novoStatus === 'EM ROTA' ? 'em-rota' : '';
-  }
+    if (tr) {
+      tr.className = novoStatus === 'ENTREGUE' ? 'entregue' : novoStatus === 'EM ROTA' ? 'em-rota' : '';
+    }
+  });
+
   if (!modoTeste) salvarLocal();
+
+  // Re-renderizar mantendo grupo e scroll
   grupoAtivo = grupoSalvo;
   renderTudo();
-  requestAnimationFrame(() => window.scrollTo({top: scrollY, behavior: 'instant'}));
+  // Restaurar scroll após o DOM ser atualizado
+  setTimeout(() => window.scrollTo({top: scrollY, behavior: 'instant'}), 0);
 }
 
 document.querySelectorAll('.modal-overlay').forEach(m => {
@@ -919,6 +927,7 @@ function renderTudo() {
       <span class="pill pill-hoje">🚚 EM ROTA AGORA</span>${testeTag}
     </div>
     <div class="body-wrap">
+      ${adminPanel}
       <div class="nota-box">ℹ️ As escolas abaixo estão em rota hoje. Atualize o status conforme as confirmações chegarem. <b>Às 23:59, todas ainda "Em Rota" serão automaticamente marcadas como Entregue.</b></div>
       <div class="sec"><div class="sec-title">🏫 Unidades em Rota Hoje <span class="badge-count">${emRotaGrupo.length} escolas</span></div>
         <div class="tw"><table class="et">${thRow()}<tbody>
@@ -974,6 +983,7 @@ function renderTudo() {
         <span class="pill pill-manha">☀ ENTREGA — MANHÃ</span>${testeTag}
       </div>
       <div class="body-wrap">
+        ${adminPanel}
         <div class="aviso-box">⚠ <b>Atenção:</b> Produções aquém ou além do planejado podem alterar a previsão de data de entrega em cada unidade escolar e assim mudar os grupos. A ordem da rota é sempre respeitada. O limite de ${MAX_KITS_DIA.toLocaleString('pt-BR')} kits/dia determina o agrupamento automático.</div>
         <div class="sec"><div class="sec-title">📦 Quadro 1 — Controle de Produção</div>
           <div class="prod-grid">
@@ -994,6 +1004,14 @@ function renderTudo() {
   });
 
   document.getElementById('conteudo').innerHTML = html;
+  // Garantir que o grupo ativo está visível IMEDIATAMENTE após reconstrução
+  const pgId =
+    grupoAtivo === 'hist' ? 'pg-hist' :
+    grupoAtivo === 'hoje' ? 'pg-hoje' :
+    grupoAtivo.startsWith('past') ? 'pg-' + grupoAtivo :
+    'pg-' + grupoAtivo;
+  const pgAtivo = document.getElementById(pgId);
+  if (pgAtivo) pgAtivo.classList.add('ativo');
 }
 
 // Enter no login
