@@ -202,7 +202,21 @@ table.et td.etl{text-align:left;font-family:'Barlow Condensed',sans-serif;color:
 .admin-btn.primary{background:var(--az);color:#fff;border-color:var(--az);}
 .admin-btn.primary:hover{background:var(--md);}
 
-@media print{#topo,#indice,.admin-panel,.st-btn{display:none!important;}.grupo-page{display:block!important;page-break-after:always;}}
+@media print{
+  #topo,#indice,.admin-panel,.topo-btn,#btn-exportar,#btn-admin-senha,
+  .print-btn,.g-stats .pill{display:none!important;}
+  body{background:#fff!important;padding:0!important;}
+  .grupo-page{display:none!important;}
+  .grupo-page.print-target{display:block!important;}
+  .g-header{border-radius:0!important;}
+  .sec{border-radius:0!important;}
+  .body-wrap{padding:8px!important;}
+  .prod-col table td{font-size:9pt!important;padding:3px 6px!important;}
+  table.et td,table.et thead th{font-size:9pt!important;padding:4px 5px!important;}
+  .info-sec{background:#fff!important;}
+  .ftr{border-radius:0!important;}
+  @page{margin:1cm;size:A4 portrait;}
+}
 </style>
 </head>
 <body>
@@ -251,6 +265,7 @@ table.et td.etl{text-align:left;font-family:'Barlow Condensed',sans-serif;color:
     <div id="topo-right">
       <div id="atualizacao-badge"></div>
       <span id="usuario-badge">—</span>
+      <button class="topo-btn print-btn" onclick="imprimirGrupo()" title="Imprimir grupo atual">🖨 Imprimir grupo</button>
       <button class="topo-btn" id="btn-admin-senha" onclick="abrirModalSenha()" style="display:none">🔐 Senhas</button>
       <button class="topo-btn primary" id="btn-exportar" onclick="exportarPrograma()" style="display:none">📤 Exportar</button>
       <button class="topo-btn danger" onclick="fazerLogout()">Sair</button>
@@ -452,8 +467,9 @@ function exportarPrograma() {
 let modalEscId = null;
 
 function abrirModalStatus(id, nome) {
-  if (perfilAtual !== 'admin') return;
+  if (perfilAtual !== 'admin') { console.warn('Não é admin'); return; }
   modalEscId = id;
+  console.log('Modal aberto para:', id, nome);
   document.getElementById('modal-status-nome').textContent = nome;
   document.getElementById('modal-status').classList.add('aberto');
 }
@@ -464,17 +480,26 @@ function fecharModal(id) {
 }
 
 function aplicarStatus(novoStatus) {
-  if (!modalEscId) return;
   const id = modalEscId;
-  estado[id] = novoStatus;
+  if (!id) { console.warn('modalEscId nulo'); return; }
+  // Fechar modal PRIMEIRO
   document.getElementById('modal-status').classList.remove('aberto');
   modalEscId = null;
-  salvarLocal();
-  renderTudo();
+  // Atualizar estado
+  estado[id] = novoStatus;
+  console.log('Status atualizado:', id, '->', novoStatus);
+  // Salvar e re-renderizar com pequeno delay para garantir que o modal fechou
+  setTimeout(function() {
+    salvarLocal();
+    renderTudo();
+  }, 50);
 }
 
 document.querySelectorAll('.modal-overlay').forEach(m => {
   m.addEventListener('click', e => { if(e.target===m) m.classList.remove('aberto'); });
+});
+document.querySelectorAll('.modal-box').forEach(b => {
+  b.addEventListener('click', e => e.stopPropagation());
 });
 
 // ══════════════════════════════════════════════════════════════
@@ -801,6 +826,18 @@ function nav(id){
   grupoAtivo=id;
   renderTudo();
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function imprimirGrupo() {
+  // Marcar o grupo atual como alvo de impressão
+  document.querySelectorAll('.grupo-page').forEach(p => p.classList.remove('print-target'));
+  const ativo = document.querySelector('.grupo-page.ativo');
+  if (ativo) ativo.classList.add('print-target');
+  window.print();
+  // Limpar após impressão
+  setTimeout(() => {
+    document.querySelectorAll('.grupo-page').forEach(p => p.classList.remove('print-target'));
+  }, 1000);
 }
 
 // Enter no login
