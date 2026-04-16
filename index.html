@@ -6,7 +6,7 @@
 <title>Kit Escolar 2026 — Controle de Entregas · SMECEL</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--az:#1a3a5c;--md:#2d6a9f;--cl:#dce8f5;--lj:#e07b00;--verde:#166534;--verde-bg:#f0fdf4;--verde-bd:#86efac;--am:#92400e;--am-bg:#fffbeb;--am-bd:#fde068;--azl:#1e40af;--azl-bg:#eff6ff;--azl-bd:#93c5fd;--roxo:#7e22ce;--roxo-bg:#fdf4ff;--roxo-bd:#d8b4fe;--bd:#d0d7de;--cz:#f4f6f8;--tx:#1c2128;--lv:#6b7280;}
+:root{--az:#1b4332;--md:#2d6a4f;--cl:#d8f3dc;--lj:#f4b942;--lj2:#f9c74f;--verde:#166534;--verde-bg:#f0fdf4;--verde-bd:#86efac;--am:#92400e;--am-bg:#fffbeb;--am-bd:#fde068;--azl:#1e40af;--azl-bg:#eff6ff;--azl-bd:#93c5fd;--roxo:#7e22ce;--roxo-bg:#fdf4ff;--roxo-bd:#d8b4fe;--bd:#b7e4c7;--cz:#f0f7f2;--tx:#0d2818;--lv:#4a6741;}
 body.modo-teste{filter:grayscale(100%);}
 body.modo-teste #topo{background:#222!important;}
 body.modo-teste .g-header{background:#333!important;}
@@ -19,7 +19,7 @@ body{font-family:'Barlow',sans-serif;background:#e5e7eb;color:var(--tx);font-siz
 #teste-banner{display:none;background:#1a1a1a;color:#fff;padding:8px 20px;align-items:center;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-bottom:3px solid #555;}
 #teste-banner span{color:#aaa;font-weight:400;}
 #teste-banner button{background:#444;border:1px solid #666;color:#fff;border-radius:4px;padding:4px 12px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;cursor:pointer;}
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f2744 0%,#1a3a5c 60%,#2d6a9f 100%);}
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0d2818 0%,#1b4332 60%,#2d6a4f 100%);}
 .login-card{background:#fff;border-radius:14px;padding:40px 36px;width:380px;box-shadow:0 24px 60px rgba(0,0,0,.4);}
 .login-logo{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--lv);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;}
 .login-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--az);margin-bottom:4px;}
@@ -535,8 +535,6 @@ footer { background: var(--az) !important; }
     <div class="login-field"><label>Usuário</label><input type="text" id="login-user" placeholder="admin ou leitor" autocomplete="username"></div>
     <div class="login-field"><label>Senha</label><input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"></div>
     <button class="login-btn" onclick="fazerLogin(false)">Entrar →</button>
-    <div id="admin-sep" class="login-sep" style="display:none">── acesso exclusivo do administrador ──</div>
-    <button class="login-btn teste" id="btn-teste-login" onclick="fazerLogin(true)" style="display:none">🧪 Entrar em Modo Teste</button>
     <div class="login-error" id="login-error">Usuário ou senha incorretos.</div>
     <div class="login-info"><b>Perfis:</b><br>🔑 <b>admin</b> — atualiza status e exporta<br>👁 <b>leitor</b> — visualização apenas</div>
   </div>
@@ -1483,11 +1481,7 @@ function verificarAutomacaoMinuto() {
   }
 }
 
-document.getElementById('login-user').addEventListener('input', function() {
-  const isAdmin = this.value.trim().toLowerCase() === 'admin';
-  document.getElementById('admin-sep').style.display = isAdmin ? 'block' : 'none';
-  document.getElementById('btn-teste-login').style.display = isAdmin ? 'block' : 'none';
-});
+
 
 function irParaGrupos() {
   document.getElementById('painel-inicial').style.display = 'none';
@@ -1514,7 +1508,7 @@ function fazerLogout() {
   document.getElementById('painel-programa').style.display = 'none';
   window.scrollTo({top: 0, behavior: 'instant'});
   ['login-user','login-pass'].forEach(id => document.getElementById(id).value = '');
-  ['admin-sep','btn-teste-login','btn-exportar','btn-senhas','btn-modo-teste'].forEach(id => document.getElementById(id).style.display = 'none');
+  ['btn-exportar','btn-senhas','btn-modo-teste'].forEach(id => document.getElementById(id).style.display = 'none');
 }
 
 function entrarModoTeste() {
