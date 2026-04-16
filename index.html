@@ -142,11 +142,6 @@ table.et td.etl{text-align:left;font-family:'Barlow Condensed',sans-serif;color:
 .rb{display:inline-block;font-size:7.5px;font-weight:700;padding:1px 4px;border-radius:3px;margin-left:3px;vertical-align:middle;font-family:'Barlow Condensed',sans-serif;}
 .st-btn{border:none;border-radius:5px;padding:4px 10px;font-size:9px;font-weight:700;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;transition:all .2s;white-space:nowrap;}
 .st-btn.pendente{background:#f1f5f9;color:#64748b;border:1px solid #cbd5e1;}
-.st-btn.atrasada{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
-table.et tbody tr.atrasada{background:#fff1f2!important;}
-.idx-atrasada{background:#fee2e2;color:#991b1b;border-radius:10px;padding:1px 6px;font-size:8px;font-weight:700;font-family:'Barlow Condensed',sans-serif;margin-left:3px;}
-.banner-atrasadas{background:#fef2f2;border:1px solid #fca5a5;border-radius:7px;padding:10px 14px;font-size:10.5px;color:#991b1b;display:flex;align-items:center;gap:10px;}
-.banner-atrasadas b{font-family:'Barlow Condensed',sans-serif;font-size:12px;}
 .st-btn.em-rota{background:#fef9c3;color:#854d0e;border:1px solid #fde047;}
 .st-btn.entregue{background:#dcfce7;color:#166534;border:1px solid #86efac;}
 .st-btn:hover{filter:brightness(.9);}
@@ -207,316 +202,76 @@ table.et tbody tr.atrasada{background:#fff1f2!important;}
   @page{margin:1cm;size:A4 portrait;}
 }
 
-/* ── MODAL CONFIG ── */
-.cfg-btn{width:100%;border:none;border-radius:7px;padding:9px 14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.04em;text-align:left;transition:opacity .15s;}
+.cfg-btn{width:100%;border:none;border-radius:7px;padding:9px 14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.04em;text-align:left;transition:opacity .15s;background:#f1f5f9;color:var(--tx);border:1px solid var(--bd);}
 .cfg-btn:hover{opacity:.85;}
-.cfg-btn{background:#f1f5f9;color:var(--tx);border:1px solid var(--bd);}
-.cfg-btn.primary{background:var(--az);color:#fff;}
+.cfg-btn.primary{background:var(--az);color:#fff;border-color:var(--az);}
 .cfg-btn.warn{background:#fff;color:#92400e;border:1px solid #fde068;}
 .cfg-btn.dark{background:#1a1a1a;color:#fff;}
 .cfg-btn.danger{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
-.cfg-btn-leitor{opacity:.45;cursor:not-allowed;pointer-events:none;}
 #config-admin-section.bloqueado .cfg-btn{opacity:.35;cursor:not-allowed;pointer-events:none;}
 #config-admin-section.bloqueado::after{content:'🔒 Disponível apenas para o Administrador';display:block;font-size:10px;color:#dc2626;text-align:center;padding:6px;background:#fee2e2;border-radius:6px;margin-top:6px;}
+#btn-voltar-inicio{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,.7);cursor:pointer;margin-left:14px;margin-right:6px;letter-spacing:.04em;transition:all .15s;white-space:nowrap;}
+#btn-voltar-inicio:hover{background:rgba(255,255,255,.15);}
 
-
-/* ══ PÁGINA INICIAL ══ */
-
-/* ══ VARIÁVEIS — PALETA VERDE + AMARELO ══ */
-:root {
-  --az: #1b4332;        /* verde escuro principal */
-  --md: #2d6a4f;        /* verde médio */
-  --cl: #d8f3dc;        /* verde claríssimo */
-  --lj: #f4b942;        /* amarelo âmbar */
-  --lj2: #f9c74f;       /* amarelo claro */
-  --verde: #1b4332;
-  --verde-bg: #d8f3dc;
-  --tx: #0d2818;
-  --lv: #4a6741;
-  --bd: #b7e4c7;
-  --white: #ffffff;
-  --off: #f0f7f2;
-  --pin-pendente: #7c3aed;
-  --pin-preparacao: #f4b942;
-  --pin-rota: #3b82f6;
-  --pin-entregue: #16a34a;
-  --pin-atrasado: #dc2626;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; background: var(--off); color: var(--tx); overflow-x: hidden; }
-
-/* ══ NAV FIXO ══ */
-#nav-site {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: rgba(27,67,50,.97);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(244,185,66,.2);
-  height: 54px;
-  display: flex; align-items: center;
-  padding: 0 40px;
-  gap: 0;
-}
-.nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px; font-weight: 700; color: #fff;
-  letter-spacing: -.01em; white-space: nowrap;
-  margin-right: 32px;
-}
-.nav-logo span { color: var(--lj2); }
-.nav-links { display: flex; gap: 4px; flex: 1; }
-.nav-link {
-  color: rgba(255,255,255,.6);
-  font-size: 11px; font-weight: 500;
-  padding: 6px 12px; border-radius: 6px;
-  cursor: pointer; transition: all .15s;
-  text-decoration: none; white-space: nowrap;
-  letter-spacing: .02em;
-}
-.nav-link:hover { background: rgba(255,255,255,.08); color: #fff; }
-.nav-link.ativo { background: rgba(244,185,66,.15); color: var(--lj2); }
-
-/* ══ HERO NOVA ══ */
-.hero {
-  background: var(--az);
-  position: relative; overflow: hidden;
-  padding: 108px 0 80px;
-}
-.hero::before {
-  content: '';
-  position: absolute; top: -100px; right: -100px;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(45,106,79,.5) 0%, transparent 70%);
-  border-radius: 50%;
-}
-.hero::after {
-  content: '';
-  position: absolute; bottom: -60px; left: 10%;
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(244,185,66,.08) 0%, transparent 70%);
-  border-radius: 50%;
-}
-.hero-grid {
-  max-width: 1080px; margin: 0 auto; padding: 0 40px;
-  display: grid; grid-template-columns: 1fr 320px; gap: 56px;
-  align-items: center; position: relative; z-index: 2;
-}
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(244,185,66,.15); border: 1px solid rgba(244,185,66,.3);
-  border-radius: 30px; padding: 5px 14px;
-  font-size: 10px; font-weight: 600; color: var(--lj2);
-  letter-spacing: .1em; text-transform: uppercase; margin-bottom: 20px;
-}
-.hero-eyebrow::before {
-  content: ''; width: 6px; height: 6px;
-  background: var(--lj2); border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .4; transform: scale(1.5); }
-}
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 48px; font-weight: 900; color: #fff;
-  line-height: 1.06; margin-bottom: 8px; letter-spacing: -.02em;
-}
-.hero-subtitle {
-  font-size: 15px; color: rgba(255,255,255,.55);
-  font-weight: 300; margin-bottom: 18px; line-height: 1.5;
-  font-style: italic;
-}
-.hero-intro {
-  font-size: 13.5px; color: rgba(255,255,255,.5);
-  line-height: 1.7; font-weight: 300; max-width: 500px;
-}
-.hero-card {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 16px; padding: 26px;
-  backdrop-filter: blur(10px);
-}
-.hero-card-title {
-  font-size: 9.5px; font-weight: 600; color: rgba(255,255,255,.35);
-  text-transform: uppercase; letter-spacing: .12em; margin-bottom: 18px;
-}
-.hero-stat {
-  display: flex; align-items: flex-end; gap: 6px;
-  margin-bottom: 16px; padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
-.hero-stat:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-.hs-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px; font-weight: 700; color: var(--lj2); line-height: 1;
-}
-.hs-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.7); }
-.hs-sub { font-size: 9px; color: rgba(255,255,255,.3); margin-top: 2px; }
-.badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-.badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
-  border-radius: 30px; padding: 4px 12px;
-  font-size: 10.5px; font-weight: 500; color: rgba(255,255,255,.7);
-}
-
-/* ══ MAPA ══ */
-#secao-mapa { background: var(--az); padding: 0 0 64px; }
-.mapa-inner { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
-.mapa-header { padding: 56px 0 28px; }
-.mapa-header .section-label { color: var(--lj2); }
-.mapa-header .section-label::before { background: var(--lj2); }
-.mapa-header h2 { color: #fff; font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; margin: 10px 0 8px; }
-.mapa-header p { color: rgba(255,255,255,.45); font-size: 13px; font-weight: 300; }
-
-.mapa-wrapper {
-  border-radius: 14px; overflow: hidden;
-  border: 2px solid rgba(244,185,66,.2);
-  box-shadow: 0 24px 60px rgba(0,0,0,.35);
-  position: relative;
-}
-#map { height: 520px; width: 100%; cursor: grab; }
-#map:active { cursor: grabbing; }
-
-/* Legenda do mapa */
-.mapa-legenda {
-  display: flex; gap: 16px; flex-wrap: wrap;
-  margin-top: 16px; padding: 12px 16px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 10px;
-}
-.leg-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(255,255,255,.7); }
-.leg-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-.leg-dot.pendente { background: var(--pin-pendente); }
-.leg-dot.preparacao { background: var(--pin-preparacao); }
-.leg-dot.rota { background: var(--pin-rota); }
-.leg-dot.entregue { background: var(--pin-entregue); }
-.leg-dot.atrasado { background: var(--pin-atrasado); }
-
-/* ══ ÍNDICE DE GRUPOS ══ */
-#secao-grupos { padding: 72px 0; background: var(--off); }
-.grupos-inner { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
-.section-label {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 10px; font-weight: 600; color: var(--lj);
-  text-transform: uppercase; letter-spacing: .12em; margin-bottom: 14px;
-}
-.section-label::before { content: ''; width: 24px; height: 2px; background: var(--lj); }
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px; font-weight: 700; color: var(--az); margin-bottom: 8px;
-}
-.section-desc { font-size: 14px; color: var(--lv); font-weight: 300; line-height: 1.6; max-width: 560px; }
-
-.grupos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 40px; }
-.grupo-card {
-  background: var(--white); border: 1px solid var(--bd);
-  border-radius: 12px; padding: 16px;
-  display: flex; flex-direction: column; gap: 6px;
-  transition: box-shadow .2s, transform .2s; cursor: default;
-  position: relative; overflow: hidden;
-}
-.grupo-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--md), var(--lj));
-}
-.grupo-card:hover { box-shadow: 0 8px 28px rgba(27,67,50,.1); transform: translateY(-2px); }
-.grupo-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px; font-weight: 900; color: var(--az); line-height: 1;
-}
-.grupo-data { font-size: 10.5px; font-weight: 600; color: var(--lj); }
-.grupo-escolas { font-size: 10px; color: var(--lv); }
-.grupo-kits { font-size: 10px; color: var(--lv); }
-.grupo-card.hoje { border-color: var(--md); background: var(--verde-bg); }
-.grupo-card.hoje .grupo-num { color: var(--md); }
-
-/* ══ SEÇÕES ORIGINAIS (VERDE) ══ */
-.section { max-width: 1080px; margin: 0 auto; padding: 72px 40px; }
-
-/* Sobrescrever cores da página original para paleta verde */
-.desc-card::before { background: linear-gradient(90deg, var(--md), var(--lj)) !important; }
-.desc-icon { background: var(--cl) !important; }
-.desc-card h3 { color: var(--az) !important; }
-
-.util-section { background: var(--az) !important; }
-.util-inner .section-label { color: var(--lj2) !important; }
-.util-inner .section-label::before { background: var(--lj2) !important; }
-.util-inner h2 { color: #fff !important; }
-.util-num { color: var(--lj2) !important; }
-
-.pos-check { background: var(--cl) !important; }
-.pos-item h4 { color: var(--az) !important; }
-
-.admin-item { border-left-color: var(--lj) !important; }
-.admin-section { background: linear-gradient(135deg, #f0f7f2, #e8f5e9) !important; border-color: var(--bd) !important; }
-.admin-inner .section-label { color: var(--md) !important; }
-.admin-inner .section-label::before { background: var(--md) !important; }
-.admin-inner h2 { color: var(--az) !important; }
-.admin-inner .section-desc { color: var(--md) !important; opacity: .85 !important; }
-.admin-item { border-color: var(--bd) !important; }
-.admin-item h4 { color: var(--az) !important; }
-.admin-item p { color: var(--md) !important; }
-
-/* Sobrescrever section-label e h2 globais */
-.section .section-label { color: var(--lj); }
-.section .section-label::before { background: var(--lj); }
-.section h2 { color: var(--az); }
-
-footer { background: var(--az) !important; }
-
-/* ══ POPUP DO MAPA ══ */
-.leaflet-popup-content-wrapper {
-  border-radius: 10px !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,.2) !important;
-  font-family: 'DM Sans', sans-serif !important;
-}
-.popup-nome { font-weight: 600; font-size: 12px; color: var(--az); margin-bottom: 4px; }
-.popup-reg { font-size: 10px; color: var(--lv); margin-bottom: 4px; }
-.popup-status { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; display: inline-block; }
-.popup-status.ENTREGUE { background: #dcfce7; color: #166534; }
-.popup-status.PENDENTE { background: #ede9fe; color: #5b21b6; }
-.popup-status.EM\ ROTA { background: #dbeafe; color: #1e40af; }
-.popup-status.ATRASADA { background: #fee2e2; color: #991b1b; }
-
-/* ══ FADE-IN ══ */
-.fade-in { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-
-@media (max-width: 768px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-card { display: none; }
-  .hero h1 { font-size: 34px; }
-  .grupos-grid { grid-template-columns: repeat(2, 1fr); }
-  .desc-grid, .util-grid, .pos-grid, .admin-grid { grid-template-columns: 1fr; }
-  .section, .mapa-inner, .grupos-inner { padding-left: 20px; padding-right: 20px; }
-  #nav-site { padding: 0 16px; }
-  .nav-links { display: none; }
-}
-
-/* ── GRÁFICOS DA PÁGINA INICIAL ── */
-.graficos-section { background: var(--az); padding: 0 0 56px; }
-.graficos-inner { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
-.graficos-header { padding: 48px 0 28px; }
-.graficos-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.grafico-card {
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-  border-radius: 14px; padding: 24px;
-}
-.grafico-titulo {
-  font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700;
-  color: #fff; margin-bottom: 4px;
-}
-.grafico-sub { font-size: 11px; color: rgba(255,255,255,.4); margin-bottom: 20px; font-weight: 300; }
-.grafico-canvas-wrap { position: relative; height: 220px; }
-
+/* ══ LANDING ══ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+#nav-site-l{position:sticky;top:0;z-index:200;background:rgba(27,67,50,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(244,185,66,.2);height:54px;display:flex;align-items:center;padding:0 40px;}
+.nav-logo-l{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;margin-right:32px;}
+.nav-logo-l span{color:#f9c74f;}
+.nav-links-l{display:flex;gap:4px;}
+.nav-lnk-l{color:rgba(255,255,255,.6);font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;cursor:pointer;transition:all .15s;}
+.nav-lnk-l:hover{background:rgba(255,255,255,.08);color:#fff;}
+.hero-l{background:#1b4332;position:relative;overflow:hidden;padding:60px 0 64px;}
+.hero-l::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(45,106,79,.5) 0%,transparent 70%);border-radius:50%;}
+.hero-l-inner{max-width:1080px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:center;position:relative;z-index:2;}
+.hero-eyebrow-l{display:inline-flex;align-items:center;gap:8px;background:rgba(244,185,66,.15);border:1px solid rgba(244,185,66,.3);border-radius:30px;padding:5px 14px;font-size:10px;font-weight:600;color:#f9c74f;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;}
+.hero-eyebrow-l::before{content:'';width:6px;height:6px;background:#f9c74f;border-radius:50%;animation:pl 2s infinite;}
+@keyframes pl{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.5);}}
+.hero-l h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:#fff;line-height:1.06;margin-bottom:6px;letter-spacing:-.02em;}
+.hero-l-sub{font-size:14px;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:14px;font-style:italic;}
+.hero-l-intro{font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;font-weight:300;max-width:480px;margin-bottom:20px;}
+.hero-badges-l{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+.hero-badge-l{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:30px;padding:4px 12px;font-size:10.5px;font-weight:500;color:rgba(255,255,255,.7);}
+.hero-assin-l{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:30px;padding:5px 16px;margin-bottom:20px;}
+.btn-controle-l{background:#f4b942;color:#1b4332;border:none;border-radius:8px;padding:12px 26px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.04em;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(244,185,66,.35);transition:all .2s;}
+.btn-controle-l:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(244,185,66,.5);}
+.hero-card-l{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px;}
+.hero-card-tit-l{font-size:9.5px;font-weight:600;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.12em;margin-bottom:16px;}
+.hs-l{display:flex;align-items:flex-end;gap:6px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07);}
+.hs-l:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.hs-num-l{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:#f9c74f;line-height:1;}
+.hs-label-l{font-size:11px;font-weight:600;color:rgba(255,255,255,.7);}
+.hs-sub-l{font-size:9px;color:rgba(255,255,255,.3);margin-top:2px;}
+.mapa-l{background:#1b4332;padding:48px 0;}
+.mapa-l-inner{max-width:1080px;margin:0 auto;padding:0 40px;}
+.sec-lbl-l{font-size:10px;font-weight:600;color:#f9c74f;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.sec-lbl-l::before{content:'';width:24px;height:2px;background:#f9c74f;}
+.sec-h2-l{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:6px;}
+.sec-desc-l{font-size:13px;color:rgba(255,255,255,.4);font-weight:300;margin-bottom:20px;}
+.mapa-wrap-l{border-radius:14px;overflow:hidden;border:2px solid rgba(244,185,66,.2);box-shadow:0 24px 60px rgba(0,0,0,.35);}
+#map-l{height:480px;width:100%;}
+.mapa-leg-l{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;padding:10px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;}
+.leg-item-l{display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(255,255,255,.65);}
+.leg-dot-l{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+.graficos-l{background:#1b4332;padding:0 0 48px;}
+.graficos-l-inner{max-width:1080px;margin:0 auto;padding:0 40px;}
+.graficos-row-l{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grafico-card-l{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px;}
+.grafico-tit-l{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
+.grafico-sub-l{font-size:11px;color:rgba(255,255,255,.4);margin-bottom:18px;font-weight:300;}
+.grupos-l{background:#f0f7f2;padding:56px 0;}
+.grupos-l-inner{max-width:1080px;margin:0 auto;padding:0 40px;}
+.grupos-grid-l{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px;}
+.grupo-card-l{background:#fff;border:1px solid #b7e4c7;border-radius:12px;padding:16px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.grupo-card-l::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2d6a4f,#f4b942);}
+.grupo-card-l:hover{box-shadow:0 8px 28px rgba(27,67,50,.1);transform:translateY(-2px);}
+.grupo-num-l{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#1b4332;line-height:1;}
+.grupo-data-l{font-size:10.5px;font-weight:600;color:#f4b942;margin-top:4px;}
+.grupo-info-l{font-size:10px;color:#4a6741;}
+.land-footer-l{background:#1b4332;padding:32px 40px;text-align:center;}
+.land-footer-nome-l{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:30px;padding:6px 18px;margin-top:10px;}
+@media(max-width:768px){.hero-l-inner,.mapa-l-inner,.graficos-l-inner,.grupos-l-inner{padding:0 20px;}.hero-l-inner{grid-template-columns:1fr;}.hero-card-l{display:none;}.hero-l h1{font-size:30px;}.graficos-row-l,.grupos-grid-l{grid-template-columns:1fr;}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -525,8 +280,207 @@ footer { background: var(--az) !important; }
   <button onclick="sairModoTeste()">✕ Sair do modo teste</button>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+var _lnd = (function() {
+  var _mapaOk = false, _grafOk = false, _grpOk = false;
+  var GEO_L = [{"seq": 1, "reg": "CENTRO DE DISTRIBUIÇÃO", "nome": "Centro de Distribuição da SMECEL (RESERVA TÉCNICA)", "lat": -15.64647, "lng": -56.00925, "status": "ENTREGUE"}, {"seq": 2, "reg": "CAMPO", "nome": "EMEBC Estevão Alves", "lat": -15.538, "lng": -55.923, "status": "PENDENTE", "grupo": 1}, {"seq": 3, "reg": "CAMPO", "nome": "EMEBC Herbert de Souza", "lat": -15.63035, "lng": -55.93027, "status": "PENDENTE", "grupo": 1}, {"seq": 4, "reg": "CAMPO", "nome": "EMEBC Nossa Senhora Penha de França", "lat": -15.4601778, "lng": -55.9773076, "status": "PENDENTE", "grupo": 1}, {"seq": 5, "reg": "CAMPO", "nome": "EMEBC Nova Esperança", "lat": -15.729611, "lng": -56.045528, "status": "PENDENTE", "grupo": 1}, {"seq": 6, "reg": "CAMPO", "nome": "EMEBC Novo Renascer", "lat": -15.57, "lng": -55.777278, "status": "PENDENTE", "grupo": 1}, {"seq": 7, "reg": "CAMPO", "nome": "EMEBC Profª Benedita Xavier Rodrigues", "lat": -15.356219, "lng": -56.2306099, "status": "EM ROTA"}, {"seq": 8, "reg": "CAMPO", "nome": "EMEBC Profª Hilda Caetano de Oliveira Leite", "lat": -15.5476556, "lng": -56.1579299, "status": "EM ROTA"}, {"seq": 9, "reg": "CAMPO", "nome": "EMEBC Profº Udeney Gonçalves de Amorim", "lat": -15.2818012, "lng": -56.1302417, "status": "PENDENTE", "grupo": 1}, {"seq": 10, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Assistencial Jesus é o Caminho e a Vida (Estrelinha de Jesus)", "lat": -15.5480261, "lng": -56.0317355, "status": "ENTREGUE"}, {"seq": 11, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Beneficente e Sociedade Menino Jesus", "lat": -15.5662721, "lng": -56.029192, "status": "ENTREGUE"}, {"seq": 12, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Beneficente Educativa Cultural Voz da Verdade", "lat": -15.6089064, "lng": -56.1332324, "status": "ENTREGUE"}, {"seq": 13, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Dona Alice Rodrigues (Creche Leãozinho Kids)", "lat": -15.6306627, "lng": -56.0098105, "status": "ENTREGUE"}, {"seq": 14, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Espírita Yvonne Amaral Pereira", "lat": -15.5364838, "lng": -56.0736481, "status": "ENTREGUE"}, {"seq": 15, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Filantrópica São Judas Tadeu", "lat": -15.6143255, "lng": -55.9961606, "status": "ENTREGUE"}, {"seq": 17, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Falcãozinho", "lat": -15.6096427, "lng": -56.108836, "status": "ENTREGUE"}, {"seq": 18, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Filantrópica Boa Vontade", "lat": -15.6391055, "lng": -56.0062826, "status": "ENTREGUE"}, {"seq": 19, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Nina Zaque  ( Seara de Luz)", "lat": -15.6100219, "lng": -55.9853698, "status": "ENTREGUE"}, {"seq": 20, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Voz da Verdade (Unidade do Distrito da Guia)", "lat": -15.6089064, "lng": -56.1332324, "status": "ENTREGUE"}, {"seq": 22, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Escola Filantrôpica Superar", "lat": -15.6444384, "lng": -55.9740933, "status": "ENTREGUE"}, {"seq": 24, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Obras Sociais da Associação Irmão Praeiro", "lat": -15.5440394, "lng": -56.0667453, "status": "ENTREGUE"}, {"seq": 25, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Obras Sociais Vianna de Carvalho", "lat": -15.5517093, "lng": -56.0828325, "status": "ENTREGUE"}, {"seq": 26, "reg": "LESTE", "nome": "CEIC Benedita Dias Evangelista", "lat": -15.5985598, "lng": -56.0692437, "status": "ENTREGUE"}, {"seq": 27, "reg": "LESTE", "nome": "CEIC CAIC Eldorado", "lat": -15.5887386, "lng": -56.0479234, "status": "ENTREGUE"}, {"seq": 28, "reg": "LESTE", "nome": "CEIC Colomba Cacelia Lombardi Dorileo", "lat": -15.6109532, "lng": -56.0263207, "status": "ENTREGUE"}, {"seq": 29, "reg": "LESTE", "nome": "CEIC Dona Micaela Henrique de Souza Lima", "lat": -15.596662, "lng": -56.085365, "status": "ENTREGUE"}, {"seq": 30, "reg": "LESTE", "nome": "CEIC Edna Catharina Pierri Ricci", "lat": -15.5793469, "lng": -56.0237134, "status": "ENTREGUE"}, {"seq": 31, "reg": "LESTE", "nome": "CEIC José Luiz Borges Garcia", "lat": -15.5832216, "lng": -56.0348561, "status": "ENTREGUE"}, {"seq": 32, "reg": "LESTE", "nome": "CEIC Josefa Catarina de Almeida", "lat": -15.6185343, "lng": -56.0828498, "status": "ENTREGUE"}, {"seq": 33, "reg": "LESTE", "nome": "CEIC Lucila Ferreira Fortes", "lat": -15.6022772, "lng": -56.0832041, "status": "ENTREGUE"}, {"seq": 34, "reg": "LESTE", "nome": "CEIC Mariana Fernandes Macedo", "lat": -15.6137633, "lng": -56.098121, "status": "ENTREGUE"}, {"seq": 35, "reg": "LESTE", "nome": "CEIC Prof. Monserrat Ismênia de Moraes Borge", "lat": -15.5978205, "lng": -56.0746124, "status": "ENTREGUE"}, {"seq": 36, "reg": "LESTE", "nome": "CEIC Risoleta Neves", "lat": -15.5758687, "lng": -56.034864, "status": "PENDENTE", "grupo": 1}, {"seq": 37, "reg": "LESTE", "nome": "CEIC Rosângela Campos Vieira Passos", "lat": -15.5976582, "lng": -56.0672393, "status": "ENTREGUE"}, {"seq": 38, "reg": "LESTE", "nome": "CEIC Santa Clara", "lat": -15.6004706, "lng": -56.0729302, "status": "ENTREGUE"}, {"seq": 39, "reg": "LESTE", "nome": "CEIC Santa Inês – Poção", "lat": -15.60869, "lng": -56.08753, "status": "EM ROTA"}, {"seq": 40, "reg": "LESTE", "nome": "CEIC São Francisco de Assis", "lat": -15.63188, "lng": -56.07566, "status": "ENTREGUE"}, {"seq": 41, "reg": "LESTE", "nome": "CEIC São José Operário", "lat": -15.6173394, "lng": -56.0904792, "status": "EM ROTA"}, {"seq": 42, "reg": "LESTE", "nome": "CEIC São Matheus", "lat": -15.6209375, "lng": -56.0915665, "status": "ENTREGUE"}, {"seq": 43, "reg": "LESTE", "nome": "CMEI Coronel José Meirelles", "lat": -15.6028143, "lng": -56.0832156, "status": "PENDENTE", "grupo": 1}, {"seq": 44, "reg": "LESTE", "nome": "CMEI Manoel de Barros", "lat": -15.6088421, "lng": -56.0247866, "status": "PENDENTE", "grupo": 2}, {"seq": 45, "reg": "LESTE", "nome": "CMEI Regina Pia Padilla de Borbon Neves", "lat": -15.5788235, "lng": -56.024187, "status": "PENDENTE", "grupo": 2}, {"seq": 46, "reg": "LESTE", "nome": "Creche João Crisostomo de Figueiredo", "lat": -15.5683571, "lng": -56.0253483, "status": "ENTREGUE"}, {"seq": 47, "reg": "LESTE", "nome": "EMEB 12 de Outubro", "lat": -15.5853548, "lng": -56.0349419, "status": "PENDENTE", "grupo": 2}, {"seq": 48, "reg": "LESTE", "nome": "EMEB Agostinho Simplício de Figueiredo", "lat": -15.6072553, "lng": -56.0859656, "status": "PENDENTE", "grupo": 2}, {"seq": 49, "reg": "LESTE", "nome": "EMEB Antonio Ferreira Valentim", "lat": -15.6222851, "lng": -56.0777187, "status": "PENDENTE", "grupo": 2}, {"seq": 50, "reg": "LESTE", "nome": "EMEB Augusto Mário Vieira", "lat": -15.5875666, "lng": -56.0636667, "status": "PENDENTE", "grupo": 2}, {"seq": 51, "reg": "LESTE", "nome": "EMEB Carlos Alberto Reyes Maldonado", "lat": -15.6094038, "lng": -56.024467, "status": "PENDENTE", "grupo": 2}, {"seq": 52, "reg": "LESTE", "nome": "EMEB Celina Fialho Bezerra", "lat": -15.5790953, "lng": -56.0240638, "status": "PENDENTE", "grupo": 2}, {"seq": 53, "reg": "LESTE", "nome": "EMEB Dejani Ribeiro Campos", "lat": -15.5634929, "lng": -56.0153701, "status": "PENDENTE", "grupo": 3}, {"seq": 54, "reg": "LESTE", "nome": "EMEB Dom Bosco do Praeirinho", "lat": -15.6321851, "lng": -56.0761841, "status": "PENDENTE", "grupo": 3}, {"seq": 55, "reg": "LESTE", "nome": "EMEB Dr. Fábio Firmino Leite", "lat": -15.5653417, "lng": -56.01799, "status": "PENDENTE", "grupo": 3}, {"seq": 56, "reg": "LESTE", "nome": "EMEB Dr. Orlando Nigro", "lat": -15.5987849, "lng": -56.0699881, "status": "PENDENTE", "grupo": 3}, {"seq": 57, "reg": "LESTE", "nome": "EMEB Henrique da Silva Prado", "lat": -15.6013133, "lng": -56.0834955, "status": "PENDENTE", "grupo": 3}, {"seq": 58, "reg": "LESTE", "nome": "EMEB Irmã Maria Betty de Souza Pires", "lat": -15.5787586, "lng": -56.0391018, "status": "PENDENTE", "grupo": 3}, {"seq": 59, "reg": "LESTE", "nome": "EMEB Jescelino José Reiners", "lat": -15.57934, "lng": -56.0322, "status": "ENTREGUE"}, {"seq": 60, "reg": "LESTE", "nome": "EMEB José Luiz Borges Garcia", "lat": -15.5853559, "lng": -56.0617898, "status": "PENDENTE", "grupo": 3}, {"seq": 61, "reg": "LESTE", "nome": "EMEB Lisaldo Farias Sodré (antiga EMEB 8 de Abril)", "lat": -15.5717, "lng": -56.0773, "status": "PENDENTE", "grupo": 3}, {"seq": 62, "reg": "LESTE", "nome": "EMEB Maria da Glória de Souza", "lat": -15.5913841, "lng": -56.081209, "status": "PENDENTE", "grupo": 4}, {"seq": 63, "reg": "LESTE", "nome": "EMEB Prof.ª Elza Luiza Esteves", "lat": -15.5829284, "lng": -56.0752136, "status": "PENDENTE", "grupo": 4}, {"seq": 64, "reg": "LESTE", "nome": "EMEB Profª Guilhermina de Figueiredo", "lat": -15.5886394, "lng": -56.0602564, "status": "PENDENTE", "grupo": 4}, {"seq": 65, "reg": "LESTE", "nome": "EMEB Profª Maria Ambrósio Pommot", "lat": -15.6109341, "lng": -56.0262359, "status": "PENDENTE", "grupo": 4}, {"seq": 66, "reg": "LESTE", "nome": "EMEB Profª Tereza Lobo", "lat": -15.6131117, "lng": -56.0992743, "status": "PENDENTE", "grupo": 4}, {"seq": 67, "reg": "LESTE", "nome": "EMEB Professora Francisca Figeiredo Arruda Martins", "lat": -15.5886036, "lng": -56.0474643, "status": "PENDENTE", "grupo": 4}, {"seq": 68, "reg": "LESTE", "nome": "EMEB Profº Filogonio Correa", "lat": -15.6185463, "lng": -56.0821579, "status": "PENDENTE", "grupo": 4}, {"seq": 69, "reg": "LESTE", "nome": "EMEB Profº Hélio de Souza Vieira", "lat": -15.6300702, "lng": -56.0746778, "status": "PENDENTE", "grupo": 4}, {"seq": 70, "reg": "LESTE", "nome": "EMEB Quintino Pereira de Freitas", "lat": -15.5825575, "lng": -56.0730648, "status": "PENDENTE", "grupo": 5}, {"seq": 71, "reg": "LESTE", "nome": "EMEB Santa Cecília", "lat": -15.6099929, "lng": -56.0808258, "status": "PENDENTE", "grupo": 5}, {"seq": 72, "reg": "LESTE", "nome": "EMEB Silvino Leite de Arruda", "lat": -15.5814069, "lng": -56.0374723, "status": "PENDENTE", "grupo": 5}, {"seq": 73, "reg": "NORTE", "nome": "CEIC Alê Guilherme Arfux da Costa Ribeiro", "lat": -15.5435959, "lng": -56.0755904, "status": "ENTREGUE"}, {"seq": 74, "reg": "NORTE", "nome": "CEIC Altos da Gloria", "lat": -15.5440838, "lng": -56.0200041, "status": "ENTREGUE"}, {"seq": 75, "reg": "NORTE", "nome": "CEIC Inocencio Leocadio da Rosa", "lat": -15.5601928, "lng": -56.0829322, "status": "ENTREGUE"}, {"seq": 76, "reg": "NORTE", "nome": "CEIC João Batista Scalabrini", "lat": -15.5722315, "lng": -56.0504309, "status": "ENTREGUE"}, {"seq": 77, "reg": "NORTE", "nome": "CEIC Josefa da Silva Parente", "lat": -15.580349, "lng": -56.0621284, "status": "ENTREGUE"}, {"seq": 78, "reg": "NORTE", "nome": "CEIC Maria Eunice Duarte Barros", "lat": -15.5659547, "lng": -56.0683926, "status": "ENTREGUE"}, {"seq": 79, "reg": "NORTE", "nome": "CEIC Maria Ligia Borges Garcia", "lat": -15.5370526, "lng": -56.0757813, "status": "ENTREGUE"}, {"seq": 80, "reg": "NORTE", "nome": "CEIC Naídes Rodrigues R. da Cruz", "lat": -15.5702575, "lng": -56.0458738, "status": "EM ROTA"}, {"seq": 81, "reg": "NORTE", "nome": "CEIC Nasla Joaquim Aschar", "lat": -15.5523873, "lng": -56.0564442, "status": "EM ROTA"}, {"seq": 82, "reg": "NORTE", "nome": "CEIC Pe. Armando Cavallo", "lat": -15.549039, "lng": -56.0323723, "status": "ENTREGUE"}, {"seq": 83, "reg": "NORTE", "nome": "CEIC Profª Luciene Ferreira de Oliveira (antiga creche Jardim Umuarama)", "lat": -15.5503172, "lng": -56.0254011, "status": "ENTREGUE"}, {"seq": 84, "reg": "NORTE", "nome": "CEIC Santa Inês – CPA", "lat": -15.5710609, "lng": -56.0357894, "status": "ENTREGUE"}, {"seq": 85, "reg": "NORTE", "nome": "CEIC Wilmon Ferreira De Souza", "lat": -15.5569896, "lng": -56.025802, "status": "ENTREGUE"}, {"seq": 86, "reg": "NORTE", "nome": "CMEI Antonio Marcos Ruzzene Balbino", "lat": -15.5599785, "lng": -56.0770186, "status": "PENDENTE", "grupo": 5}, {"seq": 87, "reg": "NORTE", "nome": "CMEI Joana Mont´Serrat Spindola", "lat": -15.5715291, "lng": -56.0362863, "status": "PENDENTE", "grupo": 5}, {"seq": 88, "reg": "NORTE", "nome": "CMEI Jornalista Paulo Maria Ferreira Leite", "lat": -15.5417572, "lng": -56.0672592, "status": "PENDENTE", "grupo": 5}, {"seq": 89, "reg": "NORTE", "nome": "CMEI Maria Conceição Oliveira de Souza", "lat": -15.5597694, "lng": -56.0297799, "status": "PENDENTE", "grupo": 5}, {"seq": 90, "reg": "NORTE", "nome": "CMEI Nevio Lotufo", "lat": -15.5628497, "lng": -56.0600528, "status": "PENDENTE", "grupo": 5}, {"seq": 91, "reg": "NORTE", "nome": "CMEI Paulo Ronan Ferraz Santos", "lat": -15.5367367, "lng": -56.0331285, "status": "PENDENTE", "grupo": 6}, {"seq": 92, "reg": "NORTE", "nome": "CMEI Plácido Flaviano Curvo Filho", "lat": -15.5493708, "lng": -56.0462383, "status": "PENDENTE", "grupo": 6}, {"seq": 93, "reg": "NORTE", "nome": "CMEI Prefeito Dante de Oliveira", "lat": -15.5577288, "lng": -56.0253374, "status": "PENDENTE", "grupo": 6}, {"seq": 94, "reg": "NORTE", "nome": "CMEI Sergio Luiz Ferreira da Silva", "lat": -15.5405437, "lng": -56.041912, "status": "PENDENTE", "grupo": 6}, {"seq": 95, "reg": "NORTE", "nome": "EMEB Antônia Tita Maciel de Campos", "lat": -15.547045, "lng": -56.079497, "status": "PENDENTE", "grupo": 6}, {"seq": 96, "reg": "NORTE", "nome": "EMEB Aristotelino Alves Praeiro", "lat": -15.545305, "lng": -56.0323071, "status": "PENDENTE", "grupo": 6}, {"seq": 97, "reg": "NORTE", "nome": "EMEB Cel. Octayde Jorge da Silva", "lat": -15.5718883, "lng": -56.0510293, "status": "PENDENTE", "grupo": 6}, {"seq": 98, "reg": "NORTE", "nome": "EMEB Dep. Ulisses Guimarães", "lat": -15.5501291, "lng": -56.0504158, "status": "PENDENTE", "grupo": 6}, {"seq": 99, "reg": "NORTE", "nome": "EMEB Lenine de Campos Povoas", "lat": -15.5445808, "lng": -56.0753376, "status": "PENDENTE", "grupo": 7}, {"seq": 100, "reg": "NORTE", "nome": "EMEB Madre Marta Cerutti", "lat": -15.5802411, "lng": -56.0633471, "status": "PENDENTE", "grupo": 7}, {"seq": 101, "reg": "NORTE", "nome": "EMEB Maria Lucila da Silva Barros", "lat": -15.5593817, "lng": -56.0908312, "status": "PENDENTE", "grupo": 7}, {"seq": 102, "reg": "NORTE", "nome": "EMEB Orzina de Amorim Soares", "lat": -15.5385343, "lng": -56.0680068, "status": "PENDENTE", "grupo": 7}, {"seq": 103, "reg": "NORTE", "nome": "EMEB Pedrosa de Morais e Silva", "lat": -15.5471661, "lng": -56.0550554, "status": "PENDENTE", "grupo": 7}, {"seq": 104, "reg": "NORTE", "nome": "EMEB Profª Gracildes de Mello Dantas", "lat": -15.5440838, "lng": -56.0200041, "status": "PENDENTE", "grupo": 7}, {"seq": 105, "reg": "NORTE", "nome": "EMEB Profº Firmo Jose Rodrigues", "lat": -15.5581946, "lng": -56.0254273, "status": "PENDENTE", "grupo": 7}, {"seq": 106, "reg": "NORTE", "nome": "EMEB Rafael Rueda", "lat": -15.5515225, "lng": -56.0251051, "status": "PENDENTE", "grupo": 7}, {"seq": 107, "reg": "NORTE", "nome": "EMEB Senhorinha Ana Alves de Oliveira", "lat": -15.5370017, "lng": -56.0767245, "status": "PENDENTE", "grupo": 8}, {"seq": 108, "reg": "NORTE", "nome": "EMEB Ten. Octacilio Sebastião da Cruz", "lat": -15.5696574, "lng": -56.0422697, "status": "PENDENTE", "grupo": 8}, {"seq": 109, "reg": "OESTE", "nome": "CEIC Elzira Cavalcante Silva", "lat": -15.5480796, "lng": -56.1580769, "status": "ENTREGUE"}, {"seq": 110, "reg": "OESTE", "nome": "CEIC Espaço Livre", "lat": -15.5879606, "lng": -56.0902108, "status": "ENTREGUE"}, {"seq": 111, "reg": "OESTE", "nome": "CEIC Francisco Santana", "lat": -15.5639477, "lng": -56.1082533, "status": "ENTREGUE"}, {"seq": 112, "reg": "OESTE", "nome": "CEIC Jose Nicolau Pinto", "lat": -15.6080043, "lng": -56.1078675, "status": "ENTREGUE"}, {"seq": 113, "reg": "OESTE", "nome": "CEIC Macaria Militona de Santana", "lat": -15.5820172, "lng": -56.11557, "status": "ENTREGUE"}, {"seq": 114, "reg": "OESTE", "nome": "CEIC Maria Benedita Martins de Oliveira", "lat": -15.6135286, "lng": -56.1246165, "status": "ENTREGUE"}, {"seq": 115, "reg": "OESTE", "nome": "CEIC Maria de Figueiredo Nunes", "lat": -15.5633839, "lng": -56.1162555, "status": "ENTREGUE"}, {"seq": 116, "reg": "OESTE", "nome": "CEIC Renisea G. Barua", "lat": -15.5649572, "lng": -56.0952589, "status": "ENTREGUE"}, {"seq": 117, "reg": "OESTE", "nome": "CEIC Sebastiao Tolomeu", "lat": -15.5989418, "lng": -56.1322433, "status": "ENTREGUE"}, {"seq": 118, "reg": "OESTE", "nome": "CEIC Tertuliana Maria (Mãe Nhara)", "lat": -15.5816809, "lng": -56.0854777, "status": "ENTREGUE"}, {"seq": 119, "reg": "OESTE", "nome": "EMEB Adelina Pereira Ventura", "lat": -15.6040413, "lng": -56.1144688, "status": "PENDENTE", "grupo": 8}, {"seq": 120, "reg": "OESTE", "nome": "EMEB Gláucia Maria Borges Garcia", "lat": -15.5687405, "lng": -56.0972484, "status": "PENDENTE", "grupo": 8}, {"seq": 121, "reg": "OESTE", "nome": "EMEB Juarez Sodré Farias", "lat": -15.5844078, "lng": -56.0896435, "status": "PENDENTE", "grupo": 8}, {"seq": 122, "reg": "OESTE", "nome": "EMEB Mal. Cândido Mariano da Silva Rondon", "lat": -15.579743, "lng": -56.0811535, "status": "PENDENTE", "grupo": 8}, {"seq": 123, "reg": "OESTE", "nome": "EMEB Maria Eunice Duarte Barros", "lat": -15.5988377, "lng": -56.1328438, "status": "PENDENTE", "grupo": 8}, {"seq": 124, "reg": "OESTE", "nome": "EMEB Maria Tomich Monteiro da Silva", "lat": -15.5614318, "lng": -56.1130447, "status": "PENDENTE", "grupo": 8}, {"seq": 125, "reg": "OESTE", "nome": "EMEB Nossa Senhora Aparecida", "lat": -15.5667386, "lng": -56.1170379, "status": "PENDENTE", "grupo": 9}, {"seq": 126, "reg": "OESTE", "nome": "EMEB Profª Alzira Valladares", "lat": -15.6013982, "lng": -56.1138575, "status": "PENDENTE", "grupo": 9}, {"seq": 127, "reg": "OESTE", "nome": "EMEB Profª Esmeralda de Campos Fontes", "lat": -15.57865, "lng": -56.11792, "status": "PENDENTE", "grupo": 9}, {"seq": 128, "reg": "OESTE", "nome": "EMEB Profª Rita Caldas Castrillon", "lat": -15.618379, "lng": -56.12332, "status": "PENDENTE", "grupo": 9}, {"seq": 129, "reg": "OESTE", "nome": "EMEB Profº Ezequiel Pompeu Ribeiro de Siqueira", "lat": -15.5856127, "lng": -56.0944411, "status": "PENDENTE", "grupo": 9}, {"seq": 130, "reg": "OESTE", "nome": "EMEB Profº Francisval de Brito", "lat": -15.6187927, "lng": -56.1289401, "status": "PENDENTE", "grupo": 9}, {"seq": 131, "reg": "OESTE", "nome": "EMEB Profº Ranulpho Paes de Barros", "lat": -15.5993999, "lng": -56.133829, "status": "PENDENTE", "grupo": 9}, {"seq": 132, "reg": "OESTE", "nome": "EMEB São João Bosco", "lat": -15.6123922, "lng": -56.1263425, "status": "PENDENTE", "grupo": 9}, {"seq": 133, "reg": "SUL", "nome": "CEIC Amalia Curvo de Campos", "lat": -15.6464733, "lng": -56.0335512, "status": "ENTREGUE"}, {"seq": 134, "reg": "SUL", "nome": "CEIC Clóvis Dias Ferreira", "lat": -15.62977, "lng": -55.953583, "status": "ENTREGUE"}, {"seq": 135, "reg": "SUL", "nome": "CEIC Helenita Paes de Assunção", "lat": -15.63179, "lng": -56.01406, "status": "ENTREGUE"}, {"seq": 136, "reg": "SUL", "nome": "CEIC Jamil Boutros Nadaf", "lat": -15.616306, "lng": -55.990917, "status": "ENTREGUE"}, {"seq": 137, "reg": "SUL", "nome": "CEIC José Gabriel da Costa", "lat": -15.6481383, "lng": -56.0617119, "status": "ENTREGUE"}, {"seq": 138, "reg": "SUL", "nome": "CEIC Lais Amiccuci Soares Martins", "lat": -15.616139, "lng": -56.00811, "status": "ENTREGUE"}, {"seq": 139, "reg": "SUL", "nome": "CEIC Lelita Lino Da Silva", "lat": -15.6474526, "lng": -56.0461486, "status": "ENTREGUE"}, {"seq": 140, "reg": "SUL", "nome": "CEIC Manoelino de Jesus", "lat": -15.63856, "lng": -55.980194, "status": "ENTREGUE"}, {"seq": 141, "reg": "SUL", "nome": "CEIC Marechal Rondon", "lat": -15.6473, "lng": -55.99246, "status": "ENTREGUE"}, {"seq": 142, "reg": "SUL", "nome": "CEIC Maria Nery Batista Ribeiro", "lat": -15.608333, "lng": -55.994917, "status": "ENTREGUE"}, {"seq": 143, "reg": "SUL", "nome": "CEIC Mariuza do Carmo Ojeda de Barros", "lat": -15.63044, "lng": -56.008944, "status": "ENTREGUE"}, {"seq": 144, "reg": "SUL", "nome": "CEIC Portal da Fé", "lat": -15.63876, "lng": -55.94218, "status": "ENTREGUE"}, {"seq": 145, "reg": "SUL", "nome": "CEIC Professor Aecim Tocantins", "lat": -15.6653603, "lng": -56.058645, "status": "ENTREGUE"}, {"seq": 146, "reg": "SUL", "nome": "CEIC Rafael Rueda CAIC", "lat": -15.63045, "lng": -55.95831, "status": "ENTREGUE"}, {"seq": 147, "reg": "SUL", "nome": "CEIC São Benedito", "lat": -15.63347, "lng": -55.9845, "status": "ENTREGUE"}, {"seq": 148, "reg": "SUL", "nome": "CEIC Silva Freire", "lat": -15.6353189, "lng": -56.0481149, "status": "ENTREGUE"}, {"seq": 149, "reg": "SUL", "nome": "CMEI Aliane Fatima Rodrigues Monteiro", "lat": -15.647861, "lng": -55.996833, "status": "PENDENTE", "grupo": 10}, {"seq": 150, "reg": "SUL", "nome": "CMEI Antonio Batista da Cruz", "lat": -15.636528, "lng": -55.9875, "status": "PENDENTE", "grupo": 10}, {"seq": 151, "reg": "SUL", "nome": "CMEI Auro Ida", "lat": -15.64138, "lng": -56.00711, "status": "PENDENTE", "grupo": 10}, {"seq": 152, "reg": "SUL", "nome": "CMEI Dr. Leonel de Moura Brizola", "lat": -15.614806, "lng": -55.9905, "status": "PENDENTE", "grupo": 10}, {"seq": 153, "reg": "SUL", "nome": "CMEI Edgar Santana de Amorim", "lat": -15.63907, "lng": -55.99745, "status": "PENDENTE", "grupo": 10}, {"seq": 154, "reg": "SUL", "nome": "CMEI Engenheiro Oscar Amelito", "lat": -15.672361, "lng": -56.037694, "status": "PENDENTE", "grupo": 10}, {"seq": 155, "reg": "SUL", "nome": "CMEI Governador José Garcia Neto", "lat": -15.629556, "lng": -55.98825, "status": "PENDENTE", "grupo": 10}, {"seq": 156, "reg": "SUL", "nome": "CMEI Jaira Cuiabano Correa da Costa", "lat": -15.6336, "lng": -55.94161, "status": "PENDENTE", "grupo": 10}, {"seq": 157, "reg": "SUL", "nome": "CMEI Jornalista Marcos Coutinho", "lat": -15.655611, "lng": -55.97725, "status": "PENDENTE", "grupo": 11}, {"seq": 158, "reg": "SUL", "nome": "CMEI Professor Ady de Figueiredo", "lat": -15.63463, "lng": -55.94677, "status": "PENDENTE", "grupo": 11}, {"seq": 159, "reg": "SUL", "nome": "CMEI Professora Marilia Ines Pedrollo Salomoni", "lat": -15.6632486, "lng": -56.0363962, "status": "PENDENTE", "grupo": 11}, {"seq": 160, "reg": "SUL", "nome": "CMEI Vereador Julio Cesar Pinheiro", "lat": -15.60687, "lng": -55.98423, "status": "PENDENTE", "grupo": 11}, {"seq": 161, "reg": "SUL", "nome": "EMEB Ana Luiza Prado Bastos", "lat": -15.612222, "lng": -55.996083, "status": "PENDENTE", "grupo": 11}, {"seq": 162, "reg": "SUL", "nome": "EMEB Ana Teresa Arco Krause", "lat": -15.64525, "lng": -55.976, "status": "PENDENTE", "grupo": 11}, {"seq": 163, "reg": "SUL", "nome": "EMEB Clovis Huguenei Neto", "lat": -15.684, "lng": -56.035472, "status": "PENDENTE", "grupo": 11}, {"seq": 164, "reg": "SUL", "nome": "EMEB Constança Figueiredo Palma Bem Bem", "lat": -15.61294, "lng": -55.99303, "status": "PENDENTE", "grupo": 11}, {"seq": 165, "reg": "SUL", "nome": "EMEB Eugênia Pereira de Mello", "lat": -15.6352962, "lng": -56.0494867, "status": "PENDENTE", "grupo": 12}, {"seq": 166, "reg": "SUL", "nome": "EMEB Floriano Bocheneki", "lat": -15.6654415, "lng": -56.0591002, "status": "PENDENTE", "grupo": 12}, {"seq": 167, "reg": "SUL", "nome": "EMEB Francisco Pedroso da Silva", "lat": -15.641139, "lng": -56.01325, "status": "PENDENTE", "grupo": 12}, {"seq": 168, "reg": "SUL", "nome": "EMEB Jean Carlos Pinho Santos", "lat": -15.62964, "lng": -55.95856, "status": "PENDENTE", "grupo": 12}, {"seq": 169, "reg": "SUL", "nome": "EMEB Jesus Criança", "lat": -15.63983, "lng": -55.97247, "status": "PENDENTE", "grupo": 12}, {"seq": 170, "reg": "SUL", "nome": "EMEB Joana Dark da Silva", "lat": -15.674694, "lng": -56.036889, "status": "PENDENTE", "grupo": 12}, {"seq": 171, "reg": "SUL", "nome": "EMEB José Torquato da Silva", "lat": -15.6509277, "lng": -56.0353069, "status": "PENDENTE", "grupo": 12}, {"seq": 172, "reg": "SUL", "nome": "EMEB Liberdade", "lat": -15.608333, "lng": -55.995389, "status": "PENDENTE", "grupo": 12}, {"seq": 173, "reg": "SUL", "nome": "EMEB Maria Elazir Correa de Figueiredo", "lat": -15.61439, "lng": -56.00314, "status": "PENDENTE", "grupo": 13}, {"seq": 174, "reg": "SUL", "nome": "EMEB Maximiano Arcanjo da Cruz", "lat": -15.617083, "lng": -55.990056, "status": "PENDENTE", "grupo": 13}, {"seq": 175, "reg": "SUL", "nome": "EMEB Ministro Marcos Freire", "lat": -15.6265, "lng": -56.015417, "status": "PENDENTE", "grupo": 13}, {"seq": 176, "reg": "SUL", "nome": "EMEB Moacyr Gratidiano Dorileo", "lat": -15.6309565, "lng": -56.0443705, "status": "PENDENTE", "grupo": 13}, {"seq": 177, "reg": "SUL", "nome": "EMEB Osmar José do Carmo Cabral", "lat": -15.61365, "lng": -55.99482, "status": "PENDENTE", "grupo": 13}, {"seq": 178, "reg": "SUL", "nome": "EMEB Padre Raimundo Conceição Pombo Moreira da Cruz", "lat": -15.6688909, "lng": -56.0406867, "status": "PENDENTE", "grupo": 13}, {"seq": 179, "reg": "SUL", "nome": "EMEB Profª Maria Dimpina Lobo Duarte", "lat": -15.6286867, "lng": -56.0544738, "status": "PENDENTE", "grupo": 13}, {"seq": 180, "reg": "SUL", "nome": "EMEB Professora Lidioliria Santana", "lat": -15.6125, "lng": -55.979389, "status": "PENDENTE", "grupo": 13}, {"seq": 182, "reg": "SUL", "nome": "EMEB Profº Zeferino Leite de Oliveira", "lat": -15.63593, "lng": -55.94577, "status": "ENTREGUE"}, {"seq": 183, "reg": "SUL", "nome": "EMEB São Sebastião", "lat": -15.63348, "lng": -55.98482, "status": "PENDENTE", "grupo": 14}, {"seq": 184, "reg": "SUL", "nome": "EMEB Senador Darcy Ribeiro", "lat": -15.651083, "lng": -55.980167, "status": "PENDENTE", "grupo": 14}, {"seq": 185, "reg": "SUL", "nome": "EMEB Senador Gastão Matos Muller", "lat": -15.62839, "lng": -55.95337, "status": "PENDENTE", "grupo": 14}, {"seq": 186, "reg": "SUL", "nome": "EMEB Silva Freire", "lat": -15.6529471, "lng": -56.0274669, "status": "PENDENTE", "grupo": 14}, {"seq": 187, "reg": "SUL", "nome": "EMEB Tereza Benguela", "lat": -15.6407413, "lng": -56.0435859, "status": "PENDENTE", "grupo": 14}, {"seq": 188, "reg": "SUL", "nome": "EMEB Vereador Paulo de Campos Borges", "lat": -15.64702, "lng": -55.99191, "status": "PENDENTE", "grupo": 14}];
+  var GRUPOS_L = [{"num": "G01", "data": "16/04", "escolas": 5, "kits": 2185}, {"num": "G02", "data": "17/04", "escolas": 6, "kits": 2183}, {"num": "G03", "data": "20/04", "escolas": 6, "kits": 2333}, {"num": "G04", "data": "22/04", "escolas": 6, "kits": 2405}, {"num": "G05", "data": "23/04", "escolas": 4, "kits": 1637}, {"num": "G06", "data": "24/04", "escolas": 4, "kits": 2358}, {"num": "G07", "data": "27/04", "escolas": 5, "kits": 2139}, {"num": "G08", "data": "28/04", "escolas": 4, "kits": 2236}, {"num": "G09", "data": "29/04", "escolas": 5, "kits": 2061}, {"num": "G10", "data": "30/04", "escolas": 3, "kits": 1675}, {"num": "G11", "data": "04/05", "escolas": 5, "kits": 2080}, {"num": "G12", "data": "05/05", "escolas": 5, "kits": 2345}, {"num": "G13", "data": "06/05", "escolas": 6, "kits": 2278}, {"num": "G14", "data": "07/05", "escolas": 8, "kits": 2395}, {"num": "G15", "data": "08/05", "escolas": 5, "kits": 2197}, {"num": "G16", "data": "11/05", "escolas": 4, "kits": 2190}, {"num": "G17", "data": "12/05", "escolas": 4, "kits": 2104}, {"num": "G18", "data": "13/05", "escolas": 5, "kits": 2497}, {"num": "G19", "data": "14/05", "escolas": 4, "kits": 1963}, {"num": "G20", "data": "15/05", "escolas": 4, "kits": 1976}, {"num": "G21", "data": "18/05", "escolas": 6, "kits": 2477}, {"num": "G22", "data": "19/05", "escolas": 8, "kits": 2388}];
 
+  function irParaGrupos() {
+    document.getElementById('painel-inicial').style.display = 'none';
+    document.getElementById('painel-programa').style.display = 'block';
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  function voltarInicio() {
+    document.getElementById('painel-programa').style.display = 'none';
+    document.getElementById('painel-inicial').style.display = 'block';
+    window.scrollTo({top:0,behavior:'instant'});
+  }
 
+  function iniciarMapa() {
+    if (_mapaOk) return; _mapaOk = true;
+    var m = L.map('map-l', {center:[-15.5959,-56.0452], zoom:11, scrollWheelZoom:true});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {attribution:'© OpenStreetMap contributors', maxZoom:18}).addTo(m);
+    function mkIcon(st) {
+      var c = {ENTREGUE:'#16a34a','EM ROTA':'#3b82f6',ATRASADA:'#dc2626',PENDENTE:'#7c3aed'}[st]||'#7c3aed';
+      var i = {ENTREGUE:'✓','EM ROTA':'➜',ATRASADA:'⚠',PENDENTE:'·'}[st]||'·';
+      return L.divIcon({className:'',
+        html:'<div style="width:24px;height:24px;background:'+c+';border:2px solid rgba(255,255,255,.9);border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;"><span style="transform:rotate(45deg);font-size:8px;font-weight:700;color:#fff;">'+i+'</span></div>',
+        iconSize:[24,24],iconAnchor:[12,24],popupAnchor:[0,-26]});
+    }
+    GEO_L.forEach(function(e) {
+      if (!e.lat || !e.lng) return;
+      var mk = L.marker([e.lat,e.lng],{icon:mkIcon(e.status||'PENDENTE')});
+      mk.bindTooltip('<b>'+e.nome+'</b>',{permanent:false,direction:'top',offset:[0,-26]});
+      mk.bindPopup('<div style="font-weight:600;font-size:12px;color:#1b4332;">'+e.nome+'</div><div style="font-size:10px;color:#4a6741;">'+(e.reg||'')+'</div>');
+      mk.addTo(m);
+    });
+  }
+
+  function iniciarGraficos() {
+    if (_grafOk) return; _grafOk = true;
+    var ctxE = document.getElementById('chart-esc-l').getContext('2d');
+    new Chart(ctxE, {
+      type:'doughnut',
+      data:{labels:['Entregues','Em Rota','Pendentes'],
+        datasets:[{data:[71,6,112],
+          backgroundColor:['#4ade80','#60a5fa','rgba(255,255,255,.12)'],
+          borderColor:['#16a34a','#3b82f6','rgba(255,255,255,.08)'],
+          borderWidth:2,hoverOffset:8}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'68%',
+        plugins:{legend:{position:'bottom',labels:{color:'rgba(255,255,255,.65)',font:{size:11},padding:12,boxWidth:10,boxHeight:10}}}},
+      plugins:[{id:'ct',beforeDraw:function(ch){
+        var ctx=ch.ctx,ca=ch.chartArea,cx=ca.width/2,cy=ca.top+ca.height/2;
+        ctx.save();
+        ctx.font='bold 24px serif';ctx.fillStyle='#f9c74f';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText('37.6%',cx,cy-8);
+        ctx.font='10px sans-serif';ctx.fillStyle='rgba(255,255,255,.45)';
+        ctx.fillText('concluído',cx,cy+14);ctx.restore();
+      }}]
+    });
+    var ctxK = document.getElementById('chart-kit-l').getContext('2d');
+    var mods=['A','B','C','D1','D2','E1','E2','F3','F4','F5'];
+    var meta={A:894,B:2624,C:8593,D1:6397,D2:6531,E1:6782,E2:7051,F3:6921,F4:6763,F5:7114};
+    var entg={A:114,B:263,C:129,D1:343,D2:217,E1:74,E2:77,F3:0,F4:68,F5:1677};
+    new Chart(ctxK,{
+      type:'bar',
+      data:{labels:mods,datasets:[
+        {label:'Entregues',data:mods.map(function(m){return entg[m]||0;}),backgroundColor:'#4ade80',borderRadius:4,borderSkipped:false},
+        {label:'Pendentes',data:mods.map(function(m){return meta[m]-(entg[m]||0);}),backgroundColor:'rgba(255,255,255,.1)',borderRadius:4,borderSkipped:false}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        scales:{x:{stacked:true,ticks:{color:'rgba(255,255,255,.6)',font:{size:10}},grid:{display:false}},
+                y:{stacked:true,ticks:{color:'rgba(255,255,255,.4)',font:{size:9},maxTicksLimit:5},grid:{color:'rgba(255,255,255,.05)'}}},
+        plugins:{legend:{position:'bottom',labels:{color:'rgba(255,255,255,.65)',font:{size:11},padding:12,boxWidth:10,boxHeight:10}}}}
+    });
+  }
+
+  function iniciarGrupos() {
+    if (_grpOk) return; _grpOk = true;
+    var grid = document.getElementById('grupos-grid-l');
+    if (!grid) return;
+    GRUPOS_L.forEach(function(g) {
+      var card = document.createElement('div');
+      card.className = 'grupo-card-l';
+      card.innerHTML = '<div class="grupo-num-l">'+g.num+'</div><div class="grupo-data-l">📅 '+g.data+'/2026</div><div class="grupo-info-l">🏫 '+g.escolas+' escolas · 📦 '+g.kits.toLocaleString('pt-BR')+' kits</div>';
+      grid.appendChild(card);
+    });
+  }
+
+  return {
+    irParaGrupos: irParaGrupos,
+    voltarInicio: voltarInicio,
+    inicializar: function() { iniciarMapa(); iniciarGraficos(); iniciarGrupos(); }
+  };
+})();
+
+function irParaGrupos() { _lnd.irParaGrupos(); }
+function voltarInicio() { _lnd.voltarInicio(); }
+</script>
+
+<div id="painel-inicial" style="display:none;">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<nav id="nav-site-l">
+  <div class="nav-logo-l">Kit Escolar <span>2026</span></div>
+  <div class="nav-links-l">
+    <span class="nav-lnk-l">Início</span>
+    <span class="nav-lnk-l" onclick="document.getElementById('mapa-sec-l').scrollIntoView({behavior:'smooth'})">Mapa</span>
+    <span class="nav-lnk-l" onclick="document.getElementById('grupos-sec-l').scrollIntoView({behavior:'smooth'})">Grupos</span>
+  </div>
+</nav>
+<section class="hero-l">
+  <div class="hero-l-inner">
+    <div>
+      <div class="hero-eyebrow-l">Sistema em operação · Cuiabá-MT · 2026</div>
+      <h1>Controle de<br>Kit Escolares</h1>
+      <p class="hero-l-sub">Indução de produção de kit escolares e programação de entregas</p>
+      <p class="hero-l-intro">Plataforma digital da CTA/SMECEL para gestão operacional da distribuição de kits escolares às 189 unidades da rede municipal de Cuiabá — escolas, CMEIs, CEICs e entidades filantrópicas.</p>
+      <div class="hero-assin-l">
+        <span style="font-size:9.5px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;">✦ Idealizador</span>
+        <span style="width:1px;height:12px;background:rgba(255,255,255,.15);"></span>
+        <span style="font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:rgba(255,255,255,.75);">Leandro Bonfim</span>
+        <span style="font-size:9.5px;color:rgba(255,255,255,.35);">Técnico de Nível Superior — Administração · CTA/SMECEL</span>
+      </div>
+      <div class="hero-badges-l">
+        <div class="hero-badge-l">🏫 189 unidades</div>
+        <div class="hero-badge-l">📦 59.673 kits</div>
+        <div class="hero-badge-l">📅 25 dias úteis</div>
+        <div class="hero-badge-l">⚙️ Limite 2.500/dia</div>
+      </div>
+      <button class="btn-controle-l" onclick="irParaGrupos()">📋 Controle de Entregas →</button>
+    </div>
+    <div class="hero-card-l">
+      <div class="hero-card-tit-l">Resumo operacional · Cuiabá-MT</div>
+      <div class="hs-l"><div class="hs-num-l">189</div><div><div class="hs-label-l">Unidades atendidas</div><div class="hs-sub-l">Escolas, CMEIs, CEICs e filantrópicas</div></div></div>
+      <div class="hs-l"><div class="hs-num-l">59.673</div><div><div class="hs-label-l">Kits a distribuir</div><div class="hs-sub-l">Modelos A a F5</div></div></div>
+      <div class="hs-l"><div class="hs-num-l">2.500</div><div><div class="hs-label-l">Limite/dia</div><div class="hs-sub-l">Grupos calculados automaticamente</div></div></div>
+      <div class="hs-l"><div class="hs-num-l">22</div><div><div class="hs-label-l">Grupos de entrega</div><div class="hs-sub-l">16/04 → 19/05/2026</div></div></div>
+    </div>
+  </div>
+</section>
+<section class="mapa-l" id="mapa-sec-l">
+  <div class="mapa-l-inner">
+    <div class="sec-lbl-l">Georreferenciamento</div>
+    <h2 class="sec-h2-l">Mapa de Entregas — Cuiabá-MT</h2>
+    <p class="sec-desc-l">184 unidades georeferenciadas. Passe o mouse para ver o nome. Arraste e scroll para navegar.</p>
+    <div class="mapa-wrap-l"><div id="map-l"></div></div>
+    <div class="mapa-leg-l">
+      <div class="leg-item-l"><div class="leg-dot-l" style="background:#7c3aed;"></div>Pendente</div>
+      <div class="leg-item-l"><div class="leg-dot-l" style="background:#3b82f6;"></div>Em Rota</div>
+      <div class="leg-item-l"><div class="leg-dot-l" style="background:#16a34a;"></div>Entregue</div>
+      <div class="leg-item-l"><div class="leg-dot-l" style="background:#dc2626;"></div>Atrasada</div>
+      <div style="margin-left:auto;font-size:10px;color:rgba(255,255,255,.3);">🗺 Arraste · Scroll para zoom</div>
+    </div>
+  </div>
+</section>
+<section class="graficos-l">
+  <div class="graficos-l-inner">
+    <div style="padding:40px 0 24px;">
+      <div class="sec-lbl-l">Painel de progresso</div>
+      <h2 class="sec-h2-l">Evolução da Operação</h2>
+      <p class="sec-desc-l">Acompanhamento em tempo real · Referência: 15/04/2026</p>
+    </div>
+    <div class="graficos-row-l">
+      <div class="grafico-card-l">
+        <div class="grafico-tit-l">🏫 Unidades Escolares Atendidas</div>
+        <div class="grafico-sub-l">Percentual concluído sobre 189 unidades</div>
+        <div style="position:relative;height:220px;"><canvas id="chart-esc-l"></canvas></div>
+      </div>
+      <div class="grafico-card-l">
+        <div class="grafico-tit-l">📦 Volume de Kits por Modelo</div>
+        <div class="grafico-sub-l">Distribuição planejada por modelo A a F5</div>
+        <div style="position:relative;height:220px;"><canvas id="chart-kit-l"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="grupos-l" id="grupos-sec-l">
+  <div class="grupos-l-inner">
+    <div class="sec-lbl-l" style="color:#f4b942;">Programação de entregas</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#1b4332;margin-bottom:6px;">Índice dos Grupos de Entrega</h2>
+    <p style="font-size:13px;color:#4a6741;font-weight:300;">22 grupos entre 16/04 e 19/05/2026 · Limite de 2.500 kits/dia · Ordem das rotas respeitada.</p>
+    <div class="grupos-grid-l" id="grupos-grid-l"></div>
+    <div style="margin-top:28px;text-align:center;">
+      <button class="btn-controle-l" onclick="irParaGrupos()">📋 Acessar o Controle de Entregas →</button>
+    </div>
+  </div>
+</section>
+<div class="land-footer-l">
+  <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;">Controle de Kit Escolares 2026 · SMECEL</div>
+  <div style="font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.06em;">Prefeitura Municipal de Cuiabá · SMECEL · CTA/SMECEL</div>
+  <div class="land-footer-nome-l">
+    <span style="font-size:9.5px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;">✦ Idealizador</span>
+    <span style="width:1px;height:12px;background:rgba(255,255,255,.15);"></span>
+    <span style="font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:rgba(255,255,255,.7);">Leandro Bonfim</span>
+    <span style="font-size:9.5px;color:rgba(255,255,255,.35);">Técnico de Nível Superior — Administração · CTA/SMECEL</span>
+  </div>
+</div>
+</div>
+
+<div id="painel-programa" style="display:none;">
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">Prefeitura Municipal de Cuiabá · SMECEL / CTA</div>
@@ -541,708 +495,9 @@ footer { background: var(--az) !important; }
 </div>
 
 <div id="app" style="display:none">
-
-  <!-- PAINEL INICIAL (visível logo após login) -->
-  <div id="painel-inicial">
-<div id="landing-screen">
-<!-- ══ NAV FIXO ══ -->
-<nav id="nav-site">
-  <div class="nav-logo">Kit Escolar <span>2026</span></div>
-  <div class="nav-links">
-    <a class="nav-link ativo" onclick="scrollTo('#secao-hero')">Início</a>
-    <a class="nav-link" onclick="scrollTo('#secao-mapa')">Mapa de Entregas</a>
-    <a class="nav-link" onclick="scrollTo('#secao-grupos')">Grupos</a>
-    <a class="nav-link" onclick="scrollTo('#secao-descricao')">O que é</a>
-    <a class="nav-link" onclick="scrollTo('#secao-utilidade')">Utilidade</a>
-    <a class="nav-link" onclick="scrollTo('#secao-positivos')">Destaques</a>
-    <a class="nav-link" onclick="scrollTo('#secao-admin')">Administrador</a>
-  </div>
-</nav>
-
-<!-- ══ HERO ══ -->
-<section class="hero" id="secao-hero">
-  <div class="hero-grid">
-    <div>
-      <div class="hero-eyebrow">Sistema em operação · Cuiabá-MT · 2026</div>
-      <h1>Controle de<br>Kit Escolares</h1>
-      <p class="hero-subtitle">Indução de produção de kit escolares e programação de entregas</p>
-      <p class="hero-intro">
-        Plataforma digital da Coordenadoria Técnica de Aquisições da SMECEL para gestão operacional da distribuição de kits escolares às 189 unidades da rede municipal de Cuiabá — escolas, CMEIs, CEICs e entidades filantrópicas. O sistema centraliza o planejamento de produção, o acompanhamento em tempo real das entregas e a comunicação com a equipe, em um único arquivo acessível por qualquer navegador.
-      </p>
-      <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:30px;padding:6px 18px;">
-        <span style="font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;">✦ Idealizador</span>
-        <span style="width:1px;height:14px;background:rgba(255,255,255,.15);"></span>
-        <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.75);font-family:'Playfair Display',serif;">Leandro Bonfim</span>
-        <span style="font-size:10px;color:rgba(255,255,255,.35);">Técnico de Nível Superior — Administração</span>
-      </div>
-      <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:30px;padding:5px 16px;">
-        <span style="font-size:9.5px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;">✦ Idealizador</span>
-        <span style="width:1px;height:12px;background:rgba(255,255,255,.15);"></span>
-        <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.75);font-family:'Playfair Display',serif;">Leandro Bonfim</span>
-        <span style="font-size:9.5px;color:rgba(255,255,255,.35);">Técnico de Nível Superior — Administração · CTA/SMECEL</span>
-      </div>
-      <div class="badge-row">
-        <div class="badge">🏫 189 unidades</div>
-        <div class="badge">📦 59.673 kits</div>
-        <div class="badge">📅 25 dias úteis</div>
-        <div class="badge">⚙️ Limite 2.500/dia</div>
-        <div class="badge">🔒 Acesso por login</div>
-      </div>
-
-      <div style="margin-top:28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-        <button onclick="irParaGrupos()" style="
-          background:var(--lj);color:#1b4332;border:none;border-radius:8px;
-          padding:13px 28px;font-family:'Barlow Condensed',sans-serif;
-          font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.04em;
-          display:flex;align-items:center;gap:8px;
-          box-shadow:0 4px 20px rgba(244,185,66,.35);transition:all .2s;
-        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(244,185,66,.5)'"
-           onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(244,185,66,.35)'">
-          📋 Controle de Entregas →
-        </button>
-        <span style="font-size:11px;color:rgba(255,255,255,.35);">Acesse os grupos, status e produção</span>
-      </div>
-    </div>
-    <div class="hero-card">
-      <div class="hero-card-title">Resumo operacional · Cuiabá-MT</div>
-      <div class="hero-stat">
-        <div class="hs-num">189</div>
-        <div>
-          <div class="hs-label">Unidades atendidas</div>
-          <div class="hs-sub">Escolas, CMEIs, CEICs e filantrópicas</div>
-        </div>
-      </div>
-      <div class="hero-stat">
-        <div class="hs-num">59.673</div>
-        <div>
-          <div class="hs-label">Kits a distribuir</div>
-          <div class="hs-sub">Modelos A, B, C, D1, D2, E1, E2, F3, F4, F5</div>
-        </div>
-      </div>
-      <div class="hero-stat">
-        <div class="hs-num">2.500</div>
-        <div>
-          <div class="hs-label">Limite de produção/dia</div>
-          <div class="hs-sub">Grupos calculados automaticamente</div>
-        </div>
-      </div>
-      <div class="hero-stat">
-        <div class="hs-num">22</div>
-        <div>
-          <div class="hs-label">Grupos de entrega</div>
-          <div class="hs-sub">16/04 → 19/05/2026</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ MAPA ══ -->
-<section id="secao-mapa">
-  <div class="mapa-inner">
-    <div class="mapa-header fade-in">
-      <div class="section-label">Georreferenciamento</div>
-      <h2>Mapa de Entregas — Cuiabá-MT</h2>
-      <p>Localização de todas as 184 unidades escolares e entidades filantrópicas. Passe o mouse sobre o ícone para ver o nome. Use o scroll para zoom e arraste para navegar.</p>
-    </div>
-    <div class="fade-in">
-      <div class="mapa-wrapper">
-        <div id="map"></div>
-      </div>
-      <div class="mapa-legenda">
-        <div class="leg-item"><div class="leg-dot pendente"></div> Pendente</div>
-        <div class="leg-item"><div class="leg-dot preparacao"></div> Em Preparação</div>
-        <div class="leg-item"><div class="leg-dot rota"></div> Em Rota</div>
-        <div class="leg-item"><div class="leg-dot entregue"></div> Entregue</div>
-        <div class="leg-item"><div class="leg-dot atrasado"></div> Atrasada</div>
-        <div style="margin-left:auto;font-size:10px;color:rgba(255,255,255,.35);">🗺 Arraste · Scroll para zoom · Clique para detalhes</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ GRÁFICOS ══ -->
-<section class="graficos-section">
-  <div class="graficos-inner">
-    <div class="graficos-header fade-in">
-      <div class="section-label" style="color:var(--lj2);">
-        <span style="display:inline-block;width:24px;height:2px;background:var(--lj2);margin-right:8px;vertical-align:middle;"></span>
-        Evolução da operação
-      </div>
-      <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;margin:8px 0 6px;">Painel de Progresso</h2>
-      <p style="font-size:13px;color:rgba(255,255,255,.4);font-weight:300;">Acompanhamento em tempo real das unidades atendidas e kits distribuídos · Referência: 15/04/2026</p>
-    </div>
-    <div class="graficos-row fade-in">
-      <div class="grafico-card">
-        <div class="grafico-titulo">🏫 Unidades Escolares Atendidas</div>
-        <div class="grafico-sub">Percentual de escolas com kit entregue sobre o total de 189 unidades</div>
-        <div class="grafico-canvas-wrap"><canvas id="chart-escolas"></canvas></div>
-      </div>
-      <div class="grafico-card">
-        <div class="grafico-titulo">📦 Volume de Kits Entregues</div>
-        <div class="grafico-sub">Kits distribuídos por modelo (A a F5) sobre a meta total de 59.673 unidades</div>
-        <div class="grafico-canvas-wrap"><canvas id="chart-kits"></canvas></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ ÍNDICE DE GRUPOS ══ -->
-<section id="secao-grupos">
-  <div class="grupos-inner">
-    <div class="fade-in">
-      <div class="section-label">Programação de entregas</div>
-      <div class="section-title">Índice dos Grupos de Entrega</div>
-      <p class="section-desc">22 grupos distribuídos ao longo de 25 dias úteis entre 16/04 e 19/05/2026, respeitando o limite de 2.500 kits por dia e a ordem das rotas definidas.</p>
-    </div>
-    <div class="grupos-grid" id="grupos-grid"></div>
-  </div>
-</section>
-
-<!-- ══ CONTEÚDO ORIGINAL (com ids para navegação) ══ -->
-<div id="secao-descricao"><!-- HERO -->
-<section class="hero">
-  <div class="hero-grid">
-    <div>
-      <div class="hero-eyebrow">Sistema em operação · 2026</div>
-      <h1>Controle de<br>Produção e<br><em>Entregas</em></h1>
-      <p class="hero-sub">Plataforma digital da Coordenadoria Técnica de Aquisições da SMECEL para gestão operacional da distribuição de kits escolares às unidades da rede municipal de Cuiabá.</p>
-      <div class="badge-row">
-        <div class="badge"><span>🏫</span> 189 unidades escolares</div>
-        <div class="badge"><span>📦</span> 59.673 kits</div>
-        <div class="badge"><span>📅</span> 25 dias úteis</div>
-        <div class="badge"><span>🔒</span> Acesso por login</div>
-      </div>
-    </div>
-    <div class="hero-card">
-      <div class="hero-card-title">Resumo operacional · Cuiabá-MT</div>
-      <div class="hero-stat">
-        <div class="hs-num">189</div>
-        <div class="hs-detail">
-          <div class="hs-label">Unidades atendidas</div>
-          <div class="hs-sub">Escolas, CMEIs, CEICs e filantrópicas</div>
-        </div>
-      </div>
-      <div class="hero-stat">
-        <div class="hs-num">59.673</div>
-        <div class="hs-detail">
-          <div class="hs-label">Kits a distribuir</div>
-          <div class="hs-sub">Modelos A, B, C, D1, D2, E1, E2, F3, F4, F5</div>
-        </div>
-      </div>
-      <div class="hero-stat">
-        <div class="hs-num">2.500</div>
-        <div class="hs-detail">
-          <div class="hs-label">Limite de produção/dia</div>
-          <div class="hs-sub">Grupos calculados automaticamente</div>
-        </div>
-      </div>
-      <div class="hero-stat">
-        <div class="hs-num">22</div>
-        <div class="hs-detail">
-          <div class="hs-label">Grupos de entrega</div>
-          <div class="hs-sub">16/04 → 19/05/2026</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- O QUE É -->
-<section class="section fade-in" id="secao-desc-0">
-  <div class="section-label">Descrição do sistema</div>
-  <h2>O que é este sistema?</h2>
-  <p class="section-desc">Uma plataforma web autossuficiente — um único arquivo HTML — que centraliza todo o planejamento e acompanhamento da operação de distribuição do Kit Escolar 2026 da Secretaria Municipal de Educação, Cultura, Esporte e Lazer de Cuiabá.</p>
-
-  <div class="desc-grid">
-    <div class="desc-card fade-in">
-      <div class="desc-icon">📋</div>
-      <h3>Planejamento de produção</h3>
-      <p>Calcula automaticamente a quantidade de kits a produzir por dia, respeitando o limite de 2.500 unidades e a regra 50/50 de carregamento. Indica o que produzir na véspera e o que completar no dia seguinte, com abatimento do estoque disponível.</p>
-    </div>
-    <div class="desc-card fade-in">
-      <div class="desc-icon">🚚</div>
-      <h3>Controle de entregas em tempo real</h3>
-      <p>Cada unidade escolar tem um botão de status que pode ser atualizado para Pendente, Em Rota, Entregue ou Atrasada. Ao alterar, o programa recalcula instantaneamente todos os grupos futuros, os gráficos e os acumulados.</p>
-    </div>
-    <div class="desc-card fade-in">
-      <div class="desc-icon">📊</div>
-      <h3>Infográficos de evolução</h3>
-      <p>Cada grupo exibe gráficos de rosca com o percentual de conclusão por modelo de kit (A a F5) e por escola. Os dados são atualizados em tempo real conforme os status são confirmados pelo administrador.</p>
-    </div>
-    <div class="desc-card fade-in">
-      <div class="desc-icon">🔗</div>
-      <h3>Compartilhamento via link</h3>
-      <p>O sistema é publicado no GitHub Pages e acessível por link fixo para todos os leitores autorizados — sem necessidade de instalação, servidor ou aplicativo. Funciona em qualquer navegador moderno.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div><div id="secao-utilidade"></div>
-
-<!-- UTILIDADE -->
-<section class="util-section" id="secao-util-inner">
-  <div class="util-inner">
-    <div class="section-label">Para que serve</div>
-    <h2>Utilidade operacional</h2>
-    <p class="section-desc">Substituir o controle manual em planilhas por um painel dinâmico que reflete o estado real da operação a qualquer momento, para qualquer pessoa com acesso ao link.</p>
-
-    <div class="util-grid">
-      <div class="util-item fade-in">
-        <div class="util-num">01</div>
-        <h4>Eliminar retrabalho</h4>
-        <p>Não há necessidade de atualizar manualmente cronogramas ou recalcular grupos. Tudo acontece automaticamente ao confirmar uma entrega.</p>
-      </div>
-      <div class="util-item fade-in">
-        <div class="util-num">02</div>
-        <h4>Dar visibilidade à equipe</h4>
-        <p>Gestores, fiscais e equipe técnica acessam o mesmo link e veem em tempo real quantas escolas foram atendidas, quantas estão em rota e o que ainda falta.</p>
-      </div>
-      <div class="util-item fade-in">
-        <div class="util-num">03</div>
-        <h4>Orientar a fábrica</h4>
-        <p>O Quadro 1 de cada grupo informa exatamente quantos kits produzir por modelo, quando carregar e o que já está disponível em estoque — sem margem para dúvidas.</p>
-      </div>
-      <div class="util-item fade-in">
-        <div class="util-num">04</div>
-        <h4>Rastrear atrasos</h4>
-        <p>Entregas não confirmadas no dia são automaticamente marcadas como Atrasadas às 23:59 e entram no início do próximo grupo com destaque visual em vermelho.</p>
-      </div>
-      <div class="util-item fade-in">
-        <div class="util-num">05</div>
-        <h4>Respeitar a ordem da rota</h4>
-        <p>Independente de quantas escolas mudam de status, o reagrupamento sempre mantém a ordem geográfica original das rotas definidas no planejamento.</p>
-      </div>
-      <div class="util-item fade-in">
-        <div class="util-num">06</div>
-        <h4>Simular cenários</h4>
-        <p>O Modo Teste permite ao administrador simular alterações e ver o impacto no cronograma sem afetar os dados reais ou a visualização dos leitores.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div id="secao-positivos"></div><!-- PONTOS POSITIVOS -->
-<section class="section fade-in">
-  <div class="section-label">Pontos positivos</div>
-  <h2>Por que este sistema funciona?</h2>
-  <p class="section-desc">Desenvolvido especificamente para a realidade da CTA/SMECEL, com foco em simplicidade de uso, robustez operacional e zero dependência de infraestrutura externa.</p>
-
-  <div class="pos-grid">
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>100% autossuficiente</h4>
-      <p>Um único arquivo HTML contém todos os dados, a lógica e o visual. Não depende de banco de dados, servidor, internet permanente ou software instalado.</p>
-    </div>
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>Atualização automática de grupos</h4>
-      <p>Marcar uma escola como entregue reorganiza todos os grupos futuros instantaneamente, respeitando o limite de 2.500 kits/dia e a ordem da rota.</p>
-    </div>
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>Dois perfis de acesso</h4>
-      <p>Administrador edita status, exporta e acessa o modo teste. Leitor navega e visualiza sem risco de alterações acidentais. Senhas configuráveis.</p>
-    </div>
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>Histórico dinâmico</h4>
-      <p>O grupo Histórico agrega automaticamente todas as escolas entregues de qualquer grupo, sem necessidade de ação manual do administrador.</p>
-    </div>
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>Automação às 23:59</h4>
-      <p>Escolas em rota ou pendentes no dia corrente são automaticamente marcadas como Atrasadas ao final do dia — nunca como Entregues sem confirmação.</p>
-    </div>
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>Impressão em A4</h4>
-      <p>Cada grupo pode ser impresso diretamente pelo navegador em formato A4 limpo, com Quadro 1 (produção), Quadro 2 (escolas) e infográfico de evolução.</p>
-    </div>
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>Modo Teste isolado</h4>
-      <p>O administrador pode simular qualquer cenário em preto e branco sem afetar os dados reais. Alterações do modo teste nunca são salvas nem vistas por leitores.</p>
-    </div>
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>Destaque de entregas atrasadas</h4>
-      <p>Escolas atrasadas aparecem com linha vermelha, ícone ⚠️, badge no índice e banner de alerta no grupo — garantindo visibilidade imediata dos pendentes críticos.</p>
-    </div>
-    <div class="pos-item fade-in">
-      <div class="pos-check">✅</div>
-      <h4>Publicação via GitHub Pages</h4>
-      <p>O link é fixo e permanente. O administrador atualiza o arquivo no repositório e todos os leitores veem a nova versão ao recarregar a página — sem envio de arquivos.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ADMIN -->
-<section class="admin-section" id="secao-admin">
-  <div class="admin-inner">
-    <div class="section-label">Perfil administrador</div>
-    <h2>O que o administrador pode fazer?</h2>
-    <p class="section-desc">O perfil de administrador tem acesso completo ao sistema. Além de visualizar tudo que o leitor vê, pode modificar dados, configurar o sistema e publicar atualizações.</p>
-
-    <div class="admin-grid">
-      <div class="admin-item fade-in">
-        <div class="admin-emoji">🔄</div>
-        <div>
-          <h4>Atualizar status de entregas</h4>
-          <p>Clica no botão de status de qualquer escola em qualquer grupo e altera para Pendente, Em Rota, Entregue ou Atrasada. O ícone muda na hora e os grupos futuros são recalculados automaticamente.</p>
-        </div>
-      </div>
-      <div class="admin-item fade-in">
-        <div class="admin-emoji">📤</div>
-        <div>
-          <h4>Exportar o programa atualizado</h4>
-          <p>Gera um novo arquivo HTML com o estado atual embutido, pronto para ser enviado ou publicado no GitHub Pages. O arquivo exportado mantém todas as alterações feitas na sessão.</p>
-        </div>
-      </div>
-      <div class="admin-item fade-in">
-        <div class="admin-emoji">🧪</div>
-        <div>
-          <h4>Usar o Modo Teste</h4>
-          <p>Entra em um ambiente isolado em preto e branco onde pode simular entregas, atrasos e reorganizações sem afetar os dados reais. Invisível para os leitores. Pode ser ativado na tela de login ou dentro do sistema.</p>
-        </div>
-      </div>
-      <div class="admin-item fade-in">
-        <div class="admin-emoji">🔐</div>
-        <div>
-          <h4>Alterar senhas de acesso</h4>
-          <p>Redefine as senhas do perfil administrador e do perfil leitor diretamente dentro do sistema. As novas senhas são aplicadas no próximo arquivo exportado.</p>
-        </div>
-      </div>
-      <div class="admin-item fade-in">
-        <div class="admin-emoji">🖨️</div>
-        <div>
-          <h4>Imprimir grupos</h4>
-          <p>Imprime o grupo atualmente visualizado em formato A4 limpo — sem menus, botões ou painel administrativo. Inclui o Quadro 1 de produção, o Quadro 2 de escolas e o infográfico de evolução.</p>
-        </div>
-      </div>
-      <div class="admin-item fade-in">
-        <div class="admin-emoji">📋</div>
-        <div>
-          <h4>Acessar grupos passados</h4>
-          <p>Visualiza e edita grupos de datas anteriores. Escolas de grupos passados permanecem visíveis no grupo original e, se marcadas como entregues, alimentam automaticamente o histórico.</p>
-        </div>
-      </div>
-      <div class="admin-item fade-in">
-        <div class="admin-emoji">💾</div>
-        <div>
-          <h4>Salvar localmente</h4>
-          <p>Salva o estado atual no armazenamento do próprio navegador. Permite retomar o trabalho ao reabrir o arquivo sem precisar exportar a cada pequena alteração.</p>
-        </div>
-      </div>
-      <div class="admin-item fade-in">
-        <div class="admin-emoji">⚠️</div>
-        <div>
-          <h4>Gerenciar entregas atrasadas</h4>
-          <p>Confirma entregas atrasadas manualmente, alterando o status de Atrasada para Entregue. O sistema nunca marca automaticamente como entregue sem confirmação do administrador.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section></div>
-
-<!-- RODAPÉ -->
-<footer style="background:var(--az);padding:40px;text-align:center;">
-  <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">
-    Controle de Kit Escolares 2026 · SMECEL
-  </div>
-  <div style="font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.06em;margin-bottom:10px;">
-    Prefeitura Municipal de Cuiabá · Secretaria Municipal de Educação, Cultura, Esporte e Lazer · CTA/SMECEL
-  </div>
-  <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:30px;padding:5px 16px;margin-top:4px;">
-    <span style="font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.08em;text-transform:uppercase;">✦ Idealizador</span>
-    <span style="width:1px;height:14px;background:rgba(255,255,255,.15);"></span>
-    <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7);font-family:'Playfair Display',serif;">Leandro Bonfim</span>
-    <span style="font-size:10px;color:rgba(255,255,255,.35);">Técnico de Nível Superior — Administração · CTA/SMECEL</span>
-  </div>
-</footer>
-
-<script>
-
-// ══ GRÁFICOS ══
-const META_ESC = 189;
-const ESC_ENTREGUES = 71;   // do estado atual do programa
-const ESC_ROTA = 6;
-const ESC_PENDENTES = 112;
-
-const META_KITS = 59673;
-const KITS_ENTREGUES = 9629;
-const KITS_ROTA = 1942;
-const KITS_PENDENTES = META_KITS - KITS_ENTREGUES - KITS_ROTA;
-
-// Gráfico 1 — Escolas
-const ctxEsc = document.getElementById('chart-escolas').getContext('2d');
-new Chart(ctxEsc, {
-  type: 'doughnut',
-  data: {
-    labels: ['Entregues', 'Em Rota', 'Pendentes'],
-    datasets: [{
-      data: [ESC_ENTREGUES, ESC_ROTA, ESC_PENDENTES],
-      backgroundColor: ['#4ade80', '#60a5fa', 'rgba(255,255,255,.12)'],
-      borderColor: ['#16a34a', '#3b82f6', 'rgba(255,255,255,.08)'],
-      borderWidth: 2,
-      hoverOffset: 8,
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    cutout: '68%',
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { color: 'rgba(255,255,255,.65)', font: { size: 11, family: 'DM Sans' }, padding: 14, boxWidth: 10, boxHeight: 10 }
-      },
-      tooltip: { callbacks: {
-        label: ctx => ` ${ctx.label}: ${ctx.parsed} escolas (${(ctx.parsed/META_ESC*100).toFixed(1)}%)`
-      }},
-    }
-  },
-  plugins: [{
-    id: 'centerText',
-    beforeDraw(chart) {
-      const { ctx, chartArea: { width, height, top } } = chart;
-      ctx.save();
-      const cx = width/2, cy = top + height/2;
-      ctx.font = 'bold 28px Playfair Display, serif';
-      ctx.fillStyle = '#f9c74f';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText((ESC_ENTREGUES/META_ESC*100).toFixed(0)+'%', cx, cy-8);
-      ctx.font = '10px DM Sans, sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,.45)';
-      ctx.fillText('concluído', cx, cy+14);
-      ctx.restore();
-    }
-  }]
-});
-
-// Gráfico 2 — Kits por modelo
-const ctxKits = document.getElementById('chart-kits').getContext('2d');
-const modelos = ['A','B','C','D1','D2','E1','E2','F3','F4','F5'];
-const metaTipo = {A:894,B:2624,C:8593,D1:6397,D2:6531,E1:6782,E2:7051,F3:6921,F4:6763,F5:7114};
-const entregTipo = {A:114,B:263,C:129,D1:343,D2:217,E1:74,E2:77,F3:0,F4:68,F5:1677}; // estoque inicial como proxy de entregues
-const pcts = modelos.map(m => (entregTipo[m]||0)/metaTipo[m]*100);
-new Chart(ctxKits, {
-  type: 'bar',
-  data: {
-    labels: modelos,
-    datasets: [
-      {
-        label: 'Entregues',
-        data: modelos.map(m => entregTipo[m]||0),
-        backgroundColor: '#4ade80',
-        borderRadius: 5,
-        borderSkipped: false,
-      },
-      {
-        label: 'Pendentes',
-        data: modelos.map(m => metaTipo[m]-(entregTipo[m]||0)),
-        backgroundColor: 'rgba(255,255,255,.08)',
-        borderRadius: 5,
-        borderSkipped: false,
-      }
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    scales: {
-      x: {
-        stacked: true,
-        ticks: { color: 'rgba(255,255,255,.6)', font: { size: 10, family: 'DM Sans' } },
-        grid: { display: false },
-      },
-      y: {
-        stacked: true,
-        ticks: { color: 'rgba(255,255,255,.4)', font: { size: 9 }, maxTicksLimit: 5 },
-        grid: { color: 'rgba(255,255,255,.05)' },
-      }
-    },
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { color: 'rgba(255,255,255,.65)', font: { size: 11, family: 'DM Sans' }, padding: 14, boxWidth: 10, boxHeight: 10 }
-      },
-      tooltip: { callbacks: {
-        label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('pt-BR')}`
-      }}
-    }
-  }
-});
-
-// ══ DADOS GEO ══
-const ESCOLAS_GEO = [{"seq": 1, "reg": "CENTRO DE DISTRIBUIÇÃO", "nome": "Centro de Distribuição da SMECEL (RESERVA TÉCNICA)", "lat": -15.64647, "lng": -56.00925, "status": "ENTREGUE"}, {"seq": 2, "reg": "CAMPO", "nome": "EMEBC Estevão Alves", "lat": -15.538, "lng": -55.923, "status": "PENDENTE", "grupo": 1}, {"seq": 3, "reg": "CAMPO", "nome": "EMEBC Herbert de Souza", "lat": -15.63035, "lng": -55.93027, "status": "PENDENTE", "grupo": 1}, {"seq": 4, "reg": "CAMPO", "nome": "EMEBC Nossa Senhora Penha de França", "lat": -15.4601778, "lng": -55.9773076, "status": "PENDENTE", "grupo": 1}, {"seq": 5, "reg": "CAMPO", "nome": "EMEBC Nova Esperança", "lat": -15.729611, "lng": -56.045528, "status": "PENDENTE", "grupo": 1}, {"seq": 6, "reg": "CAMPO", "nome": "EMEBC Novo Renascer", "lat": -15.57, "lng": -55.777278, "status": "PENDENTE", "grupo": 1}, {"seq": 7, "reg": "CAMPO", "nome": "EMEBC Profª Benedita Xavier Rodrigues", "lat": -15.356219, "lng": -56.2306099, "status": "EM ROTA"}, {"seq": 8, "reg": "CAMPO", "nome": "EMEBC Profª Hilda Caetano de Oliveira Leite", "lat": -15.5476556, "lng": -56.1579299, "status": "EM ROTA"}, {"seq": 9, "reg": "CAMPO", "nome": "EMEBC Profº Udeney Gonçalves de Amorim", "lat": -15.2818012, "lng": -56.1302417, "status": "PENDENTE", "grupo": 1}, {"seq": 10, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Assistencial Jesus é o Caminho e a Vida (Estrelinha de Jesus)", "lat": -15.5480261, "lng": -56.0317355, "status": "ENTREGUE"}, {"seq": 11, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Beneficente e Sociedade Menino Jesus", "lat": -15.5662721, "lng": -56.029192, "status": "ENTREGUE"}, {"seq": 12, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Beneficente Educativa Cultural Voz da Verdade", "lat": -15.6089064, "lng": -56.1332324, "status": "ENTREGUE"}, {"seq": 13, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Dona Alice Rodrigues (Creche Leãozinho Kids)", "lat": -15.6306627, "lng": -56.0098105, "status": "ENTREGUE"}, {"seq": 14, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Espírita Yvonne Amaral Pereira", "lat": -15.5364838, "lng": -56.0736481, "status": "ENTREGUE"}, {"seq": 15, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Filantrópica São Judas Tadeu", "lat": -15.6143255, "lng": -55.9961606, "status": "ENTREGUE"}, {"seq": 17, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Falcãozinho", "lat": -15.6096427, "lng": -56.108836, "status": "ENTREGUE"}, {"seq": 18, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Filantrópica Boa Vontade", "lat": -15.6391055, "lng": -56.0062826, "status": "ENTREGUE"}, {"seq": 19, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Nina Zaque  ( Seara de Luz)", "lat": -15.6100219, "lng": -55.9853698, "status": "ENTREGUE"}, {"seq": 20, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Voz da Verdade (Unidade do Distrito da Guia)", "lat": -15.6089064, "lng": -56.1332324, "status": "ENTREGUE"}, {"seq": 22, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Escola Filantrôpica Superar", "lat": -15.6444384, "lng": -55.9740933, "status": "ENTREGUE"}, {"seq": 24, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Obras Sociais da Associação Irmão Praeiro", "lat": -15.5440394, "lng": -56.0667453, "status": "ENTREGUE"}, {"seq": 25, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Obras Sociais Vianna de Carvalho", "lat": -15.5517093, "lng": -56.0828325, "status": "ENTREGUE"}, {"seq": 26, "reg": "LESTE", "nome": "CEIC Benedita Dias Evangelista", "lat": -15.5985598, "lng": -56.0692437, "status": "ENTREGUE"}, {"seq": 27, "reg": "LESTE", "nome": "CEIC CAIC Eldorado", "lat": -15.5887386, "lng": -56.0479234, "status": "ENTREGUE"}, {"seq": 28, "reg": "LESTE", "nome": "CEIC Colomba Cacelia Lombardi Dorileo", "lat": -15.6109532, "lng": -56.0263207, "status": "ENTREGUE"}, {"seq": 29, "reg": "LESTE", "nome": "CEIC Dona Micaela Henrique de Souza Lima", "lat": -15.596662, "lng": -56.085365, "status": "ENTREGUE"}, {"seq": 30, "reg": "LESTE", "nome": "CEIC Edna Catharina Pierri Ricci", "lat": -15.5793469, "lng": -56.0237134, "status": "ENTREGUE"}, {"seq": 31, "reg": "LESTE", "nome": "CEIC José Luiz Borges Garcia", "lat": -15.5832216, "lng": -56.0348561, "status": "ENTREGUE"}, {"seq": 32, "reg": "LESTE", "nome": "CEIC Josefa Catarina de Almeida", "lat": -15.6185343, "lng": -56.0828498, "status": "ENTREGUE"}, {"seq": 33, "reg": "LESTE", "nome": "CEIC Lucila Ferreira Fortes", "lat": -15.6022772, "lng": -56.0832041, "status": "ENTREGUE"}, {"seq": 34, "reg": "LESTE", "nome": "CEIC Mariana Fernandes Macedo", "lat": -15.6137633, "lng": -56.098121, "status": "ENTREGUE"}, {"seq": 35, "reg": "LESTE", "nome": "CEIC Prof. Monserrat Ismênia de Moraes Borge", "lat": -15.5978205, "lng": -56.0746124, "status": "ENTREGUE"}, {"seq": 36, "reg": "LESTE", "nome": "CEIC Risoleta Neves", "lat": -15.5758687, "lng": -56.034864, "status": "PENDENTE", "grupo": 1}, {"seq": 37, "reg": "LESTE", "nome": "CEIC Rosângela Campos Vieira Passos", "lat": -15.5976582, "lng": -56.0672393, "status": "ENTREGUE"}, {"seq": 38, "reg": "LESTE", "nome": "CEIC Santa Clara", "lat": -15.6004706, "lng": -56.0729302, "status": "ENTREGUE"}, {"seq": 39, "reg": "LESTE", "nome": "CEIC Santa Inês – Poção", "lat": -15.60869, "lng": -56.08753, "status": "EM ROTA"}, {"seq": 40, "reg": "LESTE", "nome": "CEIC São Francisco de Assis", "lat": -15.63188, "lng": -56.07566, "status": "ENTREGUE"}, {"seq": 41, "reg": "LESTE", "nome": "CEIC São José Operário", "lat": -15.6173394, "lng": -56.0904792, "status": "EM ROTA"}, {"seq": 42, "reg": "LESTE", "nome": "CEIC São Matheus", "lat": -15.6209375, "lng": -56.0915665, "status": "ENTREGUE"}, {"seq": 43, "reg": "LESTE", "nome": "CMEI Coronel José Meirelles", "lat": -15.6028143, "lng": -56.0832156, "status": "PENDENTE", "grupo": 1}, {"seq": 44, "reg": "LESTE", "nome": "CMEI Manoel de Barros", "lat": -15.6088421, "lng": -56.0247866, "status": "PENDENTE", "grupo": 2}, {"seq": 45, "reg": "LESTE", "nome": "CMEI Regina Pia Padilla de Borbon Neves", "lat": -15.5788235, "lng": -56.024187, "status": "PENDENTE", "grupo": 2}, {"seq": 46, "reg": "LESTE", "nome": "Creche João Crisostomo de Figueiredo", "lat": -15.5683571, "lng": -56.0253483, "status": "ENTREGUE"}, {"seq": 47, "reg": "LESTE", "nome": "EMEB 12 de Outubro", "lat": -15.5853548, "lng": -56.0349419, "status": "PENDENTE", "grupo": 2}, {"seq": 48, "reg": "LESTE", "nome": "EMEB Agostinho Simplício de Figueiredo", "lat": -15.6072553, "lng": -56.0859656, "status": "PENDENTE", "grupo": 2}, {"seq": 49, "reg": "LESTE", "nome": "EMEB Antonio Ferreira Valentim", "lat": -15.6222851, "lng": -56.0777187, "status": "PENDENTE", "grupo": 2}, {"seq": 50, "reg": "LESTE", "nome": "EMEB Augusto Mário Vieira", "lat": -15.5875666, "lng": -56.0636667, "status": "PENDENTE", "grupo": 2}, {"seq": 51, "reg": "LESTE", "nome": "EMEB Carlos Alberto Reyes Maldonado", "lat": -15.6094038, "lng": -56.024467, "status": "PENDENTE", "grupo": 2}, {"seq": 52, "reg": "LESTE", "nome": "EMEB Celina Fialho Bezerra", "lat": -15.5790953, "lng": -56.0240638, "status": "PENDENTE", "grupo": 2}, {"seq": 53, "reg": "LESTE", "nome": "EMEB Dejani Ribeiro Campos", "lat": -15.5634929, "lng": -56.0153701, "status": "PENDENTE", "grupo": 3}, {"seq": 54, "reg": "LESTE", "nome": "EMEB Dom Bosco do Praeirinho", "lat": -15.6321851, "lng": -56.0761841, "status": "PENDENTE", "grupo": 3}, {"seq": 55, "reg": "LESTE", "nome": "EMEB Dr. Fábio Firmino Leite", "lat": -15.5653417, "lng": -56.01799, "status": "PENDENTE", "grupo": 3}, {"seq": 56, "reg": "LESTE", "nome": "EMEB Dr. Orlando Nigro", "lat": -15.5987849, "lng": -56.0699881, "status": "PENDENTE", "grupo": 3}, {"seq": 57, "reg": "LESTE", "nome": "EMEB Henrique da Silva Prado", "lat": -15.6013133, "lng": -56.0834955, "status": "PENDENTE", "grupo": 3}, {"seq": 58, "reg": "LESTE", "nome": "EMEB Irmã Maria Betty de Souza Pires", "lat": -15.5787586, "lng": -56.0391018, "status": "PENDENTE", "grupo": 3}, {"seq": 59, "reg": "LESTE", "nome": "EMEB Jescelino José Reiners", "lat": -15.57934, "lng": -56.0322, "status": "ENTREGUE"}, {"seq": 60, "reg": "LESTE", "nome": "EMEB José Luiz Borges Garcia", "lat": -15.5853559, "lng": -56.0617898, "status": "PENDENTE", "grupo": 3}, {"seq": 61, "reg": "LESTE", "nome": "EMEB Lisaldo Farias Sodré (antiga EMEB 8 de Abril)", "lat": -15.5717, "lng": -56.0773, "status": "PENDENTE", "grupo": 3}, {"seq": 62, "reg": "LESTE", "nome": "EMEB Maria da Glória de Souza", "lat": -15.5913841, "lng": -56.081209, "status": "PENDENTE", "grupo": 4}, {"seq": 63, "reg": "LESTE", "nome": "EMEB Prof.ª Elza Luiza Esteves", "lat": -15.5829284, "lng": -56.0752136, "status": "PENDENTE", "grupo": 4}, {"seq": 64, "reg": "LESTE", "nome": "EMEB Profª Guilhermina de Figueiredo", "lat": -15.5886394, "lng": -56.0602564, "status": "PENDENTE", "grupo": 4}, {"seq": 65, "reg": "LESTE", "nome": "EMEB Profª Maria Ambrósio Pommot", "lat": -15.6109341, "lng": -56.0262359, "status": "PENDENTE", "grupo": 4}, {"seq": 66, "reg": "LESTE", "nome": "EMEB Profª Tereza Lobo", "lat": -15.6131117, "lng": -56.0992743, "status": "PENDENTE", "grupo": 4}, {"seq": 67, "reg": "LESTE", "nome": "EMEB Professora Francisca Figeiredo Arruda Martins", "lat": -15.5886036, "lng": -56.0474643, "status": "PENDENTE", "grupo": 4}, {"seq": 68, "reg": "LESTE", "nome": "EMEB Profº Filogonio Correa", "lat": -15.6185463, "lng": -56.0821579, "status": "PENDENTE", "grupo": 4}, {"seq": 69, "reg": "LESTE", "nome": "EMEB Profº Hélio de Souza Vieira", "lat": -15.6300702, "lng": -56.0746778, "status": "PENDENTE", "grupo": 4}, {"seq": 70, "reg": "LESTE", "nome": "EMEB Quintino Pereira de Freitas", "lat": -15.5825575, "lng": -56.0730648, "status": "PENDENTE", "grupo": 5}, {"seq": 71, "reg": "LESTE", "nome": "EMEB Santa Cecília", "lat": -15.6099929, "lng": -56.0808258, "status": "PENDENTE", "grupo": 5}, {"seq": 72, "reg": "LESTE", "nome": "EMEB Silvino Leite de Arruda", "lat": -15.5814069, "lng": -56.0374723, "status": "PENDENTE", "grupo": 5}, {"seq": 73, "reg": "NORTE", "nome": "CEIC Alê Guilherme Arfux da Costa Ribeiro", "lat": -15.5435959, "lng": -56.0755904, "status": "ENTREGUE"}, {"seq": 74, "reg": "NORTE", "nome": "CEIC Altos da Gloria", "lat": -15.5440838, "lng": -56.0200041, "status": "ENTREGUE"}, {"seq": 75, "reg": "NORTE", "nome": "CEIC Inocencio Leocadio da Rosa", "lat": -15.5601928, "lng": -56.0829322, "status": "ENTREGUE"}, {"seq": 76, "reg": "NORTE", "nome": "CEIC João Batista Scalabrini", "lat": -15.5722315, "lng": -56.0504309, "status": "ENTREGUE"}, {"seq": 77, "reg": "NORTE", "nome": "CEIC Josefa da Silva Parente", "lat": -15.580349, "lng": -56.0621284, "status": "ENTREGUE"}, {"seq": 78, "reg": "NORTE", "nome": "CEIC Maria Eunice Duarte Barros", "lat": -15.5659547, "lng": -56.0683926, "status": "ENTREGUE"}, {"seq": 79, "reg": "NORTE", "nome": "CEIC Maria Ligia Borges Garcia", "lat": -15.5370526, "lng": -56.0757813, "status": "ENTREGUE"}, {"seq": 80, "reg": "NORTE", "nome": "CEIC Naídes Rodrigues R. da Cruz", "lat": -15.5702575, "lng": -56.0458738, "status": "EM ROTA"}, {"seq": 81, "reg": "NORTE", "nome": "CEIC Nasla Joaquim Aschar", "lat": -15.5523873, "lng": -56.0564442, "status": "EM ROTA"}, {"seq": 82, "reg": "NORTE", "nome": "CEIC Pe. Armando Cavallo", "lat": -15.549039, "lng": -56.0323723, "status": "ENTREGUE"}, {"seq": 83, "reg": "NORTE", "nome": "CEIC Profª Luciene Ferreira de Oliveira (antiga creche Jardim Umuarama)", "lat": -15.5503172, "lng": -56.0254011, "status": "ENTREGUE"}, {"seq": 84, "reg": "NORTE", "nome": "CEIC Santa Inês – CPA", "lat": -15.5710609, "lng": -56.0357894, "status": "ENTREGUE"}, {"seq": 85, "reg": "NORTE", "nome": "CEIC Wilmon Ferreira De Souza", "lat": -15.5569896, "lng": -56.025802, "status": "ENTREGUE"}, {"seq": 86, "reg": "NORTE", "nome": "CMEI Antonio Marcos Ruzzene Balbino", "lat": -15.5599785, "lng": -56.0770186, "status": "PENDENTE", "grupo": 5}, {"seq": 87, "reg": "NORTE", "nome": "CMEI Joana Mont´Serrat Spindola", "lat": -15.5715291, "lng": -56.0362863, "status": "PENDENTE", "grupo": 5}, {"seq": 88, "reg": "NORTE", "nome": "CMEI Jornalista Paulo Maria Ferreira Leite", "lat": -15.5417572, "lng": -56.0672592, "status": "PENDENTE", "grupo": 5}, {"seq": 89, "reg": "NORTE", "nome": "CMEI Maria Conceição Oliveira de Souza", "lat": -15.5597694, "lng": -56.0297799, "status": "PENDENTE", "grupo": 5}, {"seq": 90, "reg": "NORTE", "nome": "CMEI Nevio Lotufo", "lat": -15.5628497, "lng": -56.0600528, "status": "PENDENTE", "grupo": 5}, {"seq": 91, "reg": "NORTE", "nome": "CMEI Paulo Ronan Ferraz Santos", "lat": -15.5367367, "lng": -56.0331285, "status": "PENDENTE", "grupo": 6}, {"seq": 92, "reg": "NORTE", "nome": "CMEI Plácido Flaviano Curvo Filho", "lat": -15.5493708, "lng": -56.0462383, "status": "PENDENTE", "grupo": 6}, {"seq": 93, "reg": "NORTE", "nome": "CMEI Prefeito Dante de Oliveira", "lat": -15.5577288, "lng": -56.0253374, "status": "PENDENTE", "grupo": 6}, {"seq": 94, "reg": "NORTE", "nome": "CMEI Sergio Luiz Ferreira da Silva", "lat": -15.5405437, "lng": -56.041912, "status": "PENDENTE", "grupo": 6}, {"seq": 95, "reg": "NORTE", "nome": "EMEB Antônia Tita Maciel de Campos", "lat": -15.547045, "lng": -56.079497, "status": "PENDENTE", "grupo": 6}, {"seq": 96, "reg": "NORTE", "nome": "EMEB Aristotelino Alves Praeiro", "lat": -15.545305, "lng": -56.0323071, "status": "PENDENTE", "grupo": 6}, {"seq": 97, "reg": "NORTE", "nome": "EMEB Cel. Octayde Jorge da Silva", "lat": -15.5718883, "lng": -56.0510293, "status": "PENDENTE", "grupo": 6}, {"seq": 98, "reg": "NORTE", "nome": "EMEB Dep. Ulisses Guimarães", "lat": -15.5501291, "lng": -56.0504158, "status": "PENDENTE", "grupo": 6}, {"seq": 99, "reg": "NORTE", "nome": "EMEB Lenine de Campos Povoas", "lat": -15.5445808, "lng": -56.0753376, "status": "PENDENTE", "grupo": 7}, {"seq": 100, "reg": "NORTE", "nome": "EMEB Madre Marta Cerutti", "lat": -15.5802411, "lng": -56.0633471, "status": "PENDENTE", "grupo": 7}, {"seq": 101, "reg": "NORTE", "nome": "EMEB Maria Lucila da Silva Barros", "lat": -15.5593817, "lng": -56.0908312, "status": "PENDENTE", "grupo": 7}, {"seq": 102, "reg": "NORTE", "nome": "EMEB Orzina de Amorim Soares", "lat": -15.5385343, "lng": -56.0680068, "status": "PENDENTE", "grupo": 7}, {"seq": 103, "reg": "NORTE", "nome": "EMEB Pedrosa de Morais e Silva", "lat": -15.5471661, "lng": -56.0550554, "status": "PENDENTE", "grupo": 7}, {"seq": 104, "reg": "NORTE", "nome": "EMEB Profª Gracildes de Mello Dantas", "lat": -15.5440838, "lng": -56.0200041, "status": "PENDENTE", "grupo": 7}, {"seq": 105, "reg": "NORTE", "nome": "EMEB Profº Firmo Jose Rodrigues", "lat": -15.5581946, "lng": -56.0254273, "status": "PENDENTE", "grupo": 7}, {"seq": 106, "reg": "NORTE", "nome": "EMEB Rafael Rueda", "lat": -15.5515225, "lng": -56.0251051, "status": "PENDENTE", "grupo": 7}, {"seq": 107, "reg": "NORTE", "nome": "EMEB Senhorinha Ana Alves de Oliveira", "lat": -15.5370017, "lng": -56.0767245, "status": "PENDENTE", "grupo": 8}, {"seq": 108, "reg": "NORTE", "nome": "EMEB Ten. Octacilio Sebastião da Cruz", "lat": -15.5696574, "lng": -56.0422697, "status": "PENDENTE", "grupo": 8}, {"seq": 109, "reg": "OESTE", "nome": "CEIC Elzira Cavalcante Silva", "lat": -15.5480796, "lng": -56.1580769, "status": "ENTREGUE"}, {"seq": 110, "reg": "OESTE", "nome": "CEIC Espaço Livre", "lat": -15.5879606, "lng": -56.0902108, "status": "ENTREGUE"}, {"seq": 111, "reg": "OESTE", "nome": "CEIC Francisco Santana", "lat": -15.5639477, "lng": -56.1082533, "status": "ENTREGUE"}, {"seq": 112, "reg": "OESTE", "nome": "CEIC Jose Nicolau Pinto", "lat": -15.6080043, "lng": -56.1078675, "status": "ENTREGUE"}, {"seq": 113, "reg": "OESTE", "nome": "CEIC Macaria Militona de Santana", "lat": -15.5820172, "lng": -56.11557, "status": "ENTREGUE"}, {"seq": 114, "reg": "OESTE", "nome": "CEIC Maria Benedita Martins de Oliveira", "lat": -15.6135286, "lng": -56.1246165, "status": "ENTREGUE"}, {"seq": 115, "reg": "OESTE", "nome": "CEIC Maria de Figueiredo Nunes", "lat": -15.5633839, "lng": -56.1162555, "status": "ENTREGUE"}, {"seq": 116, "reg": "OESTE", "nome": "CEIC Renisea G. Barua", "lat": -15.5649572, "lng": -56.0952589, "status": "ENTREGUE"}, {"seq": 117, "reg": "OESTE", "nome": "CEIC Sebastiao Tolomeu", "lat": -15.5989418, "lng": -56.1322433, "status": "ENTREGUE"}, {"seq": 118, "reg": "OESTE", "nome": "CEIC Tertuliana Maria (Mãe Nhara)", "lat": -15.5816809, "lng": -56.0854777, "status": "ENTREGUE"}, {"seq": 119, "reg": "OESTE", "nome": "EMEB Adelina Pereira Ventura", "lat": -15.6040413, "lng": -56.1144688, "status": "PENDENTE", "grupo": 8}, {"seq": 120, "reg": "OESTE", "nome": "EMEB Gláucia Maria Borges Garcia", "lat": -15.5687405, "lng": -56.0972484, "status": "PENDENTE", "grupo": 8}, {"seq": 121, "reg": "OESTE", "nome": "EMEB Juarez Sodré Farias", "lat": -15.5844078, "lng": -56.0896435, "status": "PENDENTE", "grupo": 8}, {"seq": 122, "reg": "OESTE", "nome": "EMEB Mal. Cândido Mariano da Silva Rondon", "lat": -15.579743, "lng": -56.0811535, "status": "PENDENTE", "grupo": 8}, {"seq": 123, "reg": "OESTE", "nome": "EMEB Maria Eunice Duarte Barros", "lat": -15.5988377, "lng": -56.1328438, "status": "PENDENTE", "grupo": 8}, {"seq": 124, "reg": "OESTE", "nome": "EMEB Maria Tomich Monteiro da Silva", "lat": -15.5614318, "lng": -56.1130447, "status": "PENDENTE", "grupo": 8}, {"seq": 125, "reg": "OESTE", "nome": "EMEB Nossa Senhora Aparecida", "lat": -15.5667386, "lng": -56.1170379, "status": "PENDENTE", "grupo": 9}, {"seq": 126, "reg": "OESTE", "nome": "EMEB Profª Alzira Valladares", "lat": -15.6013982, "lng": -56.1138575, "status": "PENDENTE", "grupo": 9}, {"seq": 127, "reg": "OESTE", "nome": "EMEB Profª Esmeralda de Campos Fontes", "lat": -15.57865, "lng": -56.11792, "status": "PENDENTE", "grupo": 9}, {"seq": 128, "reg": "OESTE", "nome": "EMEB Profª Rita Caldas Castrillon", "lat": -15.618379, "lng": -56.12332, "status": "PENDENTE", "grupo": 9}, {"seq": 129, "reg": "OESTE", "nome": "EMEB Profº Ezequiel Pompeu Ribeiro de Siqueira", "lat": -15.5856127, "lng": -56.0944411, "status": "PENDENTE", "grupo": 9}, {"seq": 130, "reg": "OESTE", "nome": "EMEB Profº Francisval de Brito", "lat": -15.6187927, "lng": -56.1289401, "status": "PENDENTE", "grupo": 9}, {"seq": 131, "reg": "OESTE", "nome": "EMEB Profº Ranulpho Paes de Barros", "lat": -15.5993999, "lng": -56.133829, "status": "PENDENTE", "grupo": 9}, {"seq": 132, "reg": "OESTE", "nome": "EMEB São João Bosco", "lat": -15.6123922, "lng": -56.1263425, "status": "PENDENTE", "grupo": 9}, {"seq": 133, "reg": "SUL", "nome": "CEIC Amalia Curvo de Campos", "lat": -15.6464733, "lng": -56.0335512, "status": "ENTREGUE"}, {"seq": 134, "reg": "SUL", "nome": "CEIC Clóvis Dias Ferreira", "lat": -15.62977, "lng": -55.953583, "status": "ENTREGUE"}, {"seq": 135, "reg": "SUL", "nome": "CEIC Helenita Paes de Assunção", "lat": -15.63179, "lng": -56.01406, "status": "ENTREGUE"}, {"seq": 136, "reg": "SUL", "nome": "CEIC Jamil Boutros Nadaf", "lat": -15.616306, "lng": -55.990917, "status": "ENTREGUE"}, {"seq": 137, "reg": "SUL", "nome": "CEIC José Gabriel da Costa", "lat": -15.6481383, "lng": -56.0617119, "status": "ENTREGUE"}, {"seq": 138, "reg": "SUL", "nome": "CEIC Lais Amiccuci Soares Martins", "lat": -15.616139, "lng": -56.00811, "status": "ENTREGUE"}, {"seq": 139, "reg": "SUL", "nome": "CEIC Lelita Lino Da Silva", "lat": -15.6474526, "lng": -56.0461486, "status": "ENTREGUE"}, {"seq": 140, "reg": "SUL", "nome": "CEIC Manoelino de Jesus", "lat": -15.63856, "lng": -55.980194, "status": "ENTREGUE"}, {"seq": 141, "reg": "SUL", "nome": "CEIC Marechal Rondon", "lat": -15.6473, "lng": -55.99246, "status": "ENTREGUE"}, {"seq": 142, "reg": "SUL", "nome": "CEIC Maria Nery Batista Ribeiro", "lat": -15.608333, "lng": -55.994917, "status": "ENTREGUE"}, {"seq": 143, "reg": "SUL", "nome": "CEIC Mariuza do Carmo Ojeda de Barros", "lat": -15.63044, "lng": -56.008944, "status": "ENTREGUE"}, {"seq": 144, "reg": "SUL", "nome": "CEIC Portal da Fé", "lat": -15.63876, "lng": -55.94218, "status": "ENTREGUE"}, {"seq": 145, "reg": "SUL", "nome": "CEIC Professor Aecim Tocantins", "lat": -15.6653603, "lng": -56.058645, "status": "ENTREGUE"}, {"seq": 146, "reg": "SUL", "nome": "CEIC Rafael Rueda CAIC", "lat": -15.63045, "lng": -55.95831, "status": "ENTREGUE"}, {"seq": 147, "reg": "SUL", "nome": "CEIC São Benedito", "lat": -15.63347, "lng": -55.9845, "status": "ENTREGUE"}, {"seq": 148, "reg": "SUL", "nome": "CEIC Silva Freire", "lat": -15.6353189, "lng": -56.0481149, "status": "ENTREGUE"}, {"seq": 149, "reg": "SUL", "nome": "CMEI Aliane Fatima Rodrigues Monteiro", "lat": -15.647861, "lng": -55.996833, "status": "PENDENTE", "grupo": 10}, {"seq": 150, "reg": "SUL", "nome": "CMEI Antonio Batista da Cruz", "lat": -15.636528, "lng": -55.9875, "status": "PENDENTE", "grupo": 10}, {"seq": 151, "reg": "SUL", "nome": "CMEI Auro Ida", "lat": -15.64138, "lng": -56.00711, "status": "PENDENTE", "grupo": 10}, {"seq": 152, "reg": "SUL", "nome": "CMEI Dr. Leonel de Moura Brizola", "lat": -15.614806, "lng": -55.9905, "status": "PENDENTE", "grupo": 10}, {"seq": 153, "reg": "SUL", "nome": "CMEI Edgar Santana de Amorim", "lat": -15.63907, "lng": -55.99745, "status": "PENDENTE", "grupo": 10}, {"seq": 154, "reg": "SUL", "nome": "CMEI Engenheiro Oscar Amelito", "lat": -15.672361, "lng": -56.037694, "status": "PENDENTE", "grupo": 10}, {"seq": 155, "reg": "SUL", "nome": "CMEI Governador José Garcia Neto", "lat": -15.629556, "lng": -55.98825, "status": "PENDENTE", "grupo": 10}, {"seq": 156, "reg": "SUL", "nome": "CMEI Jaira Cuiabano Correa da Costa", "lat": -15.6336, "lng": -55.94161, "status": "PENDENTE", "grupo": 10}, {"seq": 157, "reg": "SUL", "nome": "CMEI Jornalista Marcos Coutinho", "lat": -15.655611, "lng": -55.97725, "status": "PENDENTE", "grupo": 11}, {"seq": 158, "reg": "SUL", "nome": "CMEI Professor Ady de Figueiredo", "lat": -15.63463, "lng": -55.94677, "status": "PENDENTE", "grupo": 11}, {"seq": 159, "reg": "SUL", "nome": "CMEI Professora Marilia Ines Pedrollo Salomoni", "lat": -15.6632486, "lng": -56.0363962, "status": "PENDENTE", "grupo": 11}, {"seq": 160, "reg": "SUL", "nome": "CMEI Vereador Julio Cesar Pinheiro", "lat": -15.60687, "lng": -55.98423, "status": "PENDENTE", "grupo": 11}, {"seq": 161, "reg": "SUL", "nome": "EMEB Ana Luiza Prado Bastos", "lat": -15.612222, "lng": -55.996083, "status": "PENDENTE", "grupo": 11}, {"seq": 162, "reg": "SUL", "nome": "EMEB Ana Teresa Arco Krause", "lat": -15.64525, "lng": -55.976, "status": "PENDENTE", "grupo": 11}, {"seq": 163, "reg": "SUL", "nome": "EMEB Clovis Huguenei Neto", "lat": -15.684, "lng": -56.035472, "status": "PENDENTE", "grupo": 11}, {"seq": 164, "reg": "SUL", "nome": "EMEB Constança Figueiredo Palma Bem Bem", "lat": -15.61294, "lng": -55.99303, "status": "PENDENTE", "grupo": 11}, {"seq": 165, "reg": "SUL", "nome": "EMEB Eugênia Pereira de Mello", "lat": -15.6352962, "lng": -56.0494867, "status": "PENDENTE", "grupo": 12}, {"seq": 166, "reg": "SUL", "nome": "EMEB Floriano Bocheneki", "lat": -15.6654415, "lng": -56.0591002, "status": "PENDENTE", "grupo": 12}, {"seq": 167, "reg": "SUL", "nome": "EMEB Francisco Pedroso da Silva", "lat": -15.641139, "lng": -56.01325, "status": "PENDENTE", "grupo": 12}, {"seq": 168, "reg": "SUL", "nome": "EMEB Jean Carlos Pinho Santos", "lat": -15.62964, "lng": -55.95856, "status": "PENDENTE", "grupo": 12}, {"seq": 169, "reg": "SUL", "nome": "EMEB Jesus Criança", "lat": -15.63983, "lng": -55.97247, "status": "PENDENTE", "grupo": 12}, {"seq": 170, "reg": "SUL", "nome": "EMEB Joana Dark da Silva", "lat": -15.674694, "lng": -56.036889, "status": "PENDENTE", "grupo": 12}, {"seq": 171, "reg": "SUL", "nome": "EMEB José Torquato da Silva", "lat": -15.6509277, "lng": -56.0353069, "status": "PENDENTE", "grupo": 12}, {"seq": 172, "reg": "SUL", "nome": "EMEB Liberdade", "lat": -15.608333, "lng": -55.995389, "status": "PENDENTE", "grupo": 12}, {"seq": 173, "reg": "SUL", "nome": "EMEB Maria Elazir Correa de Figueiredo", "lat": -15.61439, "lng": -56.00314, "status": "PENDENTE", "grupo": 13}, {"seq": 174, "reg": "SUL", "nome": "EMEB Maximiano Arcanjo da Cruz", "lat": -15.617083, "lng": -55.990056, "status": "PENDENTE", "grupo": 13}, {"seq": 175, "reg": "SUL", "nome": "EMEB Ministro Marcos Freire", "lat": -15.6265, "lng": -56.015417, "status": "PENDENTE", "grupo": 13}, {"seq": 176, "reg": "SUL", "nome": "EMEB Moacyr Gratidiano Dorileo", "lat": -15.6309565, "lng": -56.0443705, "status": "PENDENTE", "grupo": 13}, {"seq": 177, "reg": "SUL", "nome": "EMEB Osmar José do Carmo Cabral", "lat": -15.61365, "lng": -55.99482, "status": "PENDENTE", "grupo": 13}, {"seq": 178, "reg": "SUL", "nome": "EMEB Padre Raimundo Conceição Pombo Moreira da Cruz", "lat": -15.6688909, "lng": -56.0406867, "status": "PENDENTE", "grupo": 13}, {"seq": 179, "reg": "SUL", "nome": "EMEB Profª Maria Dimpina Lobo Duarte", "lat": -15.6286867, "lng": -56.0544738, "status": "PENDENTE", "grupo": 13}, {"seq": 180, "reg": "SUL", "nome": "EMEB Professora Lidioliria Santana", "lat": -15.6125, "lng": -55.979389, "status": "PENDENTE", "grupo": 13}, {"seq": 182, "reg": "SUL", "nome": "EMEB Profº Zeferino Leite de Oliveira", "lat": -15.63593, "lng": -55.94577, "status": "ENTREGUE"}, {"seq": 183, "reg": "SUL", "nome": "EMEB São Sebastião", "lat": -15.63348, "lng": -55.98482, "status": "PENDENTE", "grupo": 14}, {"seq": 184, "reg": "SUL", "nome": "EMEB Senador Darcy Ribeiro", "lat": -15.651083, "lng": -55.980167, "status": "PENDENTE", "grupo": 14}, {"seq": 185, "reg": "SUL", "nome": "EMEB Senador Gastão Matos Muller", "lat": -15.62839, "lng": -55.95337, "status": "PENDENTE", "grupo": 14}, {"seq": 186, "reg": "SUL", "nome": "EMEB Silva Freire", "lat": -15.6529471, "lng": -56.0274669, "status": "PENDENTE", "grupo": 14}, {"seq": 187, "reg": "SUL", "nome": "EMEB Tereza Benguela", "lat": -15.6407413, "lng": -56.0435859, "status": "PENDENTE", "grupo": 14}, {"seq": 188, "reg": "SUL", "nome": "EMEB Vereador Paulo de Campos Borges", "lat": -15.64702, "lng": -55.99191, "status": "PENDENTE", "grupo": 14}];
-
-// ══ GRUPOS DE ENTREGA ══
-const GRUPOS = [
-  {num:'G01', data:'16/04', escolas:5,  kits:2185},
-  {num:'G02', data:'17/04', escolas:6,  kits:2183},
-  {num:'G03', data:'20/04', escolas:6,  kits:2333},
-  {num:'G04', data:'22/04', escolas:6,  kits:2405},
-  {num:'G05', data:'23/04', escolas:4,  kits:1637},
-  {num:'G06', data:'24/04', escolas:4,  kits:2358},
-  {num:'G07', data:'27/04', escolas:5,  kits:2139},
-  {num:'G08', data:'28/04', escolas:4,  kits:2236},
-  {num:'G09', data:'29/04', escolas:5,  kits:2061},
-  {num:'G10', data:'30/04', escolas:3,  kits:1675},
-  {num:'G11', data:'04/05', escolas:5,  kits:2080},
-  {num:'G12', data:'05/05', escolas:5,  kits:2345},
-  {num:'G13', data:'06/05', escolas:6,  kits:2278},
-  {num:'G14', data:'07/05', escolas:8,  kits:2395},
-  {num:'G15', data:'08/05', escolas:5,  kits:2197},
-  {num:'G16', data:'11/05', escolas:4,  kits:2190},
-  {num:'G17', data:'12/05', escolas:4,  kits:2104},
-  {num:'G18', data:'13/05', escolas:5,  kits:2497},
-  {num:'G19', data:'14/05', escolas:4,  kits:1963},
-  {num:'G20', data:'15/05', escolas:4,  kits:1976},
-  {num:'G21', data:'18/05', escolas:6,  kits:2477},
-  {num:'G22', data:'19/05', escolas:8,  kits:2388},
-];
-
-// ══ MAPA LEAFLET ══
-const map = L.map('map', {
-  center: [-15.5959, -56.0452],
-  zoom: 11,
-  zoomControl: true,
-  scrollWheelZoom: true,
-});
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors',
-  maxZoom: 18,
-}).addTo(map);
-
-function corPin(status) {
-  switch(status) {
-    case 'ENTREGUE':    return '#16a34a';
-    case 'EM ROTA':     return '#3b82f6';
-    case 'ATRASADA':    return '#dc2626';
-    case 'PENDENTE':    return '#7c3aed';
-    default:            return '#7c3aed';
-  }
-}
-
-function iconePin(status, seq) {
-  const cor = corPin(status);
-  const emoji = status === 'ENTREGUE' ? '✓' : status === 'EM ROTA' ? '→' : status === 'ATRASADA' ? '!' : seq || '·';
-  return L.divIcon({
-    className: '',
-    html: `<div style="
-      width: 28px; height: 28px;
-      background: ${cor};
-      border: 2.5px solid rgba(255,255,255,.9);
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      box-shadow: 0 2px 8px rgba(0,0,0,.3);
-      display: flex; align-items: center; justify-content: center;
-    "><span style="
-      transform: rotate(45deg);
-      font-size: 9px; font-weight: 700; color: #fff;
-      font-family: sans-serif; line-height: 1;
-    ">${status === 'ENTREGUE' ? '✓' : status === 'EM ROTA' ? '➜' : status === 'ATRASADA' ? '⚠' : '·'}</span></div>`,
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -30],
-  });
-}
-
-// Adicionar marcadores
-ESCOLAS_GEO.forEach(e => {
-  if (!e.lat || !e.lng) return;
-  const marker = L.marker([e.lat, e.lng], { icon: iconePin(e.status, e.seq) });
-  
-  const statusLabel = e.status === 'ENTREGUE' ? 'Entregue' :
-                      e.status === 'EM ROTA'  ? 'Em Rota'  :
-                      e.status === 'ATRASADA' ? 'Atrasada' : 'Pendente';
-
-  marker.bindTooltip(`<b>${e.nome}</b>`, {
-    permanent: false, direction: 'top', className: 'leaflet-tooltip-custom',
-    offset: [0, -30],
-  });
-
-  marker.bindPopup(`
-    <div class="popup-nome">${e.nome}</div>
-    <div class="popup-reg">${e.reg || ''}</div>
-    <span class="popup-status ${e.status}">${statusLabel}</span>
-    ${e.grupo ? `<div style="font-size:9px;color:#888;margin-top:4px;">Grupo ${e.grupo < 10 ? '0'+e.grupo : e.grupo}</div>` : ''}
-  `);
-
-  marker.addTo(map);
-});
-
-// ══ ÍNDICE DE GRUPOS ══
-const grid = document.getElementById('grupos-grid');
-const hoje = '16/04'; // data base
-GRUPOS.forEach(g => {
-  const card = document.createElement('div');
-  card.className = 'grupo-card fade-in' + (g.data === hoje ? ' hoje' : '');
-  card.innerHTML = `
-    <div class="grupo-num">${g.num}</div>
-    <div class="grupo-data">📅 ${g.data}/2026</div>
-    <div class="grupo-escolas">🏫 ${g.escolas} escolas</div>
-    <div class="grupo-kits">📦 ${g.kits.toLocaleString('pt-BR')} kits</div>
-  `;
-  grid.appendChild(card);
-});
-
-// ══ NAVEGAÇÃO SUAVE ══
-function scrollTo(id) {
-  const el = document.querySelector(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('ativo'));
-  event.target.classList.add('ativo');
-}
-
-// Atualizar nav ativo no scroll
-const sections = ['secao-hero','secao-mapa','secao-grupos','secao-descricao','secao-utilidade','secao-positivos','secao-admin'];
-const navLinks = document.querySelectorAll('.nav-link');
-const observer2 = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const id = e.target.id;
-      navLinks.forEach(l => l.classList.remove('ativo'));
-      const idx = sections.indexOf(id);
-      if (idx >= 0 && navLinks[idx]) navLinks[idx].classList.add('ativo');
-    }
-  });
-}, { threshold: 0.3 });
-sections.forEach(s => {
-  const el = document.getElementById(s);
-  if (el) observer2.observe(el);
-});
-
-// ══ ANIMAÇÕES FADE-IN ══
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 60);
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-</script>
-</div>
-  </div>
-
-  <!-- PROGRAMA DE CONTROLE (oculto até clicar em Controle de Entregas) -->
-  <div id="painel-programa" style="display:none">
   <div id="topo">
     <div id="topo-inner">
-      <button onclick="voltarInicio()" style="
-        background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-        border-radius:6px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;
-        font-size:11px;font-weight:700;color:rgba(255,255,255,.7);cursor:pointer;
-        margin-left:14px;margin-right:8px;letter-spacing:.04em;transition:all .15s;
-        white-space:nowrap;
-      " onmouseover="this.style.background='rgba(255,255,255,.15)'"
-         onmouseout="this.style.background='rgba(255,255,255,.08)'">
-        ← Início
-      </button>
+      <button id="btn-voltar-inicio" onclick="voltarInicio()">← Início</button>
       <div id="logo">Kit Escolar 2026<small>SMECEL / CTA · PMC</small></div>
       <div id="progresso-wrap">
         <div class="prog-item"><span class="prog-val" id="prog-esc">—</span><span class="prog-lbl">Escolas</span></div>
@@ -1258,7 +513,7 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
         <div id="atualizacao-badge"></div>
         <span id="usuario-badge">—</span>
         <button class="topo-btn" onclick="imprimirGrupo()">🖨 Imprimir</button>
-        <button class="topo-btn" onclick="abrirConfigModal()" title="Configurações" style="font-size:15px;padding:4px 10px;">⚙️</button>
+        <button class="topo-btn" onclick="abrirConfigModal()" title="Configurações" style="font-size:14px;padding:4px 10px;">⚙️</button>
         <button class="topo-btn warn" id="btn-modo-teste" onclick="entrarModoTeste()" style="display:none">🧪 Modo Teste</button>
         <button class="topo-btn" id="btn-senhas" onclick="abrirModal('modal-senha')" style="display:none">🔐 Senhas</button>
         <button class="topo-btn primary" id="btn-exportar" onclick="exportarPrograma()" style="display:none">📤 Exportar</button>
@@ -1278,7 +533,6 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
       <button class="modal-btn btn-pend"     onclick="aplicarStatus('PENDENTE')">⏳ Pendente</button>
       <button class="modal-btn btn-rota"     onclick="aplicarStatus('EM ROTA')">🚚 Em Rota</button>
       <button class="modal-btn btn-entregue" onclick="aplicarStatus('ENTREGUE')">✅ Entregue</button>
-      <button class="modal-btn" style="background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;flex:1;min-width:90px;" onclick="aplicarStatus('ATRASADA')">⚠️ Atrasada</button>
       <button class="modal-btn btn-cancel"   onclick="fecharModal('modal-status')">✕</button>
     </div>
   </div>
@@ -1429,10 +683,8 @@ function fazerLogin(teste = false) {
   perfilAtual = isAdmin ? 'admin' : 'leitor';
   modoTeste = teste && isAdmin;
   document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  // Começa sempre no painel inicial
   document.getElementById('painel-inicial').style.display = 'block';
-  document.getElementById('painel-programa').style.display = 'none';
+  _lnd.inicializar();
   document.getElementById('usuario-badge').textContent = modoTeste ? '🧪 Modo Teste' : isAdmin ? '🔑 Administrador' : '👁 Leitor';
   if (isAdmin) {
     document.getElementById('btn-exportar').style.display = '';
@@ -1454,59 +706,42 @@ function verificarAutomacaoMinuto() {
   const agora = new Date();
   const h = agora.getHours(), m = agora.getMinutes();
   if (h === 23 && m === 59) {
+    // Marcar EM ROTA do dia de hoje como ENTREGUE
     const dh = hoje();
-    let mudou = false;
-    // Grupo Hoje (15/04): escolas EM ROTA não confirmadas → ATRASADA
+    // Grupo Hoje (15/04)
     if (dh === '2026-04-15') {
+      let mudou = false;
       EM_ROTA_ORIGINAIS.forEach(id => {
-        const st = estadoProd[id];
-        if (st === 'EM ROTA' || st === 'PENDENTE') {
-          estadoProd[id] = 'ATRASADA'; mudou = true;
-        }
+        if (estadoProd[id] === 'EM ROTA') { estadoProd[id] = 'ENTREGUE'; mudou = true; }
       });
+      if (mudou) { salvarLocal(); renderTudo(); }
     }
-    // Grupos futuros que viraram hoje: escolas PENDENTE → ATRASADA
+    // Grupos futuros que viraram hoje
     const grupos = calcGruposFuturos();
     grupos.forEach(g => {
       if (g.data === dh) {
+        let mudou = false;
         g.escolas.forEach(e => {
-          const st = estadoProd[e.id] || 'PENDENTE';
-          if (st === 'PENDENTE' || st === 'EM ROTA') {
-            estadoProd[e.id] = 'ATRASADA'; mudou = true;
+          if ((estadoProd[e.id] || 'PENDENTE') === 'PENDENTE') {
+            estadoProd[e.id] = 'ENTREGUE'; mudou = true;
           }
         });
+        if (mudou) { salvarLocal(); renderTudo(); }
       }
     });
-    if (mudou) { salvarLocal(); renderTudo(); }
   }
 }
 
 
 
-function irParaGrupos() {
-  document.getElementById('painel-inicial').style.display = 'none';
-  document.getElementById('painel-programa').style.display = 'block';
-}
-
-function voltarInicio() {
-  document.getElementById('painel-programa').style.display = 'none';
-  document.getElementById('painel-inicial').style.display = 'block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-function acessarSistema() {
-  document.getElementById('landing-screen').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-}
-
 function fazerLogout() {
   perfilAtual = null; modoTeste = false;
   document.body.classList.remove('modo-teste');
   document.getElementById('teste-banner').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  document.getElementById('painel-inicial').style.display = 'block';
   document.getElementById('painel-programa').style.display = 'none';
-  window.scrollTo({top: 0, behavior: 'instant'});
+  document.getElementById('painel-inicial').style.display = 'block';
+  window.scrollTo({top:0,behavior:'instant'});
+  document.getElementById('login-screen').style.display = 'flex';
   ['login-user','login-pass'].forEach(id => document.getElementById(id).value = '');
   ['btn-exportar','btn-senhas','btn-modo-teste'].forEach(id => document.getElementById(id).style.display = 'none');
 }
@@ -1577,30 +812,22 @@ function aplicarStatus(novoStatus) {
   const grupoSalvo = grupoAtivo;
   const scrollY = window.scrollY;
   fecharModal('modal-status');
-
-  // Atualizar estado
   if (modoTeste) { estadoTeste[id] = novoStatus; }
   else { estadoProd[id] = novoStatus; }
-
-  // Atualizar ícone e linha imediatamente na tela (antes de qualquer re-render)
-  document.querySelectorAll(`[data-esc-id="${id}"]`).forEach(btn => {
-    const cls = novoStatus==='ENTREGUE'?'entregue':novoStatus==='EM ROTA'?'em-rota':novoStatus==='ATRASADA'?'atrasada':'pendente';
-    const ico = novoStatus==='ENTREGUE'?'✅ Entregue':novoStatus==='EM ROTA'?'🚚 Em Rota':novoStatus==='ATRASADA'?'⚠️ Atrasada':'⏳ Pendente';
+  // Atualizar ícone imediatamente
+  const btn = document.querySelector(`[data-esc-id="${id}"]`);
+  if (btn) {
+    const cls = novoStatus === 'ENTREGUE' ? 'entregue' : novoStatus === 'EM ROTA' ? 'em-rota' : 'pendente';
+    const ico = novoStatus === 'ENTREGUE' ? '✅ Entregue' : novoStatus === 'EM ROTA' ? '🚚 Em Rota' : '⏳ Pendente';
     btn.className = `st-btn ${cls}`;
     btn.textContent = ico;
     const tr = btn.closest('tr');
-    if (tr) {
-      tr.className = novoStatus==='ENTREGUE'?'entregue':novoStatus==='EM ROTA'?'em-rota':novoStatus==='ATRASADA'?'atrasada':'';
-    }
-  });
-
+    if (tr) tr.className = novoStatus === 'ENTREGUE' ? 'entregue' : novoStatus === 'EM ROTA' ? 'em-rota' : '';
+  }
   if (!modoTeste) salvarLocal();
-
-  // Re-renderizar mantendo grupo e scroll
   grupoAtivo = grupoSalvo;
   renderTudo();
-  // Restaurar scroll após o DOM ser atualizado
-  setTimeout(() => window.scrollTo({top: scrollY, behavior: 'instant'}), 0);
+  requestAnimationFrame(() => window.scrollTo({top: scrollY, behavior: 'instant'}));
 }
 
 document.querySelectorAll('.modal-overlay').forEach(m => {
@@ -1611,27 +838,10 @@ document.querySelectorAll('.modal-overlay').forEach(m => {
 //  IMPRESSÃO
 // ═══════════════════════════════════════
 function abrirConfigModal() {
-  const adminSec = document.getElementById('config-admin-section');
-  if (perfilAtual === 'admin') {
-    adminSec.classList.remove('bloqueado');
-  } else {
-    adminSec.classList.add('bloqueado');
-  }
-  // Ocultar opção modo teste se já estiver em modo teste
-  const btnTeste = adminSec.querySelector('.cfg-btn.dark');
-  if (btnTeste) btnTeste.style.display = modoTeste ? 'none' : '';
-  abrirModal('modal-config');
-}
-
-function abrirConfigModal() {
-  const adminSec = document.getElementById('config-admin-section');
-  if (perfilAtual === 'admin') {
-    adminSec.classList.remove('bloqueado');
-  } else {
-    adminSec.classList.add('bloqueado');
-  }
-  const btnTeste = adminSec.querySelector('.cfg-btn.dark');
-  if (btnTeste) btnTeste.style.display = modoTeste ? 'none' : '';
+  const sec = document.getElementById('config-admin-section');
+  sec.classList.toggle('bloqueado', perfilAtual !== 'admin');
+  const bt = sec.querySelector('.cfg-btn.dark');
+  if (bt) bt.style.display = modoTeste ? 'none' : '';
   abrirModal('modal-config');
 }
 
@@ -1650,54 +860,33 @@ function nav(id) { grupoAtivo = id; renderTudo(); window.scrollTo({top: 0, behav
 // ═══════════════════════════════════════
 function vtot(e) { return TIPOS.reduce((s, k) => s + (e[k] || 0), 0); }
 
-// Calcular grupos futuros dinamicamente (pendentes + atrasadas, limite 2500, ordem rota)
+// Calcular grupos futuros dinamicamente (apenas pendentes, limite 2500, ordem rota)
 function calcGruposFuturos() {
   const est = getEstado();
+  // IDs dos grupos passados já congelados
   const idsPassados = new Set();
   gruposPasadosSalvos.forEach(gp => gp.ids.forEach(id => idsPassados.add(id)));
 
-  // Atrasadas: entram primeiro, na frente do próximo grupo
-  const atrasadas = CFG.escolas.filter(e =>
-    !EM_ROTA_ORIGINAIS.has(e.id) &&
-    !idsPassados.has(e.id) &&
-    (est[e.id] || e.status || 'PENDENTE') === 'ATRASADA'
-  );
-
-  // Pendentes normais
+  // Pendentes: escolas que NÃO são EM ROTA originais, NÃO estão entregues, NÃO estão em grupos passados
   const pendentes = CFG.escolas.filter(e =>
     !EM_ROTA_ORIGINAIS.has(e.id) &&
     !idsPassados.has(e.id) &&
     (est[e.id] || e.status || 'PENDENTE') === 'PENDENTE'
   );
 
-  // Atrasadas entram no INÍCIO do primeiro grupo (sem redistribuição)
-  // Se o primeiro grupo + atrasadas ultrapassar 2500, as atrasadas formam grupo próprio antes
+  // Agrupar respeitando limite e ordem
   const grupos = [];
-  
-  if (atrasadas.length > 0) {
-    const volAtrasadas = atrasadas.reduce((s,e) => s+vtot(e), 0);
-    // Se couber no limite junto com as primeiras pendentes: acrescenta na frente
-    // Se não couber: grupo próprio de atrasadas
-    if (volAtrasadas <= MAX_KITS_DIA) {
-      // Inserir atrasadas no início — serão agrupadas junto com pendentes depois
-      // na lógica abaixo, mas com flag de atrasada
-    }
-    // Grupo de atrasadas sempre separado para manter visibilidade
-    grupos.push({escolas: [...atrasadas], vol: volAtrasadas, temAtrasadas: true});
-  }
-
-  // Agrupar pendentes respeitando limite e ordem
   let cur = [], vol = 0;
   for (const e of pendentes) {
     const v = vtot(e);
     if (vol + v > MAX_KITS_DIA && cur.length > 0) {
-      grupos.push({escolas: [...cur], vol, temAtrasadas: false});
+      grupos.push({escolas: [...cur], vol});
       cur = [e]; vol = v;
     } else { cur.push(e); vol += v; }
   }
-  if (cur.length) grupos.push({escolas: cur, vol, temAtrasadas: false});
+  if (cur.length) grupos.push({escolas: cur, vol});
 
-  // Atribuir datas do pool
+  // Atribuir datas do pool (após os passados)
   const nPassados = gruposPasadosSalvos.length;
   grupos.forEach((g, i) => { g.data = DATAS_POOL[nPassados + i] || ''; });
   return grupos;
@@ -1718,9 +907,7 @@ function calcAcumulados() {
   const emRotaGrupo = esc.filter(e => EM_ROTA_ORIGINAIS.has(e.id));
 
   // Histórico: todas com status ENTREGUE (incluindo as do grupo hoje)
-  // ATRASADA não conta como entregue — permanece pendente visualmente
   const entregues = esc.filter(e => e.st === 'ENTREGUE');
-  const atrasadas = esc.filter(e => e.st === 'ATRASADA' && !EM_ROTA_ORIGINAIS.has(e.id));
 
   // Para cálculo de acumulados: entregues que NÃO são do grupo hoje
   const entreguesSemHoje = entregues.filter(e => !EM_ROTA_ORIGINAIS.has(e.id));
@@ -1780,16 +967,18 @@ function escRow(e, seq, readonly = false) {
   const t = vtot(e);
   const reg = e.reg || '';
   const bc = BADGE_CORES[reg] || ['#374151', '#f3f4f6'];
-  const trCls = s === 'ENTREGUE' ? ' class="entregue"' : s === 'EM ROTA' ? ' class="em-rota"' : s === 'ATRASADA' ? ' class="atrasada"' : '';
+  const trCls = s === 'ENTREGUE' ? ' class="entregue"' : s === 'EM ROTA' ? ' class="em-rota"' : '';
   const f = v => v || '—';
   const canEdit = perfilAtual === 'admin' && !readonly;
-  const stCls = s==='ENTREGUE'?'entregue':s==='EM ROTA'?'em-rota':s==='ATRASADA'?'atrasada':'pendente';
-  const stIco = s==='ENTREGUE'?'✅ Entregue':s==='EM ROTA'?'🚚 Em Rota':s==='ATRASADA'?'⚠️ Atrasada':'⏳ Pendente';
   const stHtml = canEdit
-    ? `<button class="st-btn ${stCls}"
+    ? `<button class="st-btn ${s==='ENTREGUE'?'entregue':s==='EM ROTA'?'em-rota':'pendente'}"
         data-esc-id="${e.id}"
-        onclick="abrirModalStatus('${e.id}','${e.nome.replace(/'/g,"\'")}')">${stIco}</button>`
-    : `<span class="st-btn ${stCls} readonly">${stIco}</span>`;
+        onclick="abrirModalStatus('${e.id}','${e.nome.replace(/'/g,"\'")}')">
+        ${s==='ENTREGUE'?'✅ Entregue':s==='EM ROTA'?'🚚 Em Rota':'⏳ Pendente'}
+       </button>`
+    : `<span class="st-btn ${s==='ENTREGUE'?'entregue':s==='EM ROTA'?'em-rota':'pendente'} readonly">
+        ${s==='ENTREGUE'?'✅ Entregue':s==='EM ROTA'?'🚚 Em Rota':'⏳ Pendente'}
+       </span>`;
   return `<tr${trCls}>
     <td class="sq">${seq}</td><td class="rt">${e.rota || '—'}</td>
     <td class="nm">${e.nome} <span class="rb" style="background:${bc[1]};color:${bc[0]}">${reg}</span></td>
@@ -1864,20 +1053,16 @@ function renderTudo() {
   document.getElementById('bar-esc').style.width = pE.toFixed(1) + '%';
   document.getElementById('bar-kits').style.width = pK.toFixed(1) + '%';
 
-  // Banner de atrasadas no índice
-  const nAtrasadas = CFG.escolas.filter(e => (getEstado()[e.id]||e.status||'PENDENTE') === 'ATRASADA').length;
-
   const testeTag = modoTeste ? ' <span class="pill pill-teste">TESTE</span>' : '';
 
   // ÍNDICE
   let idxHtml = '';
   const pctH = entregues.filter(e => !EM_ROTA_ORIGINAIS.has(e.id)).length / mE * 100;
-  const badgeAtrasadas = nAtrasadas > 0 ? `<span class="idx-atrasada">⚠️ ${nAtrasadas} atrasada${nAtrasadas>1?'s':''}</span>` : '';
   idxHtml += `<button class="idx-btn${grupoAtivo==='hist'?' ativo':''}" onclick="nav('hist')">
     <span class="idx-titulo">📋 HIST.</span>
     <span class="idx-data">${entregues.length} esc.</span>
     <span class="idx-pct">${(entregues.length/mE*100).toFixed(0)}%</span>
-    <div class="idx-bar"><div class="idx-bar-fill" style="width:${(entregues.length/mE*100).toFixed(0)}%"></div></div></button>${badgeAtrasadas}`;
+    <div class="idx-bar"><div class="idx-bar-fill" style="width:${(entregues.length/mE*100).toFixed(0)}%"></div></div></button>`;
 
   // Grupos passados no índice
   gruposPasadosSalvos.forEach((gp, i) => {
@@ -1939,7 +1124,6 @@ function renderTudo() {
       <div class="g-data">Histórico de Entregas</div>
       <div class="g-sub">Todas as unidades com status Entregue · Atualizado em tempo real</div>
       <div style="font-size:9px;color:rgba(255,255,255,.28);margin-top:5px;letter-spacing:.05em;font-family:'Barlow Condensed',sans-serif;">✦ Idealizador e responsável técnico: <b style='color:rgba(255,255,255,.5);font-weight:600'>Leandro Bonfim · Técnico de Nível Superior — Administração · CTA/SMECEL</b></div>
-      <div style="font-size:9px;color:rgba(255,255,255,.3);margin-top:4px;letter-spacing:.04em;">Idealizador e responsável técnico: <b style='color:rgba(255,255,255,.5)'>Leandro Bonfim</b> · Técnico de Nível Superior — Administração · CTA/SMECEL</div>
     </div><div class="g-badge hist"><small>Grupo</small>HIST.</div></div>
     <div class="g-stats">
       <div class="g-stat"><span class="g-stat-v">${entregues.length}</span><span class="g-stat-l">Escolas entregues</span></div>
@@ -1951,13 +1135,12 @@ function renderTudo() {
     </div>
     <div class="body-wrap">
       ${adminPanel}
-      ${nAtrasadas > 0 ? `<div class="banner-atrasadas">⚠️ <b>${nAtrasadas} escola${nAtrasadas>1?'s':''} com entrega atrasada.</b> Verifique o próximo grupo — as atrasadas aparecem no início.</div>` : ''}
       ${infog(entregues.length, volH, atH)}
       <div class="sec"><div class="sec-title">🏫 Todas as unidades entregues <span class="badge-count">${entregues.length} escolas</span></div>
         <div class="tw"><table class="et">${thRow()}<tbody>
           ${entregues.map((e,i) => escRow(e, i+1, false)).join('')}${totRow(entregues)}</tbody></table></div></div>
     </div>
-    <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span style="color:var(--lv);font-style:italic">Coordenador técnico: Leandro Bonfim · Técnico de Nível Superior — Administração</span><span>Histórico dinâmico${modoTeste?' · MODO TESTE':''}</span></div>
+    <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span style="color:var(--lv);font-style:italic;font-size:8.5px;">Leandro Bonfim · Técnico de Nível Superior — Administração · CTA/SMECEL</span><span>Histórico dinâmico${modoTeste?' · MODO TESTE':''}</span></div>
   </div>`;
 
   // ── GRUPOS PASSADOS (somente leitura, congelados) ──
@@ -1983,7 +1166,7 @@ function renderTudo() {
           <div class="tw"><table class="et">${thRow()}<tbody>
             ${escsPassado.map((e,j) => escRow(e, j+1, false)).join('')}${totRow(escsPassado)}</tbody></table></div></div>
       </div>
-      <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span style="color:var(--lv);font-style:italic">Leandro Bonfim · Técnico de Nível Superior — Administração</span><span>G${String(i+1).padStart(2,'0')} · ${gp.data.slice(5).replace('-','/')} · Concluído</span></div>
+      <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span style="color:var(--lv);font-style:italic;font-size:8.5px;">Leandro Bonfim · Técnico de Nível Superior — Administração · CTA/SMECEL</span><span>G${String(i+1).padStart(2,'0')} · ${gp.data.slice(5).replace('-','/')} · Concluído</span></div>
     </div>`;
   });
 
@@ -2017,7 +1200,6 @@ function renderTudo() {
       <span class="pill pill-hoje">🚚 EM ROTA AGORA</span>${testeTag}
     </div>
     <div class="body-wrap">
-      ${adminPanel}
       ${infog(acHj, akHj, atHj)}
       <div class="nota-box">ℹ️ As escolas abaixo estão em rota hoje. Atualize o status conforme as confirmações chegarem. <b>Às 23:59, todas ainda "Em Rota" serão automaticamente marcadas como Entregue.</b></div>
       <div class="sec"><div class="sec-title">🏫 Unidades em Rota Hoje <span class="badge-count">${emRotaGrupo.length} escolas</span></div>
@@ -2033,7 +1215,7 @@ function renderTudo() {
         <div class="prod-note">⚠ <b>Regra 50/50:</b> Os primeiros 50% são carregados no início do dia. Os demais 50% até o fim do mesmo dia ou início do seguinte.</div>
       </div>
     </div>
-    <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span style="color:var(--lv);font-style:italic">Leandro Bonfim · Técnico de Nível Superior — Administração</span><span>15/04/2026 · Em Rota${modoTeste?' · MODO TESTE':''}</span></div>
+    <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span style="color:var(--lv);font-style:italic;font-size:8.5px;">Leandro Bonfim · Técnico de Nível Superior — Administração · CTA/SMECEL</span><span>15/04/2026 · Em Rota${modoTeste?' · MODO TESTE':''}</span></div>
   </div>`;
 
   // ── GRUPOS FUTUROS ──
@@ -2062,7 +1244,6 @@ function renderTudo() {
         <div class="g-data">${dataStr}${isHoje?' ← HOJE':''}</div>
         <div class="g-sub">Formulário de Produção e Entrega · Limite: ${MAX_KITS_DIA.toLocaleString('pt-BR')} kits/dia · 16/04 → ${termino}</div>
       <div style="font-size:9px;color:rgba(255,255,255,.28);margin-top:5px;letter-spacing:.05em;font-family:'Barlow Condensed',sans-serif;">✦ Idealizador e responsável técnico: <b style='color:rgba(255,255,255,.5);font-weight:600'>Leandro Bonfim · Técnico de Nível Superior — Administração · CTA/SMECEL</b></div>
-      <div style="font-size:9px;color:rgba(255,255,255,.3);margin-top:4px;letter-spacing:.04em;">Idealizador e responsável técnico: <b style='color:rgba(255,255,255,.5)'>Leandro Bonfim</b> · Técnico de Nível Superior — Administração · CTA/SMECEL</div>
       </div><div class="g-badge"><small>Grupo</small>${String(nGlobal).padStart(2,'0')}/${nPassados+gruposFuturos.length}</div></div>
       <div class="g-stats">
         <div class="g-stat"><span class="g-stat-v">${g.escolas.length}</span><span class="g-stat-l">Escolas</span></div>
@@ -2075,9 +1256,8 @@ function renderTudo() {
         <span class="pill pill-manha">☀ ENTREGA — MANHÃ</span>${testeTag}
       </div>
       <div class="body-wrap">
-        ${adminPanel}
+        <div class="aviso-box">⚠ <b>Atenção:</b> Produções aquém ou além do planejado podem alterar a previsão de data de entrega em cada unidade escolar e assim mudar os grupos. A ordem da rota é sempre respeitada. O limite de ${MAX_KITS_DIA.toLocaleString('pt-BR')} kits/dia determina o agrupamento automático.</div>
         ${infog(sE, sK, sT)}
-        ${g.temAtrasadas ? `<div class="banner-atrasadas">⚠️ <b>Este grupo contém escolas com entrega atrasada.</b> Verifique e confirme a entrega ou reagende conforme necessário.</div>` : `<div class="aviso-box">⚠ <b>Atenção:</b> Produções aquém ou além do planejado podem alterar a previsão de data de entrega em cada unidade escolar e assim mudar os grupos. A ordem da rota é sempre respeitada. O limite de ${MAX_KITS_DIA.toLocaleString('pt-BR')} kits/dia determina o agrupamento automático.</div>`}
         <div class="sec"><div class="sec-title">📦 Quadro 1 — Controle de Produção</div>
           <div class="prod-grid">
             <div class="prod-col c-est"><div class="prod-col-head">✅ Estoque disponível<div class="ps">Abatido da produção</div></div><table><tbody>${ptable(p.uso)}</tbody></table></div>
@@ -2091,315 +1271,41 @@ function renderTudo() {
           <div class="tw"><table class="et">${thRow()}<tbody>
             ${g.escolas.map((e,i) => escRow(e, i+1, false)).join('')}${totRow(g.escolas)}</tbody></table></div></div>
       </div>
-      <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span style="color:var(--lv);font-style:italic">Leandro Bonfim · Técnico de Nível Superior — Administração</span><span>G${String(nGlobal).padStart(2,'0')} · ${dataShort}${modoTeste?' · MODO TESTE':''}</span></div>
+      <div class="ftr"><span>PMC · SMECEL · CTA · Kit Escolar 2026</span><span style="color:var(--lv);font-style:italic;font-size:8.5px;">Leandro Bonfim · Técnico de Nível Superior — Administração · CTA/SMECEL</span><span>G${String(nGlobal).padStart(2,'0')} · ${dataShort}${modoTeste?' · MODO TESTE':''}</span></div>
     </div>`;
   });
 
   document.getElementById('conteudo').innerHTML = html;
-  // Garantir que o grupo ativo está visível IMEDIATAMENTE após reconstrução
-  const pgId =
-    grupoAtivo === 'hist' ? 'pg-hist' :
-    grupoAtivo === 'hoje' ? 'pg-hoje' :
-    grupoAtivo.startsWith('past') ? 'pg-' + grupoAtivo :
-    'pg-' + grupoAtivo;
-  const pgAtivo = document.getElementById(pgId);
-  if (pgAtivo) pgAtivo.classList.add('ativo');
 }
-
-// ══ GRÁFICOS ══
-const META_ESC = 189;
-const ESC_ENTREGUES = 71;   // do estado atual do programa
-const ESC_ROTA = 6;
-const ESC_PENDENTES = 112;
-
-const META_KITS = 59673;
-const KITS_ENTREGUES = 9629;
-const KITS_ROTA = 1942;
-const KITS_PENDENTES = META_KITS - KITS_ENTREGUES - KITS_ROTA;
-
-// Gráfico 1 — Escolas
-const ctxEsc = document.getElementById('chart-escolas').getContext('2d');
-new Chart(ctxEsc, {
-  type: 'doughnut',
-  data: {
-    labels: ['Entregues', 'Em Rota', 'Pendentes'],
-    datasets: [{
-      data: [ESC_ENTREGUES, ESC_ROTA, ESC_PENDENTES],
-      backgroundColor: ['#4ade80', '#60a5fa', 'rgba(255,255,255,.12)'],
-      borderColor: ['#16a34a', '#3b82f6', 'rgba(255,255,255,.08)'],
-      borderWidth: 2,
-      hoverOffset: 8,
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    cutout: '68%',
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { color: 'rgba(255,255,255,.65)', font: { size: 11, family: 'DM Sans' }, padding: 14, boxWidth: 10, boxHeight: 10 }
-      },
-      tooltip: { callbacks: {
-        label: ctx => ` ${ctx.label}: ${ctx.parsed} escolas (${(ctx.parsed/META_ESC*100).toFixed(1)}%)`
-      }},
-    }
-  },
-  plugins: [{
-    id: 'centerText',
-    beforeDraw(chart) {
-      const { ctx, chartArea: { width, height, top } } = chart;
-      ctx.save();
-      const cx = width/2, cy = top + height/2;
-      ctx.font = 'bold 28px Playfair Display, serif';
-      ctx.fillStyle = '#f9c74f';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText((ESC_ENTREGUES/META_ESC*100).toFixed(0)+'%', cx, cy-8);
-      ctx.font = '10px DM Sans, sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,.45)';
-      ctx.fillText('concluído', cx, cy+14);
-      ctx.restore();
-    }
-  }]
-});
-
-// Gráfico 2 — Kits por modelo
-const ctxKits = document.getElementById('chart-kits').getContext('2d');
-const modelos = ['A','B','C','D1','D2','E1','E2','F3','F4','F5'];
-const metaTipo = {A:894,B:2624,C:8593,D1:6397,D2:6531,E1:6782,E2:7051,F3:6921,F4:6763,F5:7114};
-const entregTipo = {A:114,B:263,C:129,D1:343,D2:217,E1:74,E2:77,F3:0,F4:68,F5:1677}; // estoque inicial como proxy de entregues
-const pcts = modelos.map(m => (entregTipo[m]||0)/metaTipo[m]*100);
-new Chart(ctxKits, {
-  type: 'bar',
-  data: {
-    labels: modelos,
-    datasets: [
-      {
-        label: 'Entregues',
-        data: modelos.map(m => entregTipo[m]||0),
-        backgroundColor: '#4ade80',
-        borderRadius: 5,
-        borderSkipped: false,
-      },
-      {
-        label: 'Pendentes',
-        data: modelos.map(m => metaTipo[m]-(entregTipo[m]||0)),
-        backgroundColor: 'rgba(255,255,255,.08)',
-        borderRadius: 5,
-        borderSkipped: false,
-      }
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    scales: {
-      x: {
-        stacked: true,
-        ticks: { color: 'rgba(255,255,255,.6)', font: { size: 10, family: 'DM Sans' } },
-        grid: { display: false },
-      },
-      y: {
-        stacked: true,
-        ticks: { color: 'rgba(255,255,255,.4)', font: { size: 9 }, maxTicksLimit: 5 },
-        grid: { color: 'rgba(255,255,255,.05)' },
-      }
-    },
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { color: 'rgba(255,255,255,.65)', font: { size: 11, family: 'DM Sans' }, padding: 14, boxWidth: 10, boxHeight: 10 }
-      },
-      tooltip: { callbacks: {
-        label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('pt-BR')}`
-      }}
-    }
-  }
-});
-
-// ══ DADOS GEO ══
-const ESCOLAS_GEO = [{"seq": 1, "reg": "CENTRO DE DISTRIBUIÇÃO", "nome": "Centro de Distribuição da SMECEL (RESERVA TÉCNICA)", "lat": -15.64647, "lng": -56.00925, "status": "ENTREGUE"}, {"seq": 2, "reg": "CAMPO", "nome": "EMEBC Estevão Alves", "lat": -15.538, "lng": -55.923, "status": "PENDENTE", "grupo": 1}, {"seq": 3, "reg": "CAMPO", "nome": "EMEBC Herbert de Souza", "lat": -15.63035, "lng": -55.93027, "status": "PENDENTE", "grupo": 1}, {"seq": 4, "reg": "CAMPO", "nome": "EMEBC Nossa Senhora Penha de França", "lat": -15.4601778, "lng": -55.9773076, "status": "PENDENTE", "grupo": 1}, {"seq": 5, "reg": "CAMPO", "nome": "EMEBC Nova Esperança", "lat": -15.729611, "lng": -56.045528, "status": "PENDENTE", "grupo": 1}, {"seq": 6, "reg": "CAMPO", "nome": "EMEBC Novo Renascer", "lat": -15.57, "lng": -55.777278, "status": "PENDENTE", "grupo": 1}, {"seq": 7, "reg": "CAMPO", "nome": "EMEBC Profª Benedita Xavier Rodrigues", "lat": -15.356219, "lng": -56.2306099, "status": "EM ROTA"}, {"seq": 8, "reg": "CAMPO", "nome": "EMEBC Profª Hilda Caetano de Oliveira Leite", "lat": -15.5476556, "lng": -56.1579299, "status": "EM ROTA"}, {"seq": 9, "reg": "CAMPO", "nome": "EMEBC Profº Udeney Gonçalves de Amorim", "lat": -15.2818012, "lng": -56.1302417, "status": "PENDENTE", "grupo": 1}, {"seq": 10, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Assistencial Jesus é o Caminho e a Vida (Estrelinha de Jesus)", "lat": -15.5480261, "lng": -56.0317355, "status": "ENTREGUE"}, {"seq": 11, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Beneficente e Sociedade Menino Jesus", "lat": -15.5662721, "lng": -56.029192, "status": "ENTREGUE"}, {"seq": 12, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Beneficente Educativa Cultural Voz da Verdade", "lat": -15.6089064, "lng": -56.1332324, "status": "ENTREGUE"}, {"seq": 13, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Dona Alice Rodrigues (Creche Leãozinho Kids)", "lat": -15.6306627, "lng": -56.0098105, "status": "ENTREGUE"}, {"seq": 14, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Espírita Yvonne Amaral Pereira", "lat": -15.5364838, "lng": -56.0736481, "status": "ENTREGUE"}, {"seq": 15, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Associação Filantrópica São Judas Tadeu", "lat": -15.6143255, "lng": -55.9961606, "status": "ENTREGUE"}, {"seq": 17, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Falcãozinho", "lat": -15.6096427, "lng": -56.108836, "status": "ENTREGUE"}, {"seq": 18, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Filantrópica Boa Vontade", "lat": -15.6391055, "lng": -56.0062826, "status": "ENTREGUE"}, {"seq": 19, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Nina Zaque  ( Seara de Luz)", "lat": -15.6100219, "lng": -55.9853698, "status": "ENTREGUE"}, {"seq": 20, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Creche Voz da Verdade (Unidade do Distrito da Guia)", "lat": -15.6089064, "lng": -56.1332324, "status": "ENTREGUE"}, {"seq": 22, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Escola Filantrôpica Superar", "lat": -15.6444384, "lng": -55.9740933, "status": "ENTREGUE"}, {"seq": 24, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Obras Sociais da Associação Irmão Praeiro", "lat": -15.5440394, "lng": -56.0667453, "status": "ENTREGUE"}, {"seq": 25, "reg": "ENTIDADE FILANTRÓPICA", "nome": "Obras Sociais Vianna de Carvalho", "lat": -15.5517093, "lng": -56.0828325, "status": "ENTREGUE"}, {"seq": 26, "reg": "LESTE", "nome": "CEIC Benedita Dias Evangelista", "lat": -15.5985598, "lng": -56.0692437, "status": "ENTREGUE"}, {"seq": 27, "reg": "LESTE", "nome": "CEIC CAIC Eldorado", "lat": -15.5887386, "lng": -56.0479234, "status": "ENTREGUE"}, {"seq": 28, "reg": "LESTE", "nome": "CEIC Colomba Cacelia Lombardi Dorileo", "lat": -15.6109532, "lng": -56.0263207, "status": "ENTREGUE"}, {"seq": 29, "reg": "LESTE", "nome": "CEIC Dona Micaela Henrique de Souza Lima", "lat": -15.596662, "lng": -56.085365, "status": "ENTREGUE"}, {"seq": 30, "reg": "LESTE", "nome": "CEIC Edna Catharina Pierri Ricci", "lat": -15.5793469, "lng": -56.0237134, "status": "ENTREGUE"}, {"seq": 31, "reg": "LESTE", "nome": "CEIC José Luiz Borges Garcia", "lat": -15.5832216, "lng": -56.0348561, "status": "ENTREGUE"}, {"seq": 32, "reg": "LESTE", "nome": "CEIC Josefa Catarina de Almeida", "lat": -15.6185343, "lng": -56.0828498, "status": "ENTREGUE"}, {"seq": 33, "reg": "LESTE", "nome": "CEIC Lucila Ferreira Fortes", "lat": -15.6022772, "lng": -56.0832041, "status": "ENTREGUE"}, {"seq": 34, "reg": "LESTE", "nome": "CEIC Mariana Fernandes Macedo", "lat": -15.6137633, "lng": -56.098121, "status": "ENTREGUE"}, {"seq": 35, "reg": "LESTE", "nome": "CEIC Prof. Monserrat Ismênia de Moraes Borge", "lat": -15.5978205, "lng": -56.0746124, "status": "ENTREGUE"}, {"seq": 36, "reg": "LESTE", "nome": "CEIC Risoleta Neves", "lat": -15.5758687, "lng": -56.034864, "status": "PENDENTE", "grupo": 1}, {"seq": 37, "reg": "LESTE", "nome": "CEIC Rosângela Campos Vieira Passos", "lat": -15.5976582, "lng": -56.0672393, "status": "ENTREGUE"}, {"seq": 38, "reg": "LESTE", "nome": "CEIC Santa Clara", "lat": -15.6004706, "lng": -56.0729302, "status": "ENTREGUE"}, {"seq": 39, "reg": "LESTE", "nome": "CEIC Santa Inês – Poção", "lat": -15.60869, "lng": -56.08753, "status": "EM ROTA"}, {"seq": 40, "reg": "LESTE", "nome": "CEIC São Francisco de Assis", "lat": -15.63188, "lng": -56.07566, "status": "ENTREGUE"}, {"seq": 41, "reg": "LESTE", "nome": "CEIC São José Operário", "lat": -15.6173394, "lng": -56.0904792, "status": "EM ROTA"}, {"seq": 42, "reg": "LESTE", "nome": "CEIC São Matheus", "lat": -15.6209375, "lng": -56.0915665, "status": "ENTREGUE"}, {"seq": 43, "reg": "LESTE", "nome": "CMEI Coronel José Meirelles", "lat": -15.6028143, "lng": -56.0832156, "status": "PENDENTE", "grupo": 1}, {"seq": 44, "reg": "LESTE", "nome": "CMEI Manoel de Barros", "lat": -15.6088421, "lng": -56.0247866, "status": "PENDENTE", "grupo": 2}, {"seq": 45, "reg": "LESTE", "nome": "CMEI Regina Pia Padilla de Borbon Neves", "lat": -15.5788235, "lng": -56.024187, "status": "PENDENTE", "grupo": 2}, {"seq": 46, "reg": "LESTE", "nome": "Creche João Crisostomo de Figueiredo", "lat": -15.5683571, "lng": -56.0253483, "status": "ENTREGUE"}, {"seq": 47, "reg": "LESTE", "nome": "EMEB 12 de Outubro", "lat": -15.5853548, "lng": -56.0349419, "status": "PENDENTE", "grupo": 2}, {"seq": 48, "reg": "LESTE", "nome": "EMEB Agostinho Simplício de Figueiredo", "lat": -15.6072553, "lng": -56.0859656, "status": "PENDENTE", "grupo": 2}, {"seq": 49, "reg": "LESTE", "nome": "EMEB Antonio Ferreira Valentim", "lat": -15.6222851, "lng": -56.0777187, "status": "PENDENTE", "grupo": 2}, {"seq": 50, "reg": "LESTE", "nome": "EMEB Augusto Mário Vieira", "lat": -15.5875666, "lng": -56.0636667, "status": "PENDENTE", "grupo": 2}, {"seq": 51, "reg": "LESTE", "nome": "EMEB Carlos Alberto Reyes Maldonado", "lat": -15.6094038, "lng": -56.024467, "status": "PENDENTE", "grupo": 2}, {"seq": 52, "reg": "LESTE", "nome": "EMEB Celina Fialho Bezerra", "lat": -15.5790953, "lng": -56.0240638, "status": "PENDENTE", "grupo": 2}, {"seq": 53, "reg": "LESTE", "nome": "EMEB Dejani Ribeiro Campos", "lat": -15.5634929, "lng": -56.0153701, "status": "PENDENTE", "grupo": 3}, {"seq": 54, "reg": "LESTE", "nome": "EMEB Dom Bosco do Praeirinho", "lat": -15.6321851, "lng": -56.0761841, "status": "PENDENTE", "grupo": 3}, {"seq": 55, "reg": "LESTE", "nome": "EMEB Dr. Fábio Firmino Leite", "lat": -15.5653417, "lng": -56.01799, "status": "PENDENTE", "grupo": 3}, {"seq": 56, "reg": "LESTE", "nome": "EMEB Dr. Orlando Nigro", "lat": -15.5987849, "lng": -56.0699881, "status": "PENDENTE", "grupo": 3}, {"seq": 57, "reg": "LESTE", "nome": "EMEB Henrique da Silva Prado", "lat": -15.6013133, "lng": -56.0834955, "status": "PENDENTE", "grupo": 3}, {"seq": 58, "reg": "LESTE", "nome": "EMEB Irmã Maria Betty de Souza Pires", "lat": -15.5787586, "lng": -56.0391018, "status": "PENDENTE", "grupo": 3}, {"seq": 59, "reg": "LESTE", "nome": "EMEB Jescelino José Reiners", "lat": -15.57934, "lng": -56.0322, "status": "ENTREGUE"}, {"seq": 60, "reg": "LESTE", "nome": "EMEB José Luiz Borges Garcia", "lat": -15.5853559, "lng": -56.0617898, "status": "PENDENTE", "grupo": 3}, {"seq": 61, "reg": "LESTE", "nome": "EMEB Lisaldo Farias Sodré (antiga EMEB 8 de Abril)", "lat": -15.5717, "lng": -56.0773, "status": "PENDENTE", "grupo": 3}, {"seq": 62, "reg": "LESTE", "nome": "EMEB Maria da Glória de Souza", "lat": -15.5913841, "lng": -56.081209, "status": "PENDENTE", "grupo": 4}, {"seq": 63, "reg": "LESTE", "nome": "EMEB Prof.ª Elza Luiza Esteves", "lat": -15.5829284, "lng": -56.0752136, "status": "PENDENTE", "grupo": 4}, {"seq": 64, "reg": "LESTE", "nome": "EMEB Profª Guilhermina de Figueiredo", "lat": -15.5886394, "lng": -56.0602564, "status": "PENDENTE", "grupo": 4}, {"seq": 65, "reg": "LESTE", "nome": "EMEB Profª Maria Ambrósio Pommot", "lat": -15.6109341, "lng": -56.0262359, "status": "PENDENTE", "grupo": 4}, {"seq": 66, "reg": "LESTE", "nome": "EMEB Profª Tereza Lobo", "lat": -15.6131117, "lng": -56.0992743, "status": "PENDENTE", "grupo": 4}, {"seq": 67, "reg": "LESTE", "nome": "EMEB Professora Francisca Figeiredo Arruda Martins", "lat": -15.5886036, "lng": -56.0474643, "status": "PENDENTE", "grupo": 4}, {"seq": 68, "reg": "LESTE", "nome": "EMEB Profº Filogonio Correa", "lat": -15.6185463, "lng": -56.0821579, "status": "PENDENTE", "grupo": 4}, {"seq": 69, "reg": "LESTE", "nome": "EMEB Profº Hélio de Souza Vieira", "lat": -15.6300702, "lng": -56.0746778, "status": "PENDENTE", "grupo": 4}, {"seq": 70, "reg": "LESTE", "nome": "EMEB Quintino Pereira de Freitas", "lat": -15.5825575, "lng": -56.0730648, "status": "PENDENTE", "grupo": 5}, {"seq": 71, "reg": "LESTE", "nome": "EMEB Santa Cecília", "lat": -15.6099929, "lng": -56.0808258, "status": "PENDENTE", "grupo": 5}, {"seq": 72, "reg": "LESTE", "nome": "EMEB Silvino Leite de Arruda", "lat": -15.5814069, "lng": -56.0374723, "status": "PENDENTE", "grupo": 5}, {"seq": 73, "reg": "NORTE", "nome": "CEIC Alê Guilherme Arfux da Costa Ribeiro", "lat": -15.5435959, "lng": -56.0755904, "status": "ENTREGUE"}, {"seq": 74, "reg": "NORTE", "nome": "CEIC Altos da Gloria", "lat": -15.5440838, "lng": -56.0200041, "status": "ENTREGUE"}, {"seq": 75, "reg": "NORTE", "nome": "CEIC Inocencio Leocadio da Rosa", "lat": -15.5601928, "lng": -56.0829322, "status": "ENTREGUE"}, {"seq": 76, "reg": "NORTE", "nome": "CEIC João Batista Scalabrini", "lat": -15.5722315, "lng": -56.0504309, "status": "ENTREGUE"}, {"seq": 77, "reg": "NORTE", "nome": "CEIC Josefa da Silva Parente", "lat": -15.580349, "lng": -56.0621284, "status": "ENTREGUE"}, {"seq": 78, "reg": "NORTE", "nome": "CEIC Maria Eunice Duarte Barros", "lat": -15.5659547, "lng": -56.0683926, "status": "ENTREGUE"}, {"seq": 79, "reg": "NORTE", "nome": "CEIC Maria Ligia Borges Garcia", "lat": -15.5370526, "lng": -56.0757813, "status": "ENTREGUE"}, {"seq": 80, "reg": "NORTE", "nome": "CEIC Naídes Rodrigues R. da Cruz", "lat": -15.5702575, "lng": -56.0458738, "status": "EM ROTA"}, {"seq": 81, "reg": "NORTE", "nome": "CEIC Nasla Joaquim Aschar", "lat": -15.5523873, "lng": -56.0564442, "status": "EM ROTA"}, {"seq": 82, "reg": "NORTE", "nome": "CEIC Pe. Armando Cavallo", "lat": -15.549039, "lng": -56.0323723, "status": "ENTREGUE"}, {"seq": 83, "reg": "NORTE", "nome": "CEIC Profª Luciene Ferreira de Oliveira (antiga creche Jardim Umuarama)", "lat": -15.5503172, "lng": -56.0254011, "status": "ENTREGUE"}, {"seq": 84, "reg": "NORTE", "nome": "CEIC Santa Inês – CPA", "lat": -15.5710609, "lng": -56.0357894, "status": "ENTREGUE"}, {"seq": 85, "reg": "NORTE", "nome": "CEIC Wilmon Ferreira De Souza", "lat": -15.5569896, "lng": -56.025802, "status": "ENTREGUE"}, {"seq": 86, "reg": "NORTE", "nome": "CMEI Antonio Marcos Ruzzene Balbino", "lat": -15.5599785, "lng": -56.0770186, "status": "PENDENTE", "grupo": 5}, {"seq": 87, "reg": "NORTE", "nome": "CMEI Joana Mont´Serrat Spindola", "lat": -15.5715291, "lng": -56.0362863, "status": "PENDENTE", "grupo": 5}, {"seq": 88, "reg": "NORTE", "nome": "CMEI Jornalista Paulo Maria Ferreira Leite", "lat": -15.5417572, "lng": -56.0672592, "status": "PENDENTE", "grupo": 5}, {"seq": 89, "reg": "NORTE", "nome": "CMEI Maria Conceição Oliveira de Souza", "lat": -15.5597694, "lng": -56.0297799, "status": "PENDENTE", "grupo": 5}, {"seq": 90, "reg": "NORTE", "nome": "CMEI Nevio Lotufo", "lat": -15.5628497, "lng": -56.0600528, "status": "PENDENTE", "grupo": 5}, {"seq": 91, "reg": "NORTE", "nome": "CMEI Paulo Ronan Ferraz Santos", "lat": -15.5367367, "lng": -56.0331285, "status": "PENDENTE", "grupo": 6}, {"seq": 92, "reg": "NORTE", "nome": "CMEI Plácido Flaviano Curvo Filho", "lat": -15.5493708, "lng": -56.0462383, "status": "PENDENTE", "grupo": 6}, {"seq": 93, "reg": "NORTE", "nome": "CMEI Prefeito Dante de Oliveira", "lat": -15.5577288, "lng": -56.0253374, "status": "PENDENTE", "grupo": 6}, {"seq": 94, "reg": "NORTE", "nome": "CMEI Sergio Luiz Ferreira da Silva", "lat": -15.5405437, "lng": -56.041912, "status": "PENDENTE", "grupo": 6}, {"seq": 95, "reg": "NORTE", "nome": "EMEB Antônia Tita Maciel de Campos", "lat": -15.547045, "lng": -56.079497, "status": "PENDENTE", "grupo": 6}, {"seq": 96, "reg": "NORTE", "nome": "EMEB Aristotelino Alves Praeiro", "lat": -15.545305, "lng": -56.0323071, "status": "PENDENTE", "grupo": 6}, {"seq": 97, "reg": "NORTE", "nome": "EMEB Cel. Octayde Jorge da Silva", "lat": -15.5718883, "lng": -56.0510293, "status": "PENDENTE", "grupo": 6}, {"seq": 98, "reg": "NORTE", "nome": "EMEB Dep. Ulisses Guimarães", "lat": -15.5501291, "lng": -56.0504158, "status": "PENDENTE", "grupo": 6}, {"seq": 99, "reg": "NORTE", "nome": "EMEB Lenine de Campos Povoas", "lat": -15.5445808, "lng": -56.0753376, "status": "PENDENTE", "grupo": 7}, {"seq": 100, "reg": "NORTE", "nome": "EMEB Madre Marta Cerutti", "lat": -15.5802411, "lng": -56.0633471, "status": "PENDENTE", "grupo": 7}, {"seq": 101, "reg": "NORTE", "nome": "EMEB Maria Lucila da Silva Barros", "lat": -15.5593817, "lng": -56.0908312, "status": "PENDENTE", "grupo": 7}, {"seq": 102, "reg": "NORTE", "nome": "EMEB Orzina de Amorim Soares", "lat": -15.5385343, "lng": -56.0680068, "status": "PENDENTE", "grupo": 7}, {"seq": 103, "reg": "NORTE", "nome": "EMEB Pedrosa de Morais e Silva", "lat": -15.5471661, "lng": -56.0550554, "status": "PENDENTE", "grupo": 7}, {"seq": 104, "reg": "NORTE", "nome": "EMEB Profª Gracildes de Mello Dantas", "lat": -15.5440838, "lng": -56.0200041, "status": "PENDENTE", "grupo": 7}, {"seq": 105, "reg": "NORTE", "nome": "EMEB Profº Firmo Jose Rodrigues", "lat": -15.5581946, "lng": -56.0254273, "status": "PENDENTE", "grupo": 7}, {"seq": 106, "reg": "NORTE", "nome": "EMEB Rafael Rueda", "lat": -15.5515225, "lng": -56.0251051, "status": "PENDENTE", "grupo": 7}, {"seq": 107, "reg": "NORTE", "nome": "EMEB Senhorinha Ana Alves de Oliveira", "lat": -15.5370017, "lng": -56.0767245, "status": "PENDENTE", "grupo": 8}, {"seq": 108, "reg": "NORTE", "nome": "EMEB Ten. Octacilio Sebastião da Cruz", "lat": -15.5696574, "lng": -56.0422697, "status": "PENDENTE", "grupo": 8}, {"seq": 109, "reg": "OESTE", "nome": "CEIC Elzira Cavalcante Silva", "lat": -15.5480796, "lng": -56.1580769, "status": "ENTREGUE"}, {"seq": 110, "reg": "OESTE", "nome": "CEIC Espaço Livre", "lat": -15.5879606, "lng": -56.0902108, "status": "ENTREGUE"}, {"seq": 111, "reg": "OESTE", "nome": "CEIC Francisco Santana", "lat": -15.5639477, "lng": -56.1082533, "status": "ENTREGUE"}, {"seq": 112, "reg": "OESTE", "nome": "CEIC Jose Nicolau Pinto", "lat": -15.6080043, "lng": -56.1078675, "status": "ENTREGUE"}, {"seq": 113, "reg": "OESTE", "nome": "CEIC Macaria Militona de Santana", "lat": -15.5820172, "lng": -56.11557, "status": "ENTREGUE"}, {"seq": 114, "reg": "OESTE", "nome": "CEIC Maria Benedita Martins de Oliveira", "lat": -15.6135286, "lng": -56.1246165, "status": "ENTREGUE"}, {"seq": 115, "reg": "OESTE", "nome": "CEIC Maria de Figueiredo Nunes", "lat": -15.5633839, "lng": -56.1162555, "status": "ENTREGUE"}, {"seq": 116, "reg": "OESTE", "nome": "CEIC Renisea G. Barua", "lat": -15.5649572, "lng": -56.0952589, "status": "ENTREGUE"}, {"seq": 117, "reg": "OESTE", "nome": "CEIC Sebastiao Tolomeu", "lat": -15.5989418, "lng": -56.1322433, "status": "ENTREGUE"}, {"seq": 118, "reg": "OESTE", "nome": "CEIC Tertuliana Maria (Mãe Nhara)", "lat": -15.5816809, "lng": -56.0854777, "status": "ENTREGUE"}, {"seq": 119, "reg": "OESTE", "nome": "EMEB Adelina Pereira Ventura", "lat": -15.6040413, "lng": -56.1144688, "status": "PENDENTE", "grupo": 8}, {"seq": 120, "reg": "OESTE", "nome": "EMEB Gláucia Maria Borges Garcia", "lat": -15.5687405, "lng": -56.0972484, "status": "PENDENTE", "grupo": 8}, {"seq": 121, "reg": "OESTE", "nome": "EMEB Juarez Sodré Farias", "lat": -15.5844078, "lng": -56.0896435, "status": "PENDENTE", "grupo": 8}, {"seq": 122, "reg": "OESTE", "nome": "EMEB Mal. Cândido Mariano da Silva Rondon", "lat": -15.579743, "lng": -56.0811535, "status": "PENDENTE", "grupo": 8}, {"seq": 123, "reg": "OESTE", "nome": "EMEB Maria Eunice Duarte Barros", "lat": -15.5988377, "lng": -56.1328438, "status": "PENDENTE", "grupo": 8}, {"seq": 124, "reg": "OESTE", "nome": "EMEB Maria Tomich Monteiro da Silva", "lat": -15.5614318, "lng": -56.1130447, "status": "PENDENTE", "grupo": 8}, {"seq": 125, "reg": "OESTE", "nome": "EMEB Nossa Senhora Aparecida", "lat": -15.5667386, "lng": -56.1170379, "status": "PENDENTE", "grupo": 9}, {"seq": 126, "reg": "OESTE", "nome": "EMEB Profª Alzira Valladares", "lat": -15.6013982, "lng": -56.1138575, "status": "PENDENTE", "grupo": 9}, {"seq": 127, "reg": "OESTE", "nome": "EMEB Profª Esmeralda de Campos Fontes", "lat": -15.57865, "lng": -56.11792, "status": "PENDENTE", "grupo": 9}, {"seq": 128, "reg": "OESTE", "nome": "EMEB Profª Rita Caldas Castrillon", "lat": -15.618379, "lng": -56.12332, "status": "PENDENTE", "grupo": 9}, {"seq": 129, "reg": "OESTE", "nome": "EMEB Profº Ezequiel Pompeu Ribeiro de Siqueira", "lat": -15.5856127, "lng": -56.0944411, "status": "PENDENTE", "grupo": 9}, {"seq": 130, "reg": "OESTE", "nome": "EMEB Profº Francisval de Brito", "lat": -15.6187927, "lng": -56.1289401, "status": "PENDENTE", "grupo": 9}, {"seq": 131, "reg": "OESTE", "nome": "EMEB Profº Ranulpho Paes de Barros", "lat": -15.5993999, "lng": -56.133829, "status": "PENDENTE", "grupo": 9}, {"seq": 132, "reg": "OESTE", "nome": "EMEB São João Bosco", "lat": -15.6123922, "lng": -56.1263425, "status": "PENDENTE", "grupo": 9}, {"seq": 133, "reg": "SUL", "nome": "CEIC Amalia Curvo de Campos", "lat": -15.6464733, "lng": -56.0335512, "status": "ENTREGUE"}, {"seq": 134, "reg": "SUL", "nome": "CEIC Clóvis Dias Ferreira", "lat": -15.62977, "lng": -55.953583, "status": "ENTREGUE"}, {"seq": 135, "reg": "SUL", "nome": "CEIC Helenita Paes de Assunção", "lat": -15.63179, "lng": -56.01406, "status": "ENTREGUE"}, {"seq": 136, "reg": "SUL", "nome": "CEIC Jamil Boutros Nadaf", "lat": -15.616306, "lng": -55.990917, "status": "ENTREGUE"}, {"seq": 137, "reg": "SUL", "nome": "CEIC José Gabriel da Costa", "lat": -15.6481383, "lng": -56.0617119, "status": "ENTREGUE"}, {"seq": 138, "reg": "SUL", "nome": "CEIC Lais Amiccuci Soares Martins", "lat": -15.616139, "lng": -56.00811, "status": "ENTREGUE"}, {"seq": 139, "reg": "SUL", "nome": "CEIC Lelita Lino Da Silva", "lat": -15.6474526, "lng": -56.0461486, "status": "ENTREGUE"}, {"seq": 140, "reg": "SUL", "nome": "CEIC Manoelino de Jesus", "lat": -15.63856, "lng": -55.980194, "status": "ENTREGUE"}, {"seq": 141, "reg": "SUL", "nome": "CEIC Marechal Rondon", "lat": -15.6473, "lng": -55.99246, "status": "ENTREGUE"}, {"seq": 142, "reg": "SUL", "nome": "CEIC Maria Nery Batista Ribeiro", "lat": -15.608333, "lng": -55.994917, "status": "ENTREGUE"}, {"seq": 143, "reg": "SUL", "nome": "CEIC Mariuza do Carmo Ojeda de Barros", "lat": -15.63044, "lng": -56.008944, "status": "ENTREGUE"}, {"seq": 144, "reg": "SUL", "nome": "CEIC Portal da Fé", "lat": -15.63876, "lng": -55.94218, "status": "ENTREGUE"}, {"seq": 145, "reg": "SUL", "nome": "CEIC Professor Aecim Tocantins", "lat": -15.6653603, "lng": -56.058645, "status": "ENTREGUE"}, {"seq": 146, "reg": "SUL", "nome": "CEIC Rafael Rueda CAIC", "lat": -15.63045, "lng": -55.95831, "status": "ENTREGUE"}, {"seq": 147, "reg": "SUL", "nome": "CEIC São Benedito", "lat": -15.63347, "lng": -55.9845, "status": "ENTREGUE"}, {"seq": 148, "reg": "SUL", "nome": "CEIC Silva Freire", "lat": -15.6353189, "lng": -56.0481149, "status": "ENTREGUE"}, {"seq": 149, "reg": "SUL", "nome": "CMEI Aliane Fatima Rodrigues Monteiro", "lat": -15.647861, "lng": -55.996833, "status": "PENDENTE", "grupo": 10}, {"seq": 150, "reg": "SUL", "nome": "CMEI Antonio Batista da Cruz", "lat": -15.636528, "lng": -55.9875, "status": "PENDENTE", "grupo": 10}, {"seq": 151, "reg": "SUL", "nome": "CMEI Auro Ida", "lat": -15.64138, "lng": -56.00711, "status": "PENDENTE", "grupo": 10}, {"seq": 152, "reg": "SUL", "nome": "CMEI Dr. Leonel de Moura Brizola", "lat": -15.614806, "lng": -55.9905, "status": "PENDENTE", "grupo": 10}, {"seq": 153, "reg": "SUL", "nome": "CMEI Edgar Santana de Amorim", "lat": -15.63907, "lng": -55.99745, "status": "PENDENTE", "grupo": 10}, {"seq": 154, "reg": "SUL", "nome": "CMEI Engenheiro Oscar Amelito", "lat": -15.672361, "lng": -56.037694, "status": "PENDENTE", "grupo": 10}, {"seq": 155, "reg": "SUL", "nome": "CMEI Governador José Garcia Neto", "lat": -15.629556, "lng": -55.98825, "status": "PENDENTE", "grupo": 10}, {"seq": 156, "reg": "SUL", "nome": "CMEI Jaira Cuiabano Correa da Costa", "lat": -15.6336, "lng": -55.94161, "status": "PENDENTE", "grupo": 10}, {"seq": 157, "reg": "SUL", "nome": "CMEI Jornalista Marcos Coutinho", "lat": -15.655611, "lng": -55.97725, "status": "PENDENTE", "grupo": 11}, {"seq": 158, "reg": "SUL", "nome": "CMEI Professor Ady de Figueiredo", "lat": -15.63463, "lng": -55.94677, "status": "PENDENTE", "grupo": 11}, {"seq": 159, "reg": "SUL", "nome": "CMEI Professora Marilia Ines Pedrollo Salomoni", "lat": -15.6632486, "lng": -56.0363962, "status": "PENDENTE", "grupo": 11}, {"seq": 160, "reg": "SUL", "nome": "CMEI Vereador Julio Cesar Pinheiro", "lat": -15.60687, "lng": -55.98423, "status": "PENDENTE", "grupo": 11}, {"seq": 161, "reg": "SUL", "nome": "EMEB Ana Luiza Prado Bastos", "lat": -15.612222, "lng": -55.996083, "status": "PENDENTE", "grupo": 11}, {"seq": 162, "reg": "SUL", "nome": "EMEB Ana Teresa Arco Krause", "lat": -15.64525, "lng": -55.976, "status": "PENDENTE", "grupo": 11}, {"seq": 163, "reg": "SUL", "nome": "EMEB Clovis Huguenei Neto", "lat": -15.684, "lng": -56.035472, "status": "PENDENTE", "grupo": 11}, {"seq": 164, "reg": "SUL", "nome": "EMEB Constança Figueiredo Palma Bem Bem", "lat": -15.61294, "lng": -55.99303, "status": "PENDENTE", "grupo": 11}, {"seq": 165, "reg": "SUL", "nome": "EMEB Eugênia Pereira de Mello", "lat": -15.6352962, "lng": -56.0494867, "status": "PENDENTE", "grupo": 12}, {"seq": 166, "reg": "SUL", "nome": "EMEB Floriano Bocheneki", "lat": -15.6654415, "lng": -56.0591002, "status": "PENDENTE", "grupo": 12}, {"seq": 167, "reg": "SUL", "nome": "EMEB Francisco Pedroso da Silva", "lat": -15.641139, "lng": -56.01325, "status": "PENDENTE", "grupo": 12}, {"seq": 168, "reg": "SUL", "nome": "EMEB Jean Carlos Pinho Santos", "lat": -15.62964, "lng": -55.95856, "status": "PENDENTE", "grupo": 12}, {"seq": 169, "reg": "SUL", "nome": "EMEB Jesus Criança", "lat": -15.63983, "lng": -55.97247, "status": "PENDENTE", "grupo": 12}, {"seq": 170, "reg": "SUL", "nome": "EMEB Joana Dark da Silva", "lat": -15.674694, "lng": -56.036889, "status": "PENDENTE", "grupo": 12}, {"seq": 171, "reg": "SUL", "nome": "EMEB José Torquato da Silva", "lat": -15.6509277, "lng": -56.0353069, "status": "PENDENTE", "grupo": 12}, {"seq": 172, "reg": "SUL", "nome": "EMEB Liberdade", "lat": -15.608333, "lng": -55.995389, "status": "PENDENTE", "grupo": 12}, {"seq": 173, "reg": "SUL", "nome": "EMEB Maria Elazir Correa de Figueiredo", "lat": -15.61439, "lng": -56.00314, "status": "PENDENTE", "grupo": 13}, {"seq": 174, "reg": "SUL", "nome": "EMEB Maximiano Arcanjo da Cruz", "lat": -15.617083, "lng": -55.990056, "status": "PENDENTE", "grupo": 13}, {"seq": 175, "reg": "SUL", "nome": "EMEB Ministro Marcos Freire", "lat": -15.6265, "lng": -56.015417, "status": "PENDENTE", "grupo": 13}, {"seq": 176, "reg": "SUL", "nome": "EMEB Moacyr Gratidiano Dorileo", "lat": -15.6309565, "lng": -56.0443705, "status": "PENDENTE", "grupo": 13}, {"seq": 177, "reg": "SUL", "nome": "EMEB Osmar José do Carmo Cabral", "lat": -15.61365, "lng": -55.99482, "status": "PENDENTE", "grupo": 13}, {"seq": 178, "reg": "SUL", "nome": "EMEB Padre Raimundo Conceição Pombo Moreira da Cruz", "lat": -15.6688909, "lng": -56.0406867, "status": "PENDENTE", "grupo": 13}, {"seq": 179, "reg": "SUL", "nome": "EMEB Profª Maria Dimpina Lobo Duarte", "lat": -15.6286867, "lng": -56.0544738, "status": "PENDENTE", "grupo": 13}, {"seq": 180, "reg": "SUL", "nome": "EMEB Professora Lidioliria Santana", "lat": -15.6125, "lng": -55.979389, "status": "PENDENTE", "grupo": 13}, {"seq": 182, "reg": "SUL", "nome": "EMEB Profº Zeferino Leite de Oliveira", "lat": -15.63593, "lng": -55.94577, "status": "ENTREGUE"}, {"seq": 183, "reg": "SUL", "nome": "EMEB São Sebastião", "lat": -15.63348, "lng": -55.98482, "status": "PENDENTE", "grupo": 14}, {"seq": 184, "reg": "SUL", "nome": "EMEB Senador Darcy Ribeiro", "lat": -15.651083, "lng": -55.980167, "status": "PENDENTE", "grupo": 14}, {"seq": 185, "reg": "SUL", "nome": "EMEB Senador Gastão Matos Muller", "lat": -15.62839, "lng": -55.95337, "status": "PENDENTE", "grupo": 14}, {"seq": 186, "reg": "SUL", "nome": "EMEB Silva Freire", "lat": -15.6529471, "lng": -56.0274669, "status": "PENDENTE", "grupo": 14}, {"seq": 187, "reg": "SUL", "nome": "EMEB Tereza Benguela", "lat": -15.6407413, "lng": -56.0435859, "status": "PENDENTE", "grupo": 14}, {"seq": 188, "reg": "SUL", "nome": "EMEB Vereador Paulo de Campos Borges", "lat": -15.64702, "lng": -55.99191, "status": "PENDENTE", "grupo": 14}];
-
-// ══ GRUPOS DE ENTREGA ══
-const GRUPOS = [
-  {num:'G01', data:'16/04', escolas:5,  kits:2185},
-  {num:'G02', data:'17/04', escolas:6,  kits:2183},
-  {num:'G03', data:'20/04', escolas:6,  kits:2333},
-  {num:'G04', data:'22/04', escolas:6,  kits:2405},
-  {num:'G05', data:'23/04', escolas:4,  kits:1637},
-  {num:'G06', data:'24/04', escolas:4,  kits:2358},
-  {num:'G07', data:'27/04', escolas:5,  kits:2139},
-  {num:'G08', data:'28/04', escolas:4,  kits:2236},
-  {num:'G09', data:'29/04', escolas:5,  kits:2061},
-  {num:'G10', data:'30/04', escolas:3,  kits:1675},
-  {num:'G11', data:'04/05', escolas:5,  kits:2080},
-  {num:'G12', data:'05/05', escolas:5,  kits:2345},
-  {num:'G13', data:'06/05', escolas:6,  kits:2278},
-  {num:'G14', data:'07/05', escolas:8,  kits:2395},
-  {num:'G15', data:'08/05', escolas:5,  kits:2197},
-  {num:'G16', data:'11/05', escolas:4,  kits:2190},
-  {num:'G17', data:'12/05', escolas:4,  kits:2104},
-  {num:'G18', data:'13/05', escolas:5,  kits:2497},
-  {num:'G19', data:'14/05', escolas:4,  kits:1963},
-  {num:'G20', data:'15/05', escolas:4,  kits:1976},
-  {num:'G21', data:'18/05', escolas:6,  kits:2477},
-  {num:'G22', data:'19/05', escolas:8,  kits:2388},
-];
-
-// ══ MAPA LEAFLET ══
-const map = L.map('map', {
-  center: [-15.5959, -56.0452],
-  zoom: 11,
-  zoomControl: true,
-  scrollWheelZoom: true,
-});
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors',
-  maxZoom: 18,
-}).addTo(map);
-
-function corPin(status) {
-  switch(status) {
-    case 'ENTREGUE':    return '#16a34a';
-    case 'EM ROTA':     return '#3b82f6';
-    case 'ATRASADA':    return '#dc2626';
-    case 'PENDENTE':    return '#7c3aed';
-    default:            return '#7c3aed';
-  }
-}
-
-function iconePin(status, seq) {
-  const cor = corPin(status);
-  const emoji = status === 'ENTREGUE' ? '✓' : status === 'EM ROTA' ? '→' : status === 'ATRASADA' ? '!' : seq || '·';
-  return L.divIcon({
-    className: '',
-    html: `<div style="
-      width: 28px; height: 28px;
-      background: ${cor};
-      border: 2.5px solid rgba(255,255,255,.9);
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      box-shadow: 0 2px 8px rgba(0,0,0,.3);
-      display: flex; align-items: center; justify-content: center;
-    "><span style="
-      transform: rotate(45deg);
-      font-size: 9px; font-weight: 700; color: #fff;
-      font-family: sans-serif; line-height: 1;
-    ">${status === 'ENTREGUE' ? '✓' : status === 'EM ROTA' ? '➜' : status === 'ATRASADA' ? '⚠' : '·'}</span></div>`,
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -30],
-  });
-}
-
-// Adicionar marcadores
-ESCOLAS_GEO.forEach(e => {
-  if (!e.lat || !e.lng) return;
-  const marker = L.marker([e.lat, e.lng], { icon: iconePin(e.status, e.seq) });
-  
-  const statusLabel = e.status === 'ENTREGUE' ? 'Entregue' :
-                      e.status === 'EM ROTA'  ? 'Em Rota'  :
-                      e.status === 'ATRASADA' ? 'Atrasada' : 'Pendente';
-
-  marker.bindTooltip(`<b>${e.nome}</b>`, {
-    permanent: false, direction: 'top', className: 'leaflet-tooltip-custom',
-    offset: [0, -30],
-  });
-
-  marker.bindPopup(`
-    <div class="popup-nome">${e.nome}</div>
-    <div class="popup-reg">${e.reg || ''}</div>
-    <span class="popup-status ${e.status}">${statusLabel}</span>
-    ${e.grupo ? `<div style="font-size:9px;color:#888;margin-top:4px;">Grupo ${e.grupo < 10 ? '0'+e.grupo : e.grupo}</div>` : ''}
-  `);
-
-  marker.addTo(map);
-});
-
-// ══ ÍNDICE DE GRUPOS ══
-const grid = document.getElementById('grupos-grid');
-const hoje = '16/04'; // data base
-GRUPOS.forEach(g => {
-  const card = document.createElement('div');
-  card.className = 'grupo-card fade-in' + (g.data === hoje ? ' hoje' : '');
-  card.innerHTML = `
-    <div class="grupo-num">${g.num}</div>
-    <div class="grupo-data">📅 ${g.data}/2026</div>
-    <div class="grupo-escolas">🏫 ${g.escolas} escolas</div>
-    <div class="grupo-kits">📦 ${g.kits.toLocaleString('pt-BR')} kits</div>
-  `;
-  grid.appendChild(card);
-});
-
-// ══ NAVEGAÇÃO SUAVE ══
-function scrollTo(id) {
-  const el = document.querySelector(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('ativo'));
-  event.target.classList.add('ativo');
-}
-
-// Atualizar nav ativo no scroll
-const sections = ['secao-hero','secao-mapa','secao-grupos','secao-descricao','secao-utilidade','secao-positivos','secao-admin'];
-const navLinks = document.querySelectorAll('.nav-link');
-const observer2 = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const id = e.target.id;
-      navLinks.forEach(l => l.classList.remove('ativo'));
-      const idx = sections.indexOf(id);
-      if (idx >= 0 && navLinks[idx]) navLinks[idx].classList.add('ativo');
-    }
-  });
-}, { threshold: 0.3 });
-sections.forEach(s => {
-  const el = document.getElementById(s);
-  if (el) observer2.observe(el);
-});
-
-// ══ ANIMAÇÕES FADE-IN ══
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 60);
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
 // Enter no login
 document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') fazerLogin(false); });
 document.getElementById('login-user').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('login-pass').focus(); });
 </script>
 
-<!-- MODAL CONFIGURAÇÕES -->
 <div class="modal-overlay" id="modal-config">
   <div class="modal-box" onclick="event.stopPropagation()" style="max-width:360px;">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
       <span style="font-size:20px;">⚙️</span>
       <h3 style="margin-bottom:0;">Configurações</h3>
     </div>
-    <!-- Seção Admin -->
     <div id="config-admin-section">
       <div style="font-size:9px;font-weight:700;color:var(--lv);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">🔑 Exclusivo do Administrador</div>
       <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
         <button class="cfg-btn primary" onclick="salvarLocal();fecharModal('modal-config')">💾 Salvar localmente</button>
-        <button class="cfg-btn primary" onclick="exportarPrograma();fecharModal('modal-config')">📤 Exportar arquivo para compartilhar</button>
+        <button class="cfg-btn primary" onclick="exportarPrograma();fecharModal('modal-config')">📤 Exportar para compartilhar</button>
         <button class="cfg-btn warn" onclick="fecharModal('modal-config');abrirModal('modal-senha')">🔐 Alterar senhas de acesso</button>
         <button class="cfg-btn dark" onclick="fecharModal('modal-config');entrarModoTeste()">🧪 Entrar em modo teste</button>
       </div>
     </div>
-    <!-- Seção comum -->
-    <div style="font-size:9px;font-weight:700;color:var(--lv);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;border-top:1px solid var(--bd);padding-top:10px;">👁 Disponível para todos</div>
+    <div style="font-size:9px;font-weight:700;color:var(--lv);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;border-top:1px solid var(--bd);padding-top:10px;">Disponível para todos</div>
     <div style="display:flex;flex-direction:column;gap:6px;">
       <button class="cfg-btn" onclick="imprimirGrupo();fecharModal('modal-config')">🖨 Imprimir grupo atual</button>
       <button class="cfg-btn danger" onclick="fecharModal('modal-config');fazerLogout()">🚪 Sair do sistema</button>
     </div>
-    <div style="margin-top:14px;text-align:center;">
-      <button class="modal-btn btn-cancel" style="width:100%;" onclick="fecharModal('modal-config')">Fechar</button>
-    </div>
+    <div style="margin-top:14px;"><button class="modal-btn btn-cancel" style="width:100%;" onclick="fecharModal('modal-config')">Fechar</button></div>
   </div>
 </div>
+</div><!-- /painel-programa -->
 </body>
 </html>
