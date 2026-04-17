@@ -306,6 +306,32 @@ table.et td.etl{text-align:left;font-family:'Barlow Condensed',sans-serif;color:
 .land-footer-l{background:#1b4332;padding:32px 40px;text-align:center;}
 .land-footer-nome-l{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:30px;padding:6px 18px;margin-top:10px;}
 @media(max-width:768px){.hero-l-inner,.mapa-l-inner,.graficos-l-inner,.grupos-l-inner{padding:0 20px;}.hero-l-inner{grid-template-columns:1fr;}.hero-card-l{display:none;}.hero-l h1{font-size:30px;}.graficos-row-l,.grupos-grid-l{grid-template-columns:1fr;}}
+@media(max-width:640px){
+  #topo-inner{flex-wrap:wrap;height:auto;padding:8px 0;}
+  #logo{font-size:12px;padding:0 12px;border-right:none;border-bottom:1px solid rgba(255,255,255,.1);width:100%;padding-bottom:6px;margin-bottom:4px;}
+  #progresso-wrap{padding:0 12px;gap:8px;flex-wrap:wrap;}
+  #atualizacao-badge{display:none;}
+  .prog-item{min-width:44px;}
+  #topo-right{padding-right:10px;gap:4px;}
+  #usuario-badge{font-size:9px;padding:2px 8px;}
+  .topo-btn{font-size:10px;padding:3px 8px;}
+  #main{padding:10px 8px;}
+  .g-header{flex-direction:column;}
+  .g-badge{border-radius:0;min-width:unset;flex-direction:row;gap:8px;padding:8px 14px;justify-content:flex-start;}
+  .g-hl{padding:10px 14px;}
+  .g-stats{padding:6px 14px;gap:10px;}
+  .prod-grid{grid-template-columns:1fr 1fr!important;}
+  .prod-col-head{font-size:9px;}
+  .prod-col table td{font-size:9.5px;padding:3px 6px;}
+  .body-wrap{padding:8px;}
+  table.et td,table.et thead th{font-size:10px;padding:4px 6px;}
+  table.et td.nm{max-width:160px;}
+  .modal-box{padding:16px;}
+  #indice{padding:8px 10px;}
+  .idx-btn{min-width:62px;min-height:52px;padding:5px 6px;}
+  .busca-card{padding:12px;}
+  body{font-size:14px;}
+}
 </style>
 </head>
 <body>
@@ -1644,7 +1670,7 @@ function imprimirGrupo() {
       estRest = p2.estRest || estRest;
     }
     const p = calcProd(escolas, estRest);
-    // Próximo grupo
+    const vol = escolas.reduce((s, e) => s + vtot(e), 0); // total de kits do grupo
     let prxIdx = -1;
     for (let i = 0; i < gruposFut.length; i++) {
       const numG2 = 'G' + String(nPassados2 + i + 1).padStart(2,'0');
@@ -1665,31 +1691,82 @@ function imprimirGrupo() {
       return r;
     }
 
+    // ── ORDEM DE PRODUÇÃO: d1 + d2 + bolso ──
+    const bolsoP = p.reserva || {};
+    const ordemProd = {};
+    let totalOrdem = 0, totalBolso = 0;
+    TIPOS.forEach(k => {
+      const v = (p.d1[k]||0) + (p.d2[k]||0) + (bolsoP[k]||0);
+      ordemProd[k] = v; totalOrdem += v; totalBolso += (bolsoP[k]||0);
+    });
+
+    function rowsOrdem(d) {
+      let r = '';
+      TIPOS.forEach(k => {
+        const v = d[k] || 0;
+        r += `<tr style="${v===0?'color:#ccc':''}">
+          <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;padding:5px 10px;font-size:13px">${k}</td>
+          <td style="font-size:10px;color:#555;padding:5px 6px">${KIT_LABELS[k]}</td>
+          <td style="text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;padding:5px 10px;color:${v===0?'#ccc':'#1b4332'}">${v===0?'—':v.toLocaleString('pt-BR')}</td>
+        </tr>`;
+      });
+      return r;
+    }
+
+    const temBolso = p.reserva && TIPOS.some(k => (p.reserva[k]||0) > 0);
     const colStyle = 'border:1px solid #e2e8f0;border-radius:6px;overflow:hidden;flex:1;min-width:130px';
     const headStyle = (bg,cl) => `background:${bg};color:${cl};font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:6px 8px;border-bottom:1px solid #e2e8f0`;
 
+    const col4html = temBolso
+      ? `<div style="${colStyle}"><div style="${headStyle('#fdf4ff','#7e22ce')}">🛡 Bolso reserva<br><span style="font-weight:400;font-size:8px">5% · Guardar p/ emergências</span></div><table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(bolsoP)}</table></div>`
+      : `<div style="${colStyle}"><div style="${headStyle('#fdf4ff','#7e22ce')}">➡ 1ª carga do próximo<br><span style="font-weight:400;font-size:8px">${prxLabel} · ${prxG ? prxG.vol.toLocaleString('pt-BR') : '—'} kits</span></div><table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(prxD1)}</table></div>`;
+
     quadroProd = `
-<div style="margin:16px 0 8px;font-size:10px;font-weight:700;color:#1b4332;text-transform:uppercase;letter-spacing:.07em;padding-bottom:6px;border-bottom:2px solid #b7e4c7">📦 Quadro de Produção</div>
-<div style="display:flex;gap:10px;flex-wrap:wrap">
-  <div style="${colStyle}">
-    <div style="${headStyle('#f0fdf4','#166534')}">✅ Estoque disponível<br><span style="font-weight:400;font-size:8px">Abatido da produção</span></div>
-    <table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(p.uso)}</table>
+<div style="margin:16px 0 0;border:2.5px solid #1b4332;border-radius:10px;overflow:hidden;page-break-inside:avoid">
+  <div style="background:#1b4332;color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:2px">📋 Ordem de Produção</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800">Produza hoje: <span style="color:#86efac">${totalOrdem.toLocaleString('pt-BR')} kits</span></div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:10px;opacity:.6;margin-bottom:2px">Entregues hoje</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700">${vol.toLocaleString('pt-BR')} kits</div>
+    </div>
   </div>
-  <div style="${colStyle}">
-    <div style="${headStyle('#fffbeb','#92400e')}">🌙 1ª carga do dia<br><span style="font-weight:400;font-size:8px">Carregar no início do dia</span></div>
-    <table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(p.d1)}</table>
-  </div>
-  <div style="${colStyle}">
-    <div style="${headStyle('#eff6ff','#1e40af')}">☀ 2ª carga do dia<br><span style="font-weight:400;font-size:8px">Até fim do dia</span></div>
-    <table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(p.d2)}</table>
-  </div>
-  <div style="${colStyle}">
-    <div style="${headStyle('#fdf4ff','#7e22ce')}">➡ 1ª metade do próximo<br><span style="font-weight:400;font-size:8px">${prxLabel} · ${prxG ? prxG.vol.toLocaleString('pt-BR') : '—'} kits</span></div>
-    <table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(prxD1)}</table>
+  <div style="display:flex">
+    <div style="flex:1;border-right:2px solid #e2e8f0">
+      <div style="background:#f0fdf4;border-bottom:1px solid #b7e4c7;padding:7px 10px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.06em">📦 Quantidade por modelo</div>
+      <table style="width:100%;border-collapse:collapse">
+        ${rowsOrdem(ordemProd)}
+        <tr style="border-top:2.5px solid #1b4332;background:#f0fdf4">
+          <td colspan="2" style="padding:7px 10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;color:#1b4332">TOTAL</td>
+          <td style="text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;padding:7px 10px;color:#1b4332">${totalOrdem.toLocaleString('pt-BR')}</td>
+        </tr>
+      </table>
+    </div>
+    <div style="width:190px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:#fafafa">
+      <div style="background:#fff;border:1px solid #b7e4c7;border-radius:7px;padding:10px">
+        <div style="font-size:9px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">✅ Como produzir</div>
+        <div style="font-size:10px;color:#374151;line-height:1.5">Monte os kits conforme a quantidade de cada modelo ao longo do dia.</div>
+      </div>
+      ${temBolso ? `<div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:7px;padding:10px">
+        <div style="font-size:9px;font-weight:700;color:#7e22ce;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">🛡 Bolso reserva</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#7e22ce">${totalBolso.toLocaleString('pt-BR')} kits</div>
+        <div style="font-size:9.5px;color:#6b21a8;margin-top:3px;line-height:1.4">Incluídos no total. Guardar separado — são estoque do próximo dia.</div>
+      </div>` : ''}
+      <div style="background:#fffbeb;border:1px solid #fde068;border-radius:7px;padding:10px">
+        <div style="font-size:9px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">⚠ Atenção</div>
+        <div style="font-size:9.5px;color:#78350f;line-height:1.4">Se a equipe tiver capacidade, pode montar além da meta. Registrar o estoque ao final.</div>
+      </div>
+    </div>
   </div>
 </div>
-<div style="background:#fffbeb;border:1px solid #fde068;border-radius:5px;padding:6px 10px;font-size:9.5px;color:#92400e;margin-top:8px">
-
+<div style="margin:12px 0 6px;font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;padding-bottom:4px;border-bottom:1px solid #e2e8f0">Detalhamento técnico — para o gestor</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+  <div style="${colStyle}"><div style="${headStyle('#f0fdf4','#166534')}">✅ Estoque disponível<br><span style="font-weight:400;font-size:8px">Abatido da produção</span></div><table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(p.uso)}</table></div>
+  <div style="${colStyle}"><div style="${headStyle('#fffbeb','#92400e')}">🌙 1ª carga do dia<br><span style="font-weight:400;font-size:8px">Carregar no início do dia</span></div><table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(p.d1)}</table></div>
+  <div style="${colStyle}"><div style="${headStyle('#eff6ff','#1e40af')}">☀ 2ª carga do dia<br><span style="font-weight:400;font-size:8px">Até fim do dia</span></div><table style="width:100%;border-collapse:collapse;font-size:10.5px">${prows(p.d2)}</table></div>
+  ${col4html}
 </div>`;
   }
 
@@ -1902,6 +1979,7 @@ function calcAcumulados() {
 }
 
 function calcProd(g, est) {
+  if (!g || g.length === 0) return { nec:{}, uso:{}, prod:{}, d1:{}, d2:{}, estRest: Object.assign({}, est), prodTotal:{} };
   const nec = {}; TIPOS.forEach(k => { nec[k] = g.reduce((s, e) => s + (e[k] || 0), 0); });
   const uso = {}, prod = {}; const e2 = Object.assign({}, est);
   TIPOS.forEach(k => { const u = Math.min(e2[k] || 0, nec[k]); uso[k] = u; prod[k] = Math.max(nec[k] - u, 0); e2[k] = Math.max((e2[k] || 0) - u, 0); });
@@ -2343,7 +2421,7 @@ function renderTudo() {
     acEAcum += (g?.escolas?.length || 0); akAcum += vol;
     TIPOS.forEach(k => { atAcum[k] = (atAcum[k]||0) + (g?.escolas||[]).reduce((s,e) => s+(e[k]||0), 0); });
     const sE=acEAcum, sK=akAcum, sT=Object.assign({},atAcum);
-    const prxG = gruposFuturos[idx+1];
+    const prxG = gruposFuturos[idx+1] ?? null;
     const prxShort = prxG?.data ? prxG.data.slice(5).replace('-','/') : '—';
     const prxVol = prxG?.vol || 0;
     const prxD1 = idx+1 < gruposFuturos.length ? (prods[idx+1]?.d1 || {}) : {};
