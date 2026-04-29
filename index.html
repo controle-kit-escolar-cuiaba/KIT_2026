@@ -1119,30 +1119,48 @@ let modalEscId = null;
 function getEstado() { return modoTeste ? estadoTeste : estadoProd; }
 
 function inicializarEstado() {
-  if (ESTADO_EMBUTIDO && ESTADO_EMBUTIDO.status) {
-    estadoProd = Object.assign({}, ESTADO_EMBUTIDO.status);
-    gruposPasadosSalvos = ESTADO_EMBUTIDO.grupos_passados || [];
-    gruposFixados = ESTADO_EMBUTIDO.grupos_fixados || {};
-    estoqueCorrecao = ESTADO_EMBUTIDO.estoque_correcao || {};
-    dataGrupoSalvo = ESTADO_EMBUTIDO.data_grupo_salvo || null;
-    ultimaAtualizacao = ESTADO_EMBUTIDO.atualizado || null;
-  } else {
-    const salvo = localStorage.getItem(APP_CONFIG.storageKey());
-    if (salvo) {
-      try {
-        const s = JSON.parse(salvo);
-        estadoProd = s.status || {};
+  // ── Prioridade de carregamento ──────────────────────────────
+  // 1. localStorage → mais recente (alterações da sessão atual)
+  // 2. ESTADO_EMBUTIDO → arquivo exportado/publicado
+  // 3. CFG.escolas → estado padrão inicial
+
+  let carregouLocal = false;
+
+  // Tentar localStorage primeiro — é sempre mais recente que o arquivo
+  const salvo = localStorage.getItem(APP_CONFIG.storageKey());
+  if (salvo) {
+    try {
+      const s = JSON.parse(salvo);
+      const tsLocal    = s.atualizado ? new Date(s.atualizado).getTime() : 0;
+      const tsEmbutido = ESTADO_EMBUTIDO?.atualizado ? new Date(ESTADO_EMBUTIDO.atualizado).getTime() : 0;
+      // Usar localStorage se for mais recente ou igual ao embutido
+      if (tsLocal >= tsEmbutido) {
+        estadoProd          = s.status || {};
         gruposPasadosSalvos = s.grupos_passados || [];
-        gruposFixados = s.grupos_fixados || {};
-        estoqueCorrecao = s.estoque_correcao || {};
-        dataGrupoSalvo = s.data_grupo_salvo || null;
-        ultimaAtualizacao = s.atualizado || null;
-      } catch(e){}
-    }
-    if (!Object.keys(estadoProd).length) {
-      CFG.escolas.forEach(e => { estadoProd[e.id] = e.status || 'PENDENTE'; });
-    }
+        gruposFixados       = s.grupos_fixados  || {};
+        estoqueCorrecao     = s.estoque_correcao || {};
+        dataGrupoSalvo      = s.data_grupo_salvo || null;
+        ultimaAtualizacao   = s.atualizado || null;
+        carregouLocal = true;
+      }
+    } catch(e) { /* localStorage corrompido — ignorar */ }
   }
+
+  // Fallback: ESTADO_EMBUTIDO (estado do arquivo publicado)
+  if (!carregouLocal && ESTADO_EMBUTIDO && ESTADO_EMBUTIDO.status) {
+    estadoProd          = Object.assign({}, ESTADO_EMBUTIDO.status);
+    gruposPasadosSalvos = ESTADO_EMBUTIDO.grupos_passados || [];
+    gruposFixados       = ESTADO_EMBUTIDO.grupos_fixados  || {};
+    estoqueCorrecao     = ESTADO_EMBUTIDO.estoque_correcao || {};
+    dataGrupoSalvo      = ESTADO_EMBUTIDO.data_grupo_salvo || null;
+    ultimaAtualizacao   = ESTADO_EMBUTIDO.atualizado || null;
+  }
+
+  // Fallback final: status padrão do CFG
+  if (!Object.keys(estadoProd).length) {
+    CFG.escolas.forEach(e => { estadoProd[e.id] = e.status || 'PENDENTE'; });
+  }
+
   estadoTeste = Object.assign({}, estadoProd);
   // Recalcular EM_ROTA_ORIGINAIS dinamicamente com base na data atual
   recalcularEmRotaOriginais();
