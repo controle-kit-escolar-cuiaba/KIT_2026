@@ -613,14 +613,12 @@ function voltarInicio() {
   document.getElementById('app').style.display = 'none';
   document.getElementById('painel-inicial').style.display = 'block';
   window.scrollTo({top:0,behavior:'instant'});
-  // Destruir mapa Leaflet corretamente antes de recriar
+  // Destruir mapa Leaflet — L_iniciarMapa recria o container DOM do zero
   if (L_mapObj) { try { L_mapObj.remove(); } catch(e){} L_mapObj = null; }
-  // Destruir gráficos Chart.js antes de recriar (dados podem ter mudado)
+  // Destruir gráficos Chart.js
   if (L_chartEsc) { try { L_chartEsc.destroy(); } catch(e){} L_chartEsc = null; }
   if (L_chartKit) { try { L_chartKit.destroy(); } catch(e){} L_chartKit = null; }
-  L_mapaOk = false;
-  L_grpOk  = false;
-  L_grafOk = false;
+  L_mapaOk = false; L_grpOk = false; L_grafOk = false;
   const gridEl = document.getElementById('grupos-grid-l');
   if (gridEl) gridEl.innerHTML = '';
   L_iniciarMapa();
@@ -637,34 +635,65 @@ function L_inicializar() {
 function L_iniciarMapa() {
   if (L_mapaOk) return;
   L_mapaOk = true;
-  L_mapObj = L.map('map-l', {center:[-15.5959,-56.0452], zoom:11, scrollWheelZoom:true});
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {attribution:'© OpenStreetMap', maxZoom:18}).addTo(L_mapObj);
 
-  // nomeParaId: busca o id da escola pelo nome para obter status real do estadoProd
-  // O campo status do L_GEO é IGNORADO — estadoProd é sempre a fonte de verdade
+  // ── Recriar o container DOM do mapa ──────────────────────
+  // Leaflet marca o container com _leaflet_id após a primeira criação.
+  // Mesmo após map.remove(), atributos residuais podem causar erro
+  // "Map container is already initialized" silencioso.
+  // Solução: substituir o elemento DOM completamente antes de criar o mapa.
+  var wrap = document.querySelector('.mapa-wrap-l');
+  if (!wrap) { L_mapaOk = false; return; }
+  var old = document.getElementById('map-l');
+  if (old) old.parentNode.removeChild(old);
+  var fresh = document.createElement('div');
+  fresh.id = 'map-l';
+  fresh.style.height = '460px';
+  wrap.appendChild(fresh);
+
+  // ── Criar mapa Leaflet ────────────────────────────────────
+  try {
+    L_mapObj = L.map('map-l', {center:[-15.5959,-56.0452], zoom:11, scrollWheelZoom:true});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {attribution:'© OpenStreetMap', maxZoom:18}).addTo(L_mapObj);
+  } catch(err) {
+    console.warn('Leaflet: erro ao criar mapa', err);
+    L_mapaOk = false;
+    return;
+  }
+
+  // ── nomeParaId: nome da escola → id para buscar estadoProd ─
+  // O campo status do L_GEO é IGNORADO — estadoProd é a fonte de verdade
   var nomeParaId = {};
   CFG.escolas.forEach(function(e) { nomeParaId[e.nome] = e.id; });
 
-  var CORES_ST = {ENTREGUE:'#16a34a','EM ROTA':'#3b82f6',ATRASADA:'#dc2626',PENDENTE:'#7c3aed'};
-  var ICOS_ST  = {ENTREGUE:'\u2713','EM ROTA':'\u27a4',ATRASADA:'\u26a0',PENDENTE:'\u00b7'};
+  var CORES = {ENTREGUE:'#16a34a','EM ROTA':'#3b82f6',ATRASADA:'#dc2626',PENDENTE:'#7c3aed'};
+  var ICOS  = {ENTREGUE:'✓','EM ROTA':'➜',ATRASADA:'⚠',PENDENTE:'·'};
 
   L_GEO.forEach(function(e) {
     if (!e.lat || !e.lng) return;
     var id = nomeParaId[e.nome];
-    if (!id) return; // escola sem match no CFG — sem pin no mapa
-    var stReal = estadoProd[id] || 'PENDENTE';
-    if (!CORES_ST[stReal]) stReal = 'PENDENTE';
-    var cor = CORES_ST[stReal];
-    var ico = ICOS_ST[stReal];
+    if (!id) return;                                   // sem match no CFG → sem pin
+    var st  = estadoProd[id] || 'PENDENTE';            // sempre do estadoProd
+    if (!CORES[st]) st = 'PENDENTE';                   // guard: status inválido
+    var cor = CORES[st], ico = ICOS[st];
     var icon = L.divIcon({
       className: '',
-      html: '<div style="width:22px;height:22px;background:'+cor+';border:2px solid rgba(255,255,255,.9);border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;"><span style="transform:rotate(45deg);font-size:8px;font-weight:700;color:#fff;">'+ico+'</span></div>',
+      html: '<div style="width:22px;height:22px;background:'+cor+
+            ';border:2px solid rgba(255,255,255,.9);border-radius:50% 50% 50% 0;'+
+            'transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.3);'+
+            'display:flex;align-items:center;justify-content:center;">'+
+            '<span style="transform:rotate(45deg);font-size:8px;font-weight:700;color:#fff;">'+
+            ico+'</span></div>',
       iconSize:[22,22], iconAnchor:[11,22], popupAnchor:[0,-24]
     });
     var mk = L.marker([e.lat, e.lng], {icon: icon});
-    mk.bindTooltip('<b>'+e.nome+'</b><br><span style="font-size:10px">'+stReal+'</span>', {permanent:false, direction:'top', offset:[0,-24]});
-    mk.bindPopup('<div style="font-weight:600;font-size:12px;color:#1b4332;">'+e.nome+'</div><div style="font-size:10px;color:#4a6741;">'+(e.reg||'')+'</div><div style="font-size:10px;margin-top:4px;font-weight:700;color:'+cor+'">'+stReal+'</div>');
+    mk.bindTooltip('<b>'+e.nome+'</b><br><span style="font-size:10px">'+st+'</span>',
+      {permanent:false, direction:'top', offset:[0,-24]});
+    mk.bindPopup(
+      '<div style="font-weight:600;font-size:12px;color:#1b4332;">'+e.nome+'</div>'+
+      '<div style="font-size:10px;color:#4a6741;">'+(e.reg||'')+'</div>'+
+      '<div style="font-size:10px;margin-top:4px;font-weight:700;color:'+cor+'">'+st+'</div>'
+    );
     mk.addTo(L_mapObj);
   });
 }
